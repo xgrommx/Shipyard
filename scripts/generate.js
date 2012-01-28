@@ -2,7 +2,8 @@
 var fs = require('fs'),
 	path = require('path'),
 	assert = require('../lib/shipyard/error/assert'),
-	string = require('../lib/shipyard/utils/string');
+	string = require('../lib/shipyard/utils/string'),
+	env = require('../lib/shipyard/env');
 
 function formatName(name) {
 	return name.trim().replace(/\s+/g, '-');
@@ -39,7 +40,7 @@ var app = exports.app = function(name, dir) {
 
 	//1. Make directory
 	console.log('Creating directory...');
-	assert(!path.existsSync(dir), 'App directory already exists:', dir);
+	assert(!path.existsSync(dir), 'App directory already exists: ', dir);
 	fs.mkdirSync(name);
 
 	//2. Make package.json
@@ -78,12 +79,11 @@ var app = exports.app = function(name, dir) {
 	});
 	fs.writeFileSync(path.join(dir, 'index.html'), htmlContent);
 
-	var indexTemplate = fs.readFileSync(path.join(__dirname('./generate/index.template')));
+	var indexTemplate = fs.readFileSync(path.join(__dirname, './generate/index.template'));
 	var indexContent = string.substitute(indexTemplate, {
 		model: modelName(name)
 	});
 	fs.writeFileSync(path.join(dir, 'index.js'), indexContent);
-
 
 	console.log('Done.');
 };

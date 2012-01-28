@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>{name}</title>
-		<script type="text/javascript" data-main="./" src=""></script>
+		<script type="text/javascript" data-main="./" src="/shipyard/scripts/require.js"></script>
 	</head>
 	<body>
 	</body>
