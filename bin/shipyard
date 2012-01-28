@@ -11,10 +11,14 @@ var program = require('commander'),
     shell = require('../scripts/shell').shell,
     test = require('../scripts/test');
 
-process.on('uncaughtException', function(e) {
-    console.error(String(e)); 
+function uncaughtException(e) {
+    console.error(String(e));
+    if (program.debug) {
+        console.error(e.stack);    
+    }
     process.exit(1);
-});
+};
+process.on('uncaughtException', uncaughtException);
 
 var dir = process.cwd();
 
@@ -38,7 +42,8 @@ program
     })
     .option('-r, --require', 'include mini require')
     .option('-m, --minify', 'force a minify')
-    .option('-M, --non-minify', 'do not minify');
+    .option('-M, --non-minify', 'do not minify')
+    .option('--debug', 'show error traces');
 
 program
     .command('build [dest]')
@@ -88,7 +93,7 @@ program
         shell();
     });
 
-program.parse(process.argv);
 if (process.argv.length == 2) {
-    program.emit('help');
+    process.argv.push('-h');
 }
+program.parse(process.argv);
