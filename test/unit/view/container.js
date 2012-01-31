@@ -6,7 +6,7 @@ module.exports = {
 	'Container': function(it, setup) {
 		it('should render child views', function(expect) {
 			var v = new Container(),
-				v2 = new View({ data: 'test' });
+				v2 = new View({ content: 'test' });
 
 			delete v.attributes.id;
 			delete v2.attributes.id;
@@ -22,8 +22,8 @@ module.exports = {
 
 		it('should render child containers', function(expect) {
 			var c = new Container(),
-				c2 = new Container({ data: 'contained' }),
-				v = new View({ data: 'test' });
+				c2 = new Container({ content: 'contained' }),
+				v = new View({ content: 'test' });
 
 			delete c.attributes.id;
 			delete c2.attributes.id;

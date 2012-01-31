@@ -19,7 +19,7 @@ module.exports = {
         })
         
         it('should be able to render', function(expect) {
-			var v = new View({ data: 'test' });
+			var v = new View({ content: 'test' });
 			delete v.attributes.id;
             var el = v.toElement();
 			expect(el.get('tag')).toBe('span');
