@@ -13,7 +13,7 @@ module.exports = {
 			var fn = new Spy();
 			this.E.addListener('tease', fn);
 			this.E.emit('tease');
-			expect(fn.getCallCount()).toBe(1);
+			expect(fn).toHaveBeenCalled();
 		});
 
 		it('should be able to take an object map for addEvents', function(expect) {
@@ -55,8 +55,8 @@ module.exports = {
             this.E.emit('a');
             this.E.emit('b');
 
-            expect(fn.getCallCount()).toBe(0);
-            expect(fn2.getCallCount()).toBe(1);
+            expect(fn).not.toHaveBeenCalled();
+            expect(fn2).toHaveBeenCalled();
         });
 
         it('should be able to remove all listeners', function(expect) {
@@ -66,7 +66,7 @@ module.exports = {
             this.E.removeEvents();
             this.E.emit('x');
 
-            expect(fn.getCallCount()).toBe(0);
+            expect(fn).not.toHaveBeenCalled();
         });
 
         it('should return a Listener when addEvent', function(expect) {
@@ -77,7 +77,7 @@ module.exports = {
 
             this.E.emit('e');
 
-            expect(fn.getCallCount()).toBe(0);
+            expect(fn).not.toHaveBeenCalled();
         });
 
 		it('should work with "onEventName"', function(expect) {
@@ -86,7 +86,7 @@ module.exports = {
 
 			this.E.emit('spy');
 
-			expect(fn.getCallCount()).toBe(1);
+			expect(fn).toHaveBeenCalled();
 		});
 
         it('should be able to attach an event `once`', function(expect) {
@@ -95,7 +95,7 @@ module.exports = {
             this.E.emit('spy');
             this.E.emit('spy');
 
-            expect(fn.getCallCount()).toBe(1);
+            expect(fn.getCallCount()).toBe(1); // not 2
         });
 
         it('should not stack multiple times of the function', function(expect) {
@@ -104,7 +104,7 @@ module.exports = {
             this.E.addListener('spy', fn);
 
             this.E.emit('spy');
-            expect(fn.getCallCount()).toBe(1);
+            expect(fn.getCallCount()).toBe(1); // not 2
         });
 
 	}

@@ -115,7 +115,7 @@ Expectation.Matchers = {
     toHaveMethod: function(received, expected){
         try {
             return (expected in received) && received[expected] !== undefined && (received[expected] instanceof Function);
-        } catch(e){
+       } catch(e){
             return false;
         }
     },
@@ -144,7 +144,12 @@ Expectation.Matchers = {
 
     toMatch: function(received, expected){
         return expected.test(received);
-    }
+    },
+
+	toHaveBeenCalled: function(received) {
+		if (!received.getCallCount) throw new Error('Value is not a `Spy`, cannot check if called.');
+		return received.getCallCount() > 0;
+	}
 
 };
 
