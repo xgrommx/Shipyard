@@ -4,8 +4,8 @@ var Binding = require('../../../lib/shipyard/class/Binding'),
 module.exports = {
     'Binding': function(it, setup) {
         it('should bind two Observables', function(expect) {
-            var model = new Observable,
-                view = new Observable;
+            var model = new Observable(),
+                view = new Observable();
             
             var b = new Binding(model, view, { name: 'id', age: 'content' });
 
@@ -17,8 +17,8 @@ module.exports = {
         });
 
         it('should remove handlers when destroyed', function(expect) {
-            var a = new Observable,
-                b = new Observable;
+            var a = new Observable(),
+                b = new Observable();
             
             var binding = new Binding(a, b, { one: 'two' });
 
@@ -26,7 +26,7 @@ module.exports = {
             expect(binding.handlers.length).toBe(0);
             expect(binding.isDestroyed).toBe(true);
 
-            expect(a.$events['change']).toBeLike([undefined]);
+            expect(a.__events.change).toBeLike([undefined]);
         });
     }
 };
