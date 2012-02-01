@@ -1,5 +1,6 @@
 /*global process,console,__dirname*/
 var path = require('path'),
+    fs = require('fs'),
     shipyard = require('../'),
 	object = require('../lib/shipyard/utils/object'),
 	copy = require('dryice').copy;
@@ -88,6 +89,48 @@ exports.compile = function(appDir, dest, options) {
     console.log('Done.');
 };
 
+
+// # __all()
+// Finds all the modules of Shipyard, combines the contents into a
+// single file, and minifies them. Don't ever do this!
+function __all() {
+    console.log('Building all of Shipyard...');
+    console.log('Wait, what? This is a terrible idea...');
+    // start with `lib` directory
+    var start = path.join(__dirname, '../lib/');
+
+    var buffer = [];
+
+    // get list of all files + directories
+    function collect(dir) {
+        var names = fs.readdirSync(dir);
+        names.forEach(function(name) {
+            var p = path.join(dir, name);
+            var stats = fs.statSync(p);
+    // add files to project
+            if (stats.isFile()) {
+                var contents = fs.readFileSync(p);
+                var id = p.replace(start, '');
+                buffer.push(wrapDefines(contents, id));
+            } else {
+    // recusrve with found directories
+                collect(p);
+            }
+        });
+    }
+
+    // remember mini-require
+    buffer.push(fs.readFileSync(path.join(__dirname, '../build/require.js')));
+    collect(start);
+    // output
+
+    var shipyard_all = path.join(process.cwd, 'shipyard-all.js');
+    var output = filterNode(buffer.join(''));
+    // output = copy.filter.uglifyjs(output);
+    fs.writeFileSync(shipyard_all, output);
+    console.log('Oh, good God. What have you done?');
+}
+
 function filterNode(content, location) {
     if (typeof content !== 'string') {
 		content = content.toString();
@@ -109,6 +152,10 @@ function wrapDefines(content, location) {
 wrapDefines.onRead = true;
 
 if (require.main === module) {
+    if (process.argv[2] === '--all') {
+        __all();
+        return;
+    }
     var src = path.join(process.cwd(), process.argv[2]),
         dest = path.join(process.cwd(), process.argv[3]);
     exports.compile(src, dest);
