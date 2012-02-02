@@ -26,6 +26,8 @@ module.exports = {
             expect(binding._handlers.length).toBe(0);
             expect(binding.isDestroyed).toBe(true);
 
+			//TODO: when this test breaks for touching internals,
+			//make it just .set() some stuff on `a` and then check `b`.
             expect(a.__events.change).toBeLike([undefined]);
         });
     }
