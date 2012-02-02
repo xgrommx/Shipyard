@@ -7,8 +7,49 @@ it, or you store it in the local SQLite database, the public API for
 Models stays the same, so the rest of your application can blissfully
 ignorant.
 
+### Extends
 
-## constructor / initialize
+Observable
+
+### Implements
+
+Syncable
+
+## Mutator: fields
+
+This property is an object of fields that describe the data of your
+Model, using `Field` classes.
+
+### Syntax
+
+	var Task = new Class({
+		Extends: Model,
+		fields: {
+			title: fields.TextField(),
+			created_at: fields.DateField(),
+			is_done: fields.BooleanField()
+		}	
+	});)
+
+## Mutator: Sync
+
+This is an object of names and syncs that the data of this model should
+synchronize to.
+
+### Syntax
+
+	var Task = new Class({
+		Extends: Model,
+		Sync: {
+			'default': BrowserSync,
+			'our_server': {
+				driver: ServerSync,
+				route: '/api/1/tasks'
+			}
+		}
+	})
+
+## Method: constructor
 
 ### Syntax
 
@@ -19,7 +60,11 @@ ignorant.
 1. data - (_object_, optional) An object of key-value pairs relating to
    the Model's `fields` for the initial data.
 
-## set
+## Method: set
+
+*Inherited from Observable*. The way to assign values to fields the 
+model has. Don't use direct assignment, or you'll miss out the 
+usefulness from `Observable` and `fields`.
 
 ### Syntax
 
@@ -35,3 +80,43 @@ ignorant.
     - properties - (_object_) An object of key-value pairs that work
       like calling `set` with each pair individually as the two-argument
       path.
+
+### Returns
+
+- (object) This Model instance.
+
+### Examples
+
+	var model = new Model();
+	model.set('pk', 3);
+	model.set({
+		pk: 4,
+		title: 'Example'
+	});
+
+## Method: get
+
+*Inherited from Observable*. The way to retrieve values of the fields
+that the model has.
+
+### Syntax
+
+	var value = model.get(keyOrKeys);
+
+### Arguments
+
+- keyOrKeys - (_string or array_) A string or array of strings of
+  properties to return the value of.
+
+### Returns
+
+- (_mixed_) The value of the field requested, or an array of the values
+  if an array was passed as an argument.
+
+## Method: save
+
+*Inherited from Syncable*.
+
+## Method: destroy
+
+*Inherited from Syncable*.
