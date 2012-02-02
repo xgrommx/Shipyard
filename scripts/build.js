@@ -109,9 +109,14 @@ function __all() {
             var stats = fs.statSync(p);
     // add files to project
             if (stats.isFile()) {
-                var contents = fs.readFileSync(p);
-                var id = p.replace(start, '');
-                buffer.push(wrapDefines(contents, id));
+                var ext = path.extname(p);
+                if (ext === '.js') {
+                    var contents = fs.readFileSync(p);
+                    var id = p.replace(start, '');
+                    buffer.push(wrapDefines(contents, id));
+                } else if (ext === '.ejs') {
+                    // TODO: TemplateLoader thingy
+                }
             } else {
     // recusrve with found directories
                 collect(p);
