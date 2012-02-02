@@ -12,9 +12,10 @@ var program = require('commander'),
     test = require('../scripts/test');
 
 function uncaughtException(e) {
-    console.error(String(e));
     if (program.debug) {
         console.error(e.stack);    
+    } else {
+        console.error(String(e));
     }
     process.exit(1);
 };

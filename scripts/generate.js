@@ -41,7 +41,7 @@ var app = exports.app = function(name, dir) {
 	//1. Make directory
 	console.log('Creating directory...');
 	assert(!path.existsSync(dir), 'App directory already exists: ', dir);
-	fs.mkdirSync(name);
+	fs.mkdirSync(dir);
 
 	//2. Make package.json
 	console.log("Creating package.json...");
