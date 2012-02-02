@@ -8,21 +8,38 @@ var http = require('http'),
 
 var HEADERS = { 'Content-Type': 'text/plain' };
 
-function serveFile(res, filename) {
-	fs.readFile(filename, 'binary', function(err, file) {
-		if (err) {
-			log.error("Error for file (%s): %s", filename, err);
-			res.writeHead(500, HEADERS);
-			res.write(err + '\n');
-			res.end();
-			return;
-		}
-		
-		res.writeHead(200);
-		res.write(file, 'binary');
-		res.end();
+var CONTENT_TYPES = {
+    '.js': 'text/javascript',
+    '.html': 'text/html',
+    '.css': 'text/css'
+};
 
-	});
+function serveFile(res, filename) {
+    fs.stat(filename, function(err, stats) {
+        if (err) {
+            e500(res, filename);
+            return;
+        }
+        if (!stats.isFile()) { 
+            e404(res, filename);
+            return;
+        }
+        fs.readFile(filename, 'binary', function(err, contents) {
+            if (err) {
+                e500(res, filename);
+                return;
+            }
+            
+            var ext = path.extname(filename);
+
+            res.writeHead(200, {
+                'Content-Type': CONTENT_TYPES[ext] || 'application/octet-stream'
+            });
+            res.write(contents);
+            res.end();
+
+        });
+    });
 }
 
 function e404(res, filename) {
@@ -30,6 +47,14 @@ function e404(res, filename) {
 	res.writeHead(404, HEADERS);
 	res.write('404 Not Found\n');
 	res.end();
+}
+
+function e500(res, filename) {
+    log.error("Error for file (%s): %s", filename, err);
+    res.writeHead(500, HEADERS);
+    res.write(err + '\n');
+    res.end();
+    return;
 }
 
 function shipyardFile(res, uri) {
