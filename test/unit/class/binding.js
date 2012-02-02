@@ -23,7 +23,7 @@ module.exports = {
             var binding = new Binding(a, b, { one: 'two' });
 
             binding.destroy();
-            expect(binding.handlers.length).toBe(0);
+            expect(binding._handlers.length).toBe(0);
             expect(binding.isDestroyed).toBe(true);
 
             expect(a.__events.change).toBeLike([undefined]);
