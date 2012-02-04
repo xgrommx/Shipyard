@@ -6,6 +6,64 @@ A base class that all Sync's should extend from.
 
 	var sync = new Sync([options]);
 
+## Method: create
+
+Creates new data in the sync location.
+
+### Syntax
+
+	sync.create(data, callback);
+
+### Arguments
+
+- data - (_object_) The data of the model. This should get serialized
+  via `JSON.stringify`.
+- callback - (_function_) A function to execute after a successful
+  creation operation. Expects an object of data representing the entire
+  model as an argument.
+
+## Method: update
+
+Updates existing data in the sync.
+
+### Syntax
+
+	sync.update(id, data, callback);
+
+### Arguments
+
+- id (_mixed_) A string or number id of the content to update.
+- data (_object_) The data of the model. This should get serialize via
+  `JSON.stringify`.
+- callback - (_function_) A function to execute after a successful
+  update operation. Expects an object of data representing the entire
+  model as an argument.
+
+## Method: read
+
+Reads data from the sync and returns it, based on the provided criteria.
+
+### Syntax
+
+	sync.read(params, callback);
+
+### Arguments
+
+- params - (_object_) A key-value map of conditions that the returns
+  data must pass.
+- callback - (_function_) A function to execute after a successful read
+  operation. Expects an array of objects of data that met the criteria.
+
+### Example
+
+	sync.read({ isDone: false, user_id: 5 }, function(arr) {
+		arr.forEach(function (obj) {
+		
+		})
+	});
+
+
+## Method: destroy
 
 # Class BrowserSync
 
