@@ -2,7 +2,9 @@
 
 Class is a useful construct for describing your classes, using
 JavaScript's prototypical inheritance, while removing some of the
-verbosity.
+verbosity. Used like so:
+
+	var Class = require('shipyard/class/Class');
 
 Classes have Mutators, which are ways to modify a class when it is
 created. The most common Mutator used is `Extends`.
