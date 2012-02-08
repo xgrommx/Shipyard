@@ -18,7 +18,7 @@ module.exports = {
 
 		it('should be able to take an object map for addEvents', function(expect) {
 			var fn = new Spy();
-			this.E.addEvents({
+			this.E.addListeners({
 				'a': fn,
 				'b': fn
 			});
@@ -37,7 +37,7 @@ module.exports = {
 
 			this.E.emit('a');
 
-			this.E.removeEvent('a', fn);
+			this.E.removeListener('a', fn);
 			this.E.emit('a');
 
 			expect(fn.getCallCount()).toBe(1);
@@ -51,7 +51,7 @@ module.exports = {
             this.E.addListener('a', fn);
             this.E.addListener('b', fn2);
 
-            this.E.removeEvents('a');
+            this.E.removeListeners('a');
             this.E.emit('a');
             this.E.emit('b');
 
@@ -63,7 +63,7 @@ module.exports = {
             var fn = new Spy();
             this.E.addListener('x', fn);
 
-            this.E.removeEvents();
+            this.E.removeListeners();
             this.E.emit('x');
 
             expect(fn).not.toHaveBeenCalled();

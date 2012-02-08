@@ -48,9 +48,9 @@ module.exports = {
                 expect(this).toBe(el);
             });
 
-            el.addEvent('click', fn);
+            el.addListener('click', fn);
 
-            el.fireEvent('click');
+            el.emit('click');
 
             expect(fn.getCallCount()).toBe(1);
 

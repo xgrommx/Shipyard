@@ -32,7 +32,7 @@ module.exports = {
         it('should fire a change event when data changes', function(expect) {
             var o = new Observable(),
                 spy = new Spy();
-            o.addEvent('change', spy);
+            o.addListener('change', spy);
             o.set('bad', 'mad');
             o.set('bad', 'happy');
             o.set('bad', 'happy');
