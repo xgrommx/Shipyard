@@ -12,7 +12,7 @@ var form = new FormView({
 	}
 })
 	.addView(new TextFieldView({ name: 'title', placeholder: 'Task title...' }))
-	.addView(new ButtonView({ data: 'Add Task' }))
+	.addView(new ButtonView({ content: 'Add Task' }))
 	.attach();
 
 var list = new ListView({
@@ -25,9 +25,9 @@ Task.find({ callback: function(tasks) {
 	});
 }});
 
-Task.addEvent('save', function(task, isNew) {
+Task.addListener('save', function(task, isNew) {
 	if (isNew) list.addItem(task);
 });
-Task.addEvent('destroy', function(task) {
+Task.addListener('destroy', function(task) {
 	list.removeItem(task);
 });
