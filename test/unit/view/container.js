@@ -8,10 +8,6 @@ module.exports = {
 			var v = new Container(),
 				v2 = new View({ content: 'test' });
 
-			delete v.attributes.id;
-			delete v2.attributes.id;
-
-
 			v.addView(v2);
 
             var el = v.toElement();
@@ -24,10 +20,6 @@ module.exports = {
 			var c = new Container(),
 				c2 = new Container({ content: 'contained' }),
 				v = new View({ content: 'test' });
-
-			delete c.attributes.id;
-			delete c2.attributes.id;
-			delete v.attributes.id;
 
 
 			c2.addView(v);
