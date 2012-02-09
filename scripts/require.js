@@ -153,7 +153,8 @@ var require = function shipyard_require(id, path){
             if (isRelative) {
                 base = normalize(paths[i], id);
 			} else if (isDomain) {
-				// it's absolute, so don't mess with the pass
+				// it's absolute, so don't mess with the path
+				base = id;
             } else {
                 // check path versus id
                 // `/lib/shipyard` vs `shipyard/class/Class`
@@ -275,18 +276,19 @@ for (var i = 0, length = scripts.length; i < length; i++) {
 		continue;
 	}
 
-    if ((src.indexOf('require.js') >= 0) && (main = script.getAttribute('data-main'))) {
+    if ((src.indexOf('require.js') >= 0) &&
+		(main = script.getAttribute('data-main'))) {
         var maindir = dirname(main),
             shipyard = normalize(dirname(src), '../lib/shipyard');
         require.paths.unshift(shipyard);
-        if (!~require.paths.indexOf(maindir)) {
+        if (require.paths.indexOf(maindir) !== -1) {
             require.paths.unshift(maindir);
         }
         break;
     }
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function onload() {
     main_require(main);
 }, false);
 
