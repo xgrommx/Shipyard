@@ -136,7 +136,8 @@ var require = function shipyard_require(id, path){
         base = '',
         paths = (id[0] === '/') ? [''] : require.paths,
         trailingSlash = (id.slice(-1) === '/'),
-        isRelative = id.charAt(0) === '.';
+        isRelative = id.charAt(0) === '.',
+		isDomain = id.indexOf('://') !== -1;
 
     if (trailingSlash) {
 		id = id.slice(0, -1);
@@ -151,6 +152,8 @@ var require = function shipyard_require(id, path){
         for (var i = 0, y = paths.length; (i < y); i++) {
             if (isRelative) {
                 base = normalize(paths[i], id);
+			} else if (isDomain) {
+				// it's absolute, so don't mess with the pass
             } else {
                 // check path versus id
                 // `/lib/shipyard` vs `shipyard/class/Class`
