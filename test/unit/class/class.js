@@ -1,4 +1,5 @@
 var Class = require('../../../lib/shipyard/class/Class'),
+	func = require('../../../lib/shipyard/utils/function'),
 	Spy = require('../../testigo/lib/spy').Spy;
 
 module.exports = {
@@ -121,6 +122,23 @@ module.exports = {
 			
 			var ex = new BetterExample();
 			expect(ex.derp()).toBe('derp');
+		});
+
+		it('should be able to call parent with overloadSetter', function(expect) {
+			var Ex = new Class({
+				a: function(b) { this.b = b; }
+			});
+			var Ex2 = new Class({
+				Extends: Ex,
+				a: func.overloadSetter(function(b, c) {
+					this.parent(b);
+				})
+			});
+
+			var ex = new Ex2();
+			ex.a({ foo: 'bar' });
+			expect(ex.b).toBe('foo');
+
 		});
 
 		it('should merge objects when extended', function(expect) {
