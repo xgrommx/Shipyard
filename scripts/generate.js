@@ -5,6 +5,8 @@ var fs = require('fs'),
 	string = require('../lib/shipyard/utils/string'),
 	env = require('../lib/shipyard/env');
 
+var dirMode = '0777';
+
 function formatName(name) {
 	return name.trim().replace(/\s+/g, '-');
 }
@@ -23,7 +25,7 @@ var model = exports.model = function(name, dir) {
 	dir = path.join(dir || process.cwd, 'models');
 
 	if (!path.existsSync(dir)) {
-		fs.mkdirSync(dir);
+		fs.mkdirSync(dir, dirMode);
 	}
 
 	var modelTemplate = fs.readFileSync(path.join(__dirname, './generate/model.template'));
@@ -41,7 +43,7 @@ var app = exports.app = function(name, dir) {
 	//1. Make directory
 	console.log('Creating directory...');
 	assert(!path.existsSync(dir), 'App directory already exists: ', dir);
-	fs.mkdirSync(dir);
+	fs.mkdirSync(dir, dirMode);
 
 	//2. Make package.json
 	console.log("Creating package.json...");
@@ -58,12 +60,12 @@ var app = exports.app = function(name, dir) {
 
 	//4. Make views/
 	console.log('Creating views...');
-	fs.mkdirSync(path.join(dir, 'views'));
+	fs.mkdirSync(path.join(dir, 'views'), dirMode);
 
 	//5. Make tests/
 	console.log('Creating tests...');
-	fs.mkdirSync(path.join(dir, 'tests'));
-	fs.mkdirSync(path.join(dir, 'tests', 'models'));
+	fs.mkdirSync(path.join(dir, 'tests'), dirMode);
+	fs.mkdirSync(path.join(dir, 'tests', 'models'), dirMode);
 	var testTemplate = fs.readFileSync(path.join(__dirname, './generate/test.template'));
 	var testContent = string.substitute(testTemplate, {
 		model: modelName(name)
