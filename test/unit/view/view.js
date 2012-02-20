@@ -11,6 +11,8 @@ module.exports = {
             
                 Extends: View,
 
+				classNames: ['mock-view'],
+
                 attributes: ['data-test']
 
             });
@@ -38,6 +40,16 @@ module.exports = {
             v.set('data-test', 'derp');
             expect(el.get('data-test')).toBe('derp');
         });
+
+		it('should combine classNames', function(expect) {
+			var v = new MockView({
+				'class': 'foo'
+			});
+			
+			var el = v.toElement();
+
+			expect(el.get('class')).toBe('shipyard-view mock-view foo');
+		});
 
 	}
 
