@@ -151,15 +151,22 @@ var require = function shipyard_require(id, path){
     if (!module) {
         var exts = Object.keys(require.extensions);
         for (var i = 0, y = paths.length; (i < y); i++) {
+
+            // prevent trailing slashes on base path
+            var _path = paths[i];
+            if (_path.charAt(_path.length-1) === '/') {
+                _path = _path.substring(0, _path.length - 1);
+            }
+
             if (isRelative) {
-                base = normalize(paths[i], id);
+                base = normalize(_path, id);
 			} else if (isDomain) {
 				// it's absolute, so don't mess with the path
 				base = id;
             } else {
                 // check path versus id
                 // `/lib/shipyard` vs `shipyard/class/Class`
-                var poppedPath = paths[i].split('/'),
+                var poppedPath = _path.split('/'),
                     pathEnd = poppedPath.pop(),
                     idStart = id.split('/').shift();
                 
