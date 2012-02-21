@@ -25,7 +25,7 @@ var load = function(path){
 		result = xhr.responseText;
 	}
 
-    return load._cache[path] = result;
+    return (load._cache[path] = result);
 };
 load._cache = {};
 
@@ -50,6 +50,7 @@ var exec = function(fn, module) {
 
 var compile = function(module, contents) {
     module.exports = {};
+    contents += '\n//@ sourceURL=' + module.filename;
     var fn = new Function('require, exports, module, __filename, __dirname', contents);
     require.paths.unshift(module.dirname);
     exec(fn, module);
