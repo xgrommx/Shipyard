@@ -1,6 +1,7 @@
 /*global process: true*/
 var fs = require('fs'),
 	path = require('path'),
+    existsSync = fs.existsSync || path.existsSync, // path deprecated in v0.6
 	Testigo = require('../test/testigo').Testigo;
 
 function namespace(prefix, module) {
@@ -22,7 +23,7 @@ exports.load = function load(dir, casesArgs, prefix) {
     } else {
         casesArgs = casesArgs.map(function(c) {
             c = String(c);
-            if (!~c.indexOf('.js') && !path.existsSync(path.join(dir, c))) {
+            if (!~c.indexOf('.js') && !existsSync(path.join(dir, c))) {
                 return c + '.js';
             }
             return c;
@@ -30,7 +31,7 @@ exports.load = function load(dir, casesArgs, prefix) {
     }
     casesArgs.forEach(function(val) {
         var _p = path.join(dir, val);
-        if (path.existsSync(_p) && fs.statSync(_p).isFile()) {
+        if (existsSync(_p) && fs.statSync(_p).isFile()) {
             cases.push(namespace(prefix, require(_p)));
         } else {
             var _prefix = (prefix ? prefix+': ' : '') + val;
