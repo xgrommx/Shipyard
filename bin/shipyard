@@ -63,7 +63,9 @@ program
     .action(function() {
         var pack = shipyard.loadPackage(dir);
         var tests = path.join(dir, pack.shipyard.test);
-
+        
+        // when testing, you always want stacktraces
+        program.debug = true;
         pushShipyard();
 
         var args = program.args.filter(type.isString);
