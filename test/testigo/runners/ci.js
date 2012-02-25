@@ -124,6 +124,7 @@ var callbacks = {
         } else {
             this.setColor('red');
             this.print('F');
+            this.setColor();
             failures.push({ suite: suite, test: test, results: results});
         }
     }
