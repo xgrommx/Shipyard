@@ -19,8 +19,8 @@ var Task = module.exports = new Class({
 	fields: {
 		id: model.fields.TextField(),
 		title: model.fields.TextField(),
-		created_at: model.fields.DateField(),
-		is_done: model.fields.BooleanField({ 'default': false })
+		createdAt: model.fields.DateField(),
+		isDone: model.fields.BooleanField({ 'default': false })
 	},
 
 	toString: function() {
