@@ -96,5 +96,17 @@ module.exports = {
 			expect(fooSpy.getCallCount()).toBe(1);
 			expect(barSpy.getCallCount()).toBeTruthy();
 		});
+
+        it('should assign events for properties starting with "on"', function(expect) {
+            var spy = new Spy();
+            var Ex = new Class({
+                Extends: Observable,
+                onEv: spy
+            });
+            var ex = new Ex();
+            ex.emit('ev');
+
+            expect(spy).toHaveBeenCalled();
+        });
     }
 };

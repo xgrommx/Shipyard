@@ -230,11 +230,11 @@ module.exports = {
 
 		it('should have local Mutators', function(expect) {
 			var Interface = new Class();
-			Interface.Mutators.Local = function(val) {
+			Interface.defineMutator('Local', function(val) {
 				this.implement('isLocal', function() {
 					return !!val;
 				});
-			};
+			});
 
 			var Ex = new Class({
 				Implements: Interface,
