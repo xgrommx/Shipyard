@@ -1,6 +1,7 @@
 var Class = require('../../../lib/shipyard/class/Class'),
 	Events = require('../../../lib/shipyard/class/Events'),
-	Spy = require('../../testigo/lib/spy').Spy;
+	log = require('../../../lib/shipyard/utils/log'),
+	Spy = require('../../../lib/shipyard/test/Spy');
 
 module.exports = {
 	'Events': function(it, setup) {
@@ -69,7 +70,7 @@ module.exports = {
             expect(fn).not.toHaveBeenCalled();
         });
 
-        it('should return a Listener when addEvent', function(expect) {
+        it('should return a Listener when addListener', function(expect) {
             var fn = new Spy();
             var ptr = this.E.addListener('a', fn);
 
@@ -99,12 +100,18 @@ module.exports = {
         });
 
         it('should not stack multiple times of the function', function(expect) {
-            var fn = new Spy();
-            this.E.addListener('spy', fn);
-            this.E.addListener('spy', fn);
+            var handler = new Spy();
+			var warn = new Spy();
+			var oldWarn = log.warn;
+			log.warn = warn;
+            this.E.addListener('spy', handler);
+            this.E.addListener('spy', handler);
 
             this.E.emit('spy');
-            expect(fn.getCallCount()).toBe(1); // not 2
+            expect(handler.getCallCount()).toBe(1); // not 2
+			expect(warn).toHaveBeenCalled();
+
+			log.warn = oldWarn;
         });
 
 	}
