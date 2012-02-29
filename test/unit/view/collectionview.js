@@ -19,6 +19,7 @@ module.exports = {
 			});
 
 			expect(v.itemViewOptions.tag).toBe('span');
+			expect(v.itemViewOptions['class']).toBe('example');
 		});
 	}
 
