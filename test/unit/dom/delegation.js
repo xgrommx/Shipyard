@@ -4,10 +4,17 @@ var dom = require('../../../lib/shipyard/dom'),
 module.exports = {
 
 	'Element.delegate': function(it, setup) {
-		var ul, li,	anchor;
+		var div, para, ul, li, anchor;
 
 		setup('beforeEach', function() {
-			dom.document.body.empty();
+			dom.document.body.empty().removeListeners();
+
+			div = new dom.Element('div');
+			dom.document.body.appendChild(div);
+
+			para = new dom.Element('p');
+			div.appendChild(para);
+
 			ul = new dom.Element('ul');
 			dom.document.body.appendChild(ul);
 
@@ -27,6 +34,30 @@ module.exports = {
 
 			ul.emit('click', null, anchor);
 			expect(fn).toHaveBeenCalled();
+		});
+
+		it('should be removal with the returned Listener', function(expect) {
+			var fn = new Spy();
+			var listener = ul.delegate('li', 'click', fn);
+
+			listener.detach();
+			ul.emit('click', null, li);
+
+			expect(fn).not.toHaveBeenCalled();
+		});
+
+
+		it('should allow the same handler for different selectors', function(expect) {
+			var fn = new Spy();
+			var body = dom.document.body;
+
+			body.delegate('li', 'click', fn);
+			body.delegate('div', 'click', fn);
+
+			body.emit('click', null, li);
+			body.emit('click', null, div);
+
+			expect(fn.getCallCount()).toBe(2);
 		});
 	}
 
