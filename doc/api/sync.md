@@ -116,6 +116,10 @@ Sync
 A Syncable object has a unified API for saving, reading, and destroying
 data to various locations. The most common usage is with a `Model`.
 
+### Extends
+
+Observable
+
 ## Method: save
 
 Saves a JSON representation of the object to a sync. Uses the objects

@@ -9,10 +9,6 @@ ignorant.
 
 ### Extends
 
-Observable
-
-### Implements
-
 Syncable
 
 ## Mutator: fields
