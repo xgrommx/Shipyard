@@ -99,14 +99,19 @@ module.exports = {
 
         it('should assign events for properties starting with "on"', function(expect) {
             var spy = new Spy();
+			var spy2 = new Spy();
             var Ex = new Class({
                 Extends: Observable,
                 onEv: spy
             });
-            var ex = new Ex();
+            var ex = new Ex({
+				onFoo: spy2
+			});
             ex.emit('ev');
+			ex.emit('foo');
 
             expect(spy).toHaveBeenCalled();
+			expect(spy2).toHaveBeenCalled();
         });
     }
 };
