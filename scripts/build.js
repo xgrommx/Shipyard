@@ -6,13 +6,8 @@ var path = require('path'),
 	copy = require('dryice').copy;
 
 exports.compile = function(appDir, dest, options) {
-    var pack;
-    try {
-        pack = shipyard.loadPackage(appDir);
-    } catch (ex) {
-        console.error(ex.message);
-        process.exit(1);
-    }
+    var pack = require(path.join(appDir, './package.json'));
+	shipyard.registerExts();
     
     var meta = pack.shipyard;
 
@@ -23,7 +18,7 @@ exports.compile = function(appDir, dest, options) {
 	// `dir` contains the current app
 	// `app` is what will get required() to start the file search
     var dir = path.join(appDir, '../'),
-        app = path.join(pack.name, meta.app || './'),
+        app = path.join(pack.name, meta.app),
         shipyardDir = path.join(__dirname, '../lib'),
 		roots = [dir];
 	
@@ -62,7 +57,7 @@ exports.compile = function(appDir, dest, options) {
             require: [app]
         }),
         dest: build,
-        filter: [filterNode, wrapDefines]
+        filter: [filterNode, template, wrapDefines]
     });
 
     copy({
@@ -152,9 +147,22 @@ function wrapDefines(content, location) {
         location = location.path;
     }
     location = location.replace(/(\.js|\/)$/, '');
+	location = location.replace(/\\/g, '/');
     return "define('"+ location +"', [], function(require, exports, module){\n" + content +"\n});\n";
 }
 wrapDefines.onRead = true;
+
+function template(content, loc) {
+	loc = path.join(loc.base, loc.path);
+	//TODO: look in a list of template extension names, instead.
+	if (path.extname(loc) !== '.js') {
+		var temp = require(loc);
+		return "module.exports = " + temp;
+	} else {
+		return content;
+	}
+}
+template.onRead = true;
 
 if (require.main === module) {
     if (process.argv[2] === '--all') {

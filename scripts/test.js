@@ -59,11 +59,12 @@ exports.run = function(cases) {
 };
 
 if (require.main === module) {
-	var shipyard = require('../');
 	var path = require('path');
 	var syPath = path.join(__dirname, '../');
-	var pack = shipyard.loadPackage(syPath);
+	var pack = require('../');
+	shipyard.registerExts(pack);
     var shipyardSuite = path.join(syPath, pack.shipyard.test);
+
     var args = process.argv.slice(2);
     exports.run(exports.load(shipyardSuite, args));
 }

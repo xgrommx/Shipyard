@@ -32,7 +32,7 @@ load._cache = {};
 var exec = function(fn, module) {
     var _req = function(id) {
         try {
-            return require(id);
+            return require(id, module.dirname);
         } catch (ex) {
             if (ex instanceof RequireError) {
                 throw new RequireError(ex.message + ', required from "'+module.filename+'"');
@@ -82,7 +82,7 @@ var normalize = function(base, path){
 var dirname = function(filename) {
     var parts = filename.split('/');
     parts.pop(); //bye filename
-    return parts.join('/');
+    return parts.join('/') + '/';
 };
 
 var basename = function(filename) {
@@ -140,9 +140,10 @@ var require = function shipyard_require(id, path){
         isRelative = id.charAt(0) === '.',
 		isDomain = id.indexOf('://') !== -1;
 
-    if (trailingSlash) {
-		id = id.slice(0, -1);
-	}
+	// why?
+    //if (trailingSlash) {
+	//	id = id.slice(0, -1);
+	//}
     var module = MODULES[id];
     
 
@@ -152,10 +153,11 @@ var require = function shipyard_require(id, path){
         var exts = Object.keys(require.extensions);
         for (var i = 0, y = paths.length; (i < y); i++) {
 
+			// why??
             // prevent trailing slashes on base path
             var _path = paths[i];
             if (_path.charAt(_path.length-1) === '/') {
-                _path = _path.substring(0, _path.length - 1);
+                //_path = _path.substring(0, _path.length - 1);
             }
 
             if (isRelative) {
@@ -240,7 +242,10 @@ var require = function shipyard_require(id, path){
 require.extensions = {
     '.js': function(module, filename) {
                 require._compile(module, require._load(filename));
-    }
+    },
+	'.json': function(module, filename) {
+		module.exports = JSON.parse(require._load(filename));
+	}
 };
 
 require._load = load;
@@ -259,6 +264,9 @@ function main_require(main) {
 			}
 		}
 	}
+
+	var shipyard = require('shipyard');
+	shipyard.registerExts(json);
 	require.paths.unshift(main);
 	require(main);
 }

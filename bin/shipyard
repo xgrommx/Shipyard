@@ -30,11 +30,10 @@ function pushShipyard() {
         var lib = path.join(shipyard.dirname, shipyard.directories.lib);
         var testigo = path.join(shipyard.dirname, './test/');
 
-        //TODO: this doesn't work in Node 0.5+
-        require.paths.unshift(testigo);
         require.paths.unshift(lib);
     }
 }
+
 
 program
     .version(shipyard.version)
@@ -58,15 +57,16 @@ program
     });
 
 program
-    .command('test')
+	.command('test')
     .description('Run your app\'s test suite')
     .action(function() {
-        var pack = shipyard.loadPackage(dir);
+        var pack = require(path.join(dir, './package.json'));
         var tests = path.join(dir, pack.shipyard.test);
         
         // when testing, you always want stacktraces
         program.debug = true;
         pushShipyard();
+		shipyard.registerExts();
 
         var args = program.args.filter(type.isString);
 
@@ -93,6 +93,7 @@ program
     .description('A node shell with Shipyard already on the path')
     .action(function() {
         pushShipyard();
+		shipyard.registerExts();
         shell();
     });
 
