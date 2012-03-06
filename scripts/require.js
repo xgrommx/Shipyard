@@ -152,12 +152,13 @@ var require = function shipyard_require(id, path){
     if (!module) {
         var exts = Object.keys(require.extensions);
         for (var i = 0, y = paths.length; (i < y); i++) {
-
-			// why??
-            // prevent trailing slashes on base path
             var _path = paths[i];
+
+            // prevent trailing slashes on base path
+			// because otherwise "shipyard/".split('/').pop() will
+			// return an empty string.
             if (_path.charAt(_path.length-1) === '/') {
-                //_path = _path.substring(0, _path.length - 1);
+                _path = _path.substring(0, _path.length - 1);
             }
 
             if (isRelative) {
@@ -173,7 +174,9 @@ var require = function shipyard_require(id, path){
                     idStart = id.split('/').shift();
                 
                 if (pathEnd === idStart) {
-                    base = normalize(poppedPath.join('/'), id);
+					// use the original path, instead of the slightly
+					// modified _path
+                    base = normalize(paths[i], id);
                 } else {
                     continue;
                 }
