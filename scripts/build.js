@@ -45,7 +45,7 @@ exports.compile = function(appDir, dest, options) {
     if (meta.mini_require || options.mini_require) {
         console.log('Including mini require...');
         copy({
-            source: [path.join(__dirname, '../build/require.js')],
+            source: [path.join(__dirname, './build/require.js')],
             dest: build
         });
     }
