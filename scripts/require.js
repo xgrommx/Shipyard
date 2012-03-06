@@ -157,7 +157,8 @@ var require = function shipyard_require(id, path){
             // prevent trailing slashes on base path
 			// because otherwise "shipyard/".split('/').pop() will
 			// return an empty string.
-            if (_path.charAt(_path.length-1) === '/') {
+			// UNLESS _path is specifically absolute ROOT
+            if (_path !== '/' && _path.charAt(_path.length-1) === '/') {
                 _path = _path.substring(0, _path.length - 1);
             }
 
@@ -174,9 +175,7 @@ var require = function shipyard_require(id, path){
                     idStart = id.split('/').shift();
                 
                 if (pathEnd === idStart) {
-					// use the original path, instead of the slightly
-					// modified _path
-                    base = normalize(paths[i], id);
+                    base = normalize(poppedPath.join('/'), id);
                 } else {
                     continue;
                 }
