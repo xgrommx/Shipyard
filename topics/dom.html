@@ -1,0 +1,26 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: dom</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>The DOM<a class="permalink" id="The_DOM" href="#The_DOM" title="Permalink to 'The DOM'">#</a></h1>
+<p>When programming with Shipyard, if you ever wish to access a usual
+global that is available in a browser, such as <code>window</code>, <code>document</code>, or
+<code>XMLHttpRequest</code>, you must access it via the <code>dom</code> module.
+
+</p>
+<p>This is important, as it prevents other modules from relying on
+environment globals that could not exist in other environments, such as
+the node test runner, <code>shipyard test</code>. The <code>dom</code> relies on <code>jsdom</code> to
+be able to provide the APIs you're looking for in the node environment,
+that would otherwise be undefined if you blindly tried to just access
+<code>document</code> globally.
+
+</p>
+<p>An example:
+
+</p>
+<pre><code><span class="keyword">var</span> dom = <span class="keyword">require</span>(<span class="string">'shipyard/dom'</span>);
+
+<span class="keyword">var</span> el = <span class="keyword">new</span> dom.Element(<span class="string">'div'</span>);
+dom.document.body.appendChild(el);</code></pre>
+<p>However, if you think you need the <code>dom</code> to insert <code>Element</code>s,
+consider using a <code>View</code> instead.
+
+</p>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" class="active">dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

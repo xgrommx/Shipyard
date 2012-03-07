@@ -1,0 +1,87 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: events</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: EventEmitter<a class="permalink" id="EventEmitter" href="#EventEmitter" title="Permalink to 'Class: EventEmitter'">#</a></h1>
+<p>A class to allow object to listen for certain events, and the
+implementor of this class can emit those events at various times.
+Models, Views, and Controllers are EventEmitters. Use by doing this:
+
+</p>
+<pre><code><span class="keyword">var</span> EventEmitter = <span class="keyword">require</span>(<span class="string">'shipyard/class/Events'</span>);</code></pre>
+<h2>Method: emit<a class="permalink" id="EventEmitter:emit" href="#EventEmitter:emit" title="Permalink to 'Method: emit'">#</a></h2>
+<p>This emits an event, invoking any listeners interested.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>emitter.emit(eventName [, args...]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>eventName - (<em>string</em>) A string representing the event that happened.</li>
+<li>args - (<em>mixed</em>, optional) Any number of extra arguments that will be
+passed to all listener functions.</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(<em>object</em>) This emitter.</li>
+</ul>
+<h3>Example</h3>
+<pre><code>model.emit('save', isNew);</code></pre>
+<h2>Method: addListener<a class="permalink" id="EventEmitter:addListener" href="#EventEmitter:addListener" title="Permalink to 'Method: addListener'">#</a></h2>
+<p>They way to listen for specific events.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> listener = emitter.addListener(eventName, handler);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>eventName - (<em>string</em>) A string represting the event you wish to
+listen for.</li>
+<li>handler - (<em>function</em>) The function that should be called when the
+event is emitted.</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(<em>Listener</em>) A new <code>Listener</code> object.</li>
+</ul>
+<h2>Method: removeListener<a class="permalink" id="EventEmitter:removeListener" href="#EventEmitter:removeListener" title="Permalink to 'Method: removeListener'">#</a></h2>
+<p>A way to remove listeners if you still have the original handler method.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>emitter.removeListener(eventName, handler);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>eventName - (<em>string</em>) A string representing the event that should not
+longer be listened for.</li>
+<li>handler - (<em>function</em>) The exact function has been previously added as
+a handler for the <code>eventName</code></li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(<em>object</em>) This emitter.</li>
+</ul>
+<h1>Class: Listener<a class="permalink" id="Listener" href="#Listener" title="Permalink to 'Class: Listener'">#</a></h1>
+<p>Listeners are a simple way to add and remove the same handler at various
+times, and may be easier to hold on to than an anonymous function.
+
+</p>
+<h2>Method: attach<a class="permalink" id="Listener:attach" href="#Listener:attach" title="Permalink to 'Method: attach'">#</a></h2>
+<p>The handler associated with this Listener will be added to the
+associated event.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>listener.attach();</code></pre>
+<h2>Method: detach<a class="permalink" id="Listener:detach" href="#Listener:detach" title="Permalink to 'Method: detach'">#</a></h2>
+<p>The handler associated with this Listener will be removed from the
+associated event.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>listener.detach();</code></pre>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> listener = emitter.addListener(<span class="string">'change'</span>, <span class="keyword">function</span>() {
+    alert(<span class="string">'changed!'</span>);    
+});
+
+<span class="comment">// useful since you didn't keep a reference to the anonymous</span>
+<span class="comment">// function passed as the handler above.</span>
+listener.detach();</code></pre>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" class="active">events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

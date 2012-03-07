@@ -1,0 +1,60 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: class</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: Class<a class="permalink" id="Class" href="#Class" title="Permalink to 'Class: Class'">#</a></h1>
+<p>Class is a useful construct for describing your classes, using
+JavaScript's prototypical inheritance, while removing some of the
+verbosity. Used like so:
+
+</p>
+<pre><code><span class="keyword">var</span> <span class="keyword">Class</span> = <span class="keyword">require</span>(<span class="string">'shipyard/class/Class'</span>);</code></pre>
+<p>Classes have Mutators, which are ways to modify a class when it is
+created. The most common Mutator used is <code>Extends</code>.
+
+</p>
+<h2>Mutator: Extends<a class="permalink" id="Class:Extends" href="#Class:Extends" title="Permalink to 'Mutator: Extends'">#</a></h2>
+<p>Extends lets you declare sub-classes. This sets the prototype of the
+Class you are defining as being related to the super-class, and will
+look up the prototype chain for methods. This means that if the
+super-class gets modified later in the application, the sub-classes
+automatically are as well.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> Task = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Model
+});</code></pre>
+<h2>Mutator: Implements<a class="permalink" id="Class:Implements" href="#Class:Implements" title="Permalink to 'Mutator: Implements'">#</a></h2>
+<p>Implements is the same thing as a Mixin. JavaScript can't do
+multiple-inheritance, so a Class can only Extend one other class.
+However, sometimes you have a self contained set of methods that you
+would like easily pluggable into other classes. That is what Implements
+is for.
+
+</p>
+<p>A common class to Implement is the <code>EventEmitter</code> class.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> Arbiter = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Implements</span>: [Observable, Syncable]
+});</code></pre>
+<h2>Method: parent<a class="permalink" id="Class:parent" href="#Class:parent" title="Permalink to 'Method: parent'">#</a></h2>
+<p>This a way to access the <code>super</code> method when the <code>Extends</code> Mutator is
+used.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> A = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    getAge: <span class="keyword">function</span>() { 
+        <span class="keyword">return</span> <span class="number">2</span>; 
+    }
+});
+
+<span class="keyword">var</span> B = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: A,
+    getAge: <span class="keyword">function</span>() {
+        <span class="keyword">return</span> <span class="keyword">this</span>.<span class="keyword">parent</span>() * <span class="number">3</span>;
+    }    
+});
+
+<span class="keyword">var</span> b = <span class="keyword">new</span> B();
+b.getAge(); <span class="comment">// 6</span></code></pre>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" class="active">class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

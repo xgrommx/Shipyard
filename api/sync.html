@@ -1,0 +1,184 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: sync</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: Sync<a class="permalink" id="Sync" href="#Sync" title="Permalink to 'Class: Sync'">#</a></h1>
+<p>A base class that all Sync's should extend from.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> sync = <span class="keyword">new</span> Sync([options]);</code></pre>
+<h2>Method: create<a class="permalink" id="Sync:create" href="#Sync:create" title="Permalink to 'Method: create'">#</a></h2>
+<p>Creates new data in the sync location.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>sync.create(data, callback);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>data - (<em>object</em>) The data of the model. This should get serialized
+via <code>JSON.stringify</code>.</li>
+<li>callback - (<em>function</em>) A function to execute after a successful
+creation operation. Expects an object of data representing the entire
+model as an argument.</li>
+</ul>
+<h2>Method: update<a class="permalink" id="Sync:update" href="#Sync:update" title="Permalink to 'Method: update'">#</a></h2>
+<p>Updates existing data in the sync.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>sync.update(id, data, callback);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>id (<em>mixed</em>) A string or number id of the content to update.</li>
+<li>data (<em>object</em>) The data of the model. This should get serialize via
+<code>JSON.stringify</code>.</li>
+<li>callback - (<em>function</em>) A function to execute after a successful
+update operation. Expects an object of data representing the entire
+model as an argument.</li>
+</ul>
+<h2>Method: read<a class="permalink" id="Sync:read" href="#Sync:read" title="Permalink to 'Method: read'">#</a></h2>
+<p>Reads data from the sync and returns it, based on the provided criteria.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>sync.read(params, callback);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>params - (<em>object</em>) A key-value map of conditions that the returns
+data must pass.</li>
+<li>callback - (<em>function</em>) A function to execute after a successful read
+operation. Expects an array of objects of data that met the criteria.</li>
+</ul>
+<h3>Example</h3>
+<pre><code>sync.read({ isDone: <span class="keyword">false</span>, user_id: <span class="number">5</span> }, <span class="keyword">function</span>(arr) {
+    arr.<span class="keyword">forEach</span>(<span class="keyword">function</span> (obj) {
+
+    })
+});</code></pre>
+<h2>Method: destroy<a class="permalink" id="Sync:destroy" href="#Sync:destroy" title="Permalink to 'Method: destroy'">#</a></h2>
+<h1>Class BrowserSync<a class="permalink" id="Class_BrowserSync" href="#Class_BrowserSync" title="Permalink to 'Class BrowserSync'">#</a></h1>
+<p>A sync to read and write to the <code>localStorage</code> of the browser.
+
+</p>
+<h3>Extends</h3>
+<p>Sync
+
+</p>
+<h3>Options</h3>
+<ul>
+<li>table - (<em>string</em>) A string key to store all the rows of data inside
+localStorage.</li>
+</ul>
+<h1>Class: ServerSync<a class="permalink" id="ServerSync" href="#ServerSync" title="Permalink to 'Class: ServerSync'">#</a></h1>
+<p>A sync to access a RESTful API using XMLHttpRequests.
+
+</p>
+<h3>Extends</h3>
+<p>Sync
+
+</p>
+<h3>Options</h3>
+<ul>
+<li>route - (<em>string</em>) The route leading to the API for this specific
+model.</li>
+<li>emulation - (<em>boolean</em>) Whether to emulate <code>PUT</code> and <code>DELETE</code> requests
+as <code>POST</code>, passing <code>_method=PUT</code> as a parameter instead. Useful for
+servers that don't support <code>PUT</code> or <code>DELETE</code>.</li>
+<li>create, update, read, destroy - (<em>object</em>, optional) An object of
+options specific for each type of request.<ul>
+<li>fragment - (<em>string</em>, optional) Added to the URI before the
+request is made. Uses syntax from <code>string.substitute</code>.</li>
+<li>method - (<em>string</em>, optional) The HTTP method to use.</li>
+</ul>
+</li>
+</ul>
+<h3>Example</h3>
+<pre><code>Sync: {
+    'default': {
+        driver: ServerSync,
+        route: '/api/tasks',
+        update: {
+            fragment: '/{guid}/{name}'
+        }
+    }
+}</code></pre>
+<h1>Class: Syncable<a class="permalink" id="Syncable" href="#Syncable" title="Permalink to 'Class: Syncable'">#</a></h1>
+<p>A Syncable object has a unified API for saving, reading, and destroying
+data to various locations. The most common usage is with a <code>Model</code>.
+
+</p>
+<h3>Extends</h3>
+<p>Observable
+
+</p>
+<h2>Method: save<a class="permalink" id="Syncable:save" href="#Syncable:save" title="Permalink to 'Method: save'">#</a></h2>
+<p>Saves a JSON representation of the object to a sync. Uses the objects
+toJSON method, if available.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>syncable.save([options]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>options - (<em>object</em>, optional) An object of options for the save
+operation.</li>
+</ul>
+<h3>Options</h3>
+<ul>
+<li>using - (<em>string</em>, optional) The string matching a sync from the
+object's Sync property. Defaults to 'default'.</li>
+</ul>
+<h2>Method: destroy<a class="permalink" id="Syncable:destroy" href="#Syncable:destroy" title="Permalink to 'Method: destroy'">#</a></h2>
+<p>Tells a sync to delete the stored content of this syncable.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>syncable.destroy([options]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>options - (<em>object</em>, optional) An object of options for the destroy
+operation.</li>
+</ul>
+<h3>Options</h3>
+<ul>
+<li>using - (<em>string</em>, optional) The string matching a sync from the
+object's Sync property. Defaults to 'default'.</li>
+</ul>
+<h2>Static Method: find<a class="permalink" id="Syncable:Static_find" href="#Syncable:Static_find" title="Permalink to 'Static Method: find'">#</a></h2>
+<p>Searches a sync for all data of the Syncable type that matches the
+provide criteria.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>Syncable.find([options]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>options - (<em>object</em>, optional) An object of options for the destroy
+operation.</li>
+</ul>
+<h3>Options</h3>
+<ul>
+<li>conditions - (<em>object</em>, optional) An object containing conditions for
+the found data.</li>
+<li>using - (<em>string</em>, optional) The string matching a sync from the
+object's Sync property.</li>
+<li>callback - (<em>function</em>, optional) A function that will be called once
+the sync has returned data. The callback will be passed an array of
+instances of the Syncable as a parameter.</li>
+</ul>
+<h3>Example</h3>
+<pre><code>Task.find({
+    conditions: { isDone: <span class="keyword">false</span> },
+    using: <span class="string">'server'</span>,
+    callback: renderTasks
+});</code></pre>
+<h2>Note<a class="permalink" id="Syncable:Note" href="#Syncable:Note" title="Permalink to 'Note'">#</a></h2>
+<p>A Syncable class is also an EventEmitter. It is specially modified so
+that one can listen to events on the Class, to retrieve all events that
+are emitted on all instances.
+
+</p>
+<h3>Example</h3>
+<pre><code>Task.addListener(<span class="string">'save'</span>, <span class="keyword">function</span>(instance, isNew) {
+    console.log(instance);
+});
+<span class="keyword">var</span> t = <span class="keyword">new</span> Task();
+task.save(); <span class="comment">// will log the instance to the console</span></code></pre>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" class="active">sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

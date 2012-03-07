@@ -1,0 +1,36 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: installation</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Installation<a class="permalink" id="Installation" href="#Installation" title="Permalink to 'Installation'">#</a></h1>
+<h2>Install Node<a class="permalink" id="Installation:Install_Node" href="#Installation:Install_Node" title="Permalink to 'Install Node'">#</a></h2>
+<p>Shipyard uses node.js for it's utilty scripts, such as running tests and
+minifying your application for deployment. Head over to <a href="http://nodejs.org/#download">nodejs.org</a>, and
+follow the installation instructions for your operating system.
+
+</p>
+<h2>Install Shipyard<a class="permalink" id="Installation:Install_Shipyard" href="#Installation:Install_Shipyard" title="Permalink to 'Install Shipyard'">#</a></h2>
+<p>Checkout <a href="https://github.com/seanmonstar/Shipyard">Shipyard from GitHub</a> into the directory of your choosing.
+
+</p>
+<pre><code>$ git checkout git:<span class="comment">//github.com/seanmonstar/Shipyard.git</span></code></pre>
+<p>Next, <code>cd</code> into that directory, and use <code>npm link</code>. This will add the
+<code>shipyard</code> command to your <code>PATH</code>, as well as download Shipyard's
+dependencies.
+
+</p>
+<pre><code>$ cd ./Shipyard
+$ npm link</code></pre>
+<p>Finally, you should add to your NODE_PATH enivornment variable the <code>lib</code>
+directory inside Shipyard. This allows testing and building of apps to
+work as easily as possible. You may need to create the NODE_PATH
+variable, if you don't have one yet.
+
+</p>
+<h2>Verifying<a class="permalink" id="Installation:Verifying" href="#Installation:Verifying" title="Permalink to 'Verifying'">#</a></h2>
+<p>To verify that Shipyard has been installed, type <code>shipyard</code> into a
+terminal. You should see the usage information for the <code>shipyard</code>
+command.
+
+</p>
+<h2>Done<a class="permalink" id="Installation:Done" href="#Installation:Done" title="Permalink to 'Done'">#</a></h2>
+<p>Excellent. Now you can proceed with the <a href="./tutorial.md">tutorial</a>.
+
+</p>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" class="active">installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

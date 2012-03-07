@@ -1,0 +1,285 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: tutorial</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Your First Shipyard App<a class="permalink" id="Your_First_Shipyard_App" href="#Your_First_Shipyard_App" title="Permalink to 'Your First Shipyard App'">#</a></h1>
+<p>Let's learn by example. We'll walk through creating a basic recipe
+collection. We'll assume you already have <a href="./installation.md">Shipyard installed</a>. You can
+tell it's installed correctly by running <code>shipyard</code> in a terminal and
+seeing the help information printing.
+
+</p>
+<h2>Setup your project<a class="permalink" id="Your_First_Shipyard_App:Setup_your_project" href="#Your_First_Shipyard_App:Setup_your_project" title="Permalink to 'Setup your project'">#</a></h2>
+<p>Shipyard comes with a utilty to get started with a new application very
+quickly. In a terminal, get to the directory that you would like your
+application to live, and run this:
+
+</p>
+<pre><code>$ shipyard startapp recipes</code></pre>
+<p>This will create a directory called <code>recipes</code>, as well as some typical
+files used in an application. You should see a file structure like so:
+
+</p>
+<pre><code>recipes/
+    models/
+        Recipe.js
+    tests/
+        models/
+            Recipe.js
+    views/
+    index.html
+    index.js
+    package.json</code></pre>
+<p><code>cd</code> into the directory, and you can immediately run the tests to see
+how that works.
+
+</p>
+<pre><code>$ cd recipes
+$ shipyard test
+Starting Tests
+.
+Tests Finished: Passed (Passed: 1, Failed: 0)</code></pre>
+<h2>Edit Recipe Model<a class="permalink" id="Your_First_Shipyard_App:Edit_Recipe_Model" href="#Your_First_Shipyard_App:Edit_Recipe_Model" title="Permalink to 'Edit Recipe Model'">#</a></h2>
+<p>Now, since Shipyard applications are data-driven, let's edit the Recipe
+Model that got generated for us. We'll add some properties that make
+sense for a Recipe, such as a title, and ingredients. Edit the file to
+add these lines in:
+
+</p>
+<pre><code>module.exports = <span class="keyword">new</span> <span class="keyword">Class</span>({
+
+    <span class="comment">// ...</span>
+
+    fields: {
+        id: fields.NumberField(),
+        title: fields.TextField({ required: <span class="keyword">true</span> }),
+        ingredients: fields.TextField()
+    },
+
+    <span class="comment">//...</span>
+
+});</code></pre>
+<p>This Recipe class extends from Model, which among other things, uses a
+<code>fields</code> properties to know what properties make up the underlying data.
+The <code>id</code> is a <code>NumberField</code>, and <code>title</code> and <code>ingredients</code> are
+<code>TextField</code>s. A field type will try to properly convert the data from
+a JavaScript-usable form to a serializable form (for databases or
+what-have-you) automatically.
+
+</p>
+<p><code>Field</code>s also accept options, and we've used one here to imply that the
+<code>title</code> is required before the model could <code>save</code> properly.
+
+</p>
+<p>These fields determine what values you can use via the Model's <code>get</code> and
+<code>set</code> methods. Try these in a console:
+
+</p>
+<pre><code>$ shipyard shell
+&amp;gt; <span class="keyword">var</span> Recipe = <span class="keyword">require</span>(<span class="string">'./models/Recipe'</span>);
+&amp;gt; <span class="keyword">var</span> r = <span class="keyword">new</span> Recipe();
+&amp;gt; r.set(<span class="string">'title'</span>, <span class="string">'French Toast'</span>);
+&amp;gt; r.get(<span class="string">'title'</span>) <span class="comment">// should return 'French Toast'</span>
+&amp;gt; r.set(<span class="string">'oops'</span>, <span class="string">'i did it again'</span>); <span class="comment">// won't set anything</span>
+&amp;gt; r.get(<span class="string">'yikes'</span>); <span class="comment">// throw an Error about an non-existant 'yikes'</span></code></pre>
+<p>While we're here editing the Model, it would be a good idea to set the
+<code>toString</code> method to something more useful.
+
+</p>
+<pre><code>toString: <span class="keyword">function</span> toString() {
+    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'title'</span>);    
+}</code></pre>
+<p>Most views will default to showing the String representation of a Model
+if a property isn't specified, so it's a good idea to set up a decent 
+<code>toString</code> method.
+
+</p>
+<h2>A dip into testing<a class="permalink" id="Your_First_Shipyard_App:A_dip_into_testing" href="#Your_First_Shipyard_App:A_dip_into_testing" title="Permalink to 'A dip into testing'">#</a></h2>
+<p>After having set up our Recipe model, go ahead and run the test suite
+again:
+
+</p>
+<pre><code>$ shipyard test
+Starting Tests
+F
+
+====================================================
+models: Recipe: should have a String representation
+----------------------------------------------------
+     1: Expected toBe [object Recipe], got undefined
+
+====================================================
+
+Tests Finished: Failed (Passed: 0, Failed: 1)</code></pre>
+<p>The single test that <code>shipyard startapp</code> creates by default is a simple
+<code>toString</code> test meant to be overriden. Since we changed that method, we
+should update our test so it passes.
+
+</p>
+<p>Open up the <code>recipes/tests/models/Recipe.js</code> file, and modify the test
+to have this:
+
+</p>
+<pre><code>it(<span class="string">'should have a String representation'</span>, <span class="keyword">function</span>(expect) {
+    <span class="keyword">var</span> r = <span class="keyword">new</span> Recipe();
+    <span class="keyword">var</span> title = <span class="string">'French Toast'</span>;
+    r.set(<span class="string">'title'</span>, title);
+    expect(String(r)).toBe(title);
+});</code></pre>
+<p>Another run of the test suite will show our test passes again. Hurray!
+
+</p>
+<h2>Creating Views<a class="permalink" id="Your_First_Shipyard_App:Creating_Views" href="#Your_First_Shipyard_App:Creating_Views" title="Permalink to 'Creating Views'">#</a></h2>
+<p>Until now, we've been playing with how to handle our data in models.
+Let's get some stuff showing in the browser, right? Shipyard renders
+data to the browser via it's View system.
+
+</p>
+<p>First, we'll create a simple View that will show the title and
+description of a single recipe. Edit the <code>recipes/index.js</code> file to look
+like this:
+
+</p>
+<pre><code><span class="keyword">var</span> View = <span class="keyword">require</span>(<span class="string">'shipyard/view/View'</span>);
+<span class="keyword">var</span> Recipe = <span class="keyword">require</span>(<span class="string">'./models/Recipe'</span>);
+
+<span class="keyword">var</span> toast = <span class="keyword">new</span> Recipe({
+    title: <span class="string">'French Toast'</span>,
+    ingredients: <span class="string">'Bread, Egg, Milk'</span>
+});
+
+<span class="keyword">var</span> titleView = <span class="keyword">new</span> View();
+titleView.bind(toast, { <span class="string">'content'</span>: <span class="string">'title'</span> });
+titleView.attach();</code></pre>
+<p>We instantiated a <code>Recipe</code>, passing it initial properties with an object
+map. Then we created a new basic <code>View</code>, and bound the <code>content</code>
+property to the <code>title</code> property of our model. View binding means
+whenever the model changes a property we care about, the view will
+update immediately.
+
+</p>
+<h2>Check in Browser<a class="permalink" id="Your_First_Shipyard_App:Check_in_Browser" href="#Your_First_Shipyard_App:Check_in_Browser" title="Permalink to 'Check in Browser'">#</a></h2>
+<p>In a terminal, run <code>shipyard server</code> from the <code>recipes</code> directory. Now,
+you open your browser, point it at localhost:8000, and notice that
+"French Toast" has been printed to the page.
+
+
+</p>
+<h2>Let's Make a Form<a class="permalink" id="Your_First_Shipyard_App:Let_s_Make_a_Form" href="#Your_First_Shipyard_App:Let_s_Make_a_Form" title="Permalink to 'Let's Make a Form'">#</a></h2>
+<p>In order to create recipes, let's create a form that can be used to
+accept user input, and then create new Recipes. Replace the contents of
+index.js with something like this:
+
+</p>
+<pre><code><span class="keyword">var</span> View = <span class="keyword">require</span>(<span class="string">'shipyard/view/View'</span>);
+<span class="keyword">var</span> FormView = <span class="keyword">require</span>(<span class="string">'shipyard/view/FormView'</span>);
+<span class="keyword">var</span> TextFieldView = <span class="keyword">require</span>(<span class="string">'shipyard/view/TextFieldView'</span>);
+<span class="keyword">var</span> ButtonView = <span class="keyword">require</span>(<span class="string">'shipyard/view/ButtonView'</span>);
+<span class="keyword">var</span> Recipe = <span class="keyword">require</span>(<span class="string">'./models/Recipe'</span>);
+
+<span class="keyword">var</span> form = <span class="keyword">new</span> FormView();
+
+<span class="keyword">var</span> titleInput = <span class="keyword">new</span> TextFieldView({ 
+    name: <span class="string">'title'</span>,
+    placeholder: <span class="string">'Recipe Title'</span>
+});
+
+<span class="keyword">var</span> ingredientsInput = <span class="keyword">new</span> TextFieldView({
+    name: <span class="string">'ingredients'</span>,
+    placeholder: <span class="string">'Recipe ingredients'</span>
+});
+
+form.addView(titleInput);
+form.addView(ingredientsInput);
+form.addView(<span class="keyword">new</span> ButtonView({ content: <span class="string">'New Recipe'</span> }));
+form.attach();</code></pre>
+<p>So far, the only new concepts are that we used some new View classes,
+specifically <code>FormView</code>, which is a <code>Container</code>. It can contain child
+views, using a <code>addView</code> and <code>removeView</code> pair of methods.
+
+</p>
+<p>A refresh of the browser shows our form, but it's not tied up to
+anything. Time to make it useful.
+
+</p>
+<h2>A List of Recipes<a class="permalink" id="Your_First_Shipyard_App:A_List_of_Recipes" href="#Your_First_Shipyard_App:A_List_of_Recipes" title="Permalink to 'A List of Recipes'">#</a></h2>
+<p>First of all, let's listen to the <code>FormView</code> to know when to save a new
+<code>Recipe</code>. We can listen to the submit event like so:
+
+</p>
+<pre><code>form.addListener(<span class="string">'submit'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">var</span> data = <span class="keyword">this</span>.serialize();
+    <span class="keyword">var</span> r = <span class="keyword">new</span> Recipe(data);
+    r.save();
+});</code></pre>
+<p>Next up, we'll make a <code>ListView</code> that will contain and show our recipes
+as we create them. Add this to the index.js after the previous code we
+wrote:
+
+</p>
+<pre><code><span class="keyword">var</span> ListView = <span class="keyword">require</span>(<span class="string">'shipyard/view/ListView'</span>);
+<span class="keyword">var</span> <span class="keyword">list</span> = <span class="keyword">new</span> ListView();
+<span class="keyword">list</span>.attach();</code></pre>
+<p>And finally, we can listen for save events across any <code>Recipe</code> model
+like this:
+
+</p>
+<pre><code>Recipe.addListener(<span class="string">'save'</span>, <span class="keyword">function</span>(recipe, isNew) {
+    <span class="keyword">if</span> (isNew) {
+        <span class="keyword">list</span>.addItem(recipe);
+    }
+});</code></pre>
+<p>Another refresh shows we have a list that fills up as we enter in
+recipes and click the button.
+
+</p>
+<h2>Saving Data<a class="permalink" id="Your_First_Shipyard_App:Saving_Data" href="#Your_First_Shipyard_App:Saving_Data" title="Permalink to 'Saving Data'">#</a></h2>
+<p>The last bit to our tutorial is to show how easy it is to sync data to
+various locations without changing our usage much. We're going to employ
+a <code>Sync</code> to save to the browser's <code>localStorage</code>. In fact, we've been
+using a <code>Dummy</code> sync this whole time, which let's our model act like it
+can sync, without actually saving data anywhere.
+
+</p>
+<p>Heading back to our <code>recipes/models/Recipe.js</code> file, we're going to edit
+with these lines:
+
+</p>
+<pre><code><span class="comment">// ... other requires ...</span>
+<span class="keyword">var</span> BrowserSync = <span class="keyword">require</span>(<span class="string">'shipyard/sync/Browser'</span>);
+
+module.exports = <span class="keyword">new</span> <span class="keyword">Class</span>({
+
+    <span class="comment">// ...</span>
+
+    Sync: {
+        <span class="string">'default'</span>: {
+            driver: BrowserSync    
+        }
+    }
+
+    <span class="comment">// ...</span>
+
+});</code></pre>
+<p>The <code>Sync</code> property of a model should be an object map describing the
+various locations the model should sync to. There should always be a
+<code>default</code> sync, as shown. Any others should be named how you like, and
+then can be accessed specifically be passing <code>{ using: 'yourSyncName'
+}</code> to any Syncable method.
+
+</p>
+<p>Back in our <code>index.js</code>, let's add in a line to load in our models on
+page load:
+
+</p>
+<pre><code>Recipe.find({ callback: <span class="keyword">function</span>(recipes) {
+    recipes.<span class="keyword">forEach</span>(<span class="keyword">list</span>.addItem.bind(<span class="keyword">list</span>));
+}});</code></pre>
+<p>Save and refresh, then save a couple recipes. Then, you can refresh
+again to see that they had been persisted.
+
+</p>
+<h2>Ahead full!<a class="permalink" id="Your_First_Shipyard_App:Ahead_full_" href="#Your_First_Shipyard_App:Ahead_full_" title="Permalink to 'Ahead full!'">#</a></h2>
+<p>With that quick overview, you now have an application working using
+Shipyard. The concepts are the same as you scale to a full application,
+but you can always read up more about specific parts if you like the
+details.
+
+</p>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" class="active">tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

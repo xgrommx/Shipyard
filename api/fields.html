@@ -1,0 +1,89 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: fields</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: Field<a class="permalink" id="Field" href="#Field" title="Permalink to 'Class: Field'">#</a></h1>
+<p>All properties on a Model are stored via the help of Fields. Data is
+stored with primitive values, but Fields can convert the data to useful
+data formats.
+
+</p>
+<h2>Method: constructor<a class="permalink" id="Field:constructor" href="#Field:constructor" title="Permalink to 'Method: constructor'">#</a></h2>
+<p>Creates a Field instance.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> field = <span class="keyword">new</span> Field([options]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>options - (<em>object</em>, optional)</li>
+</ul>
+<h3>Options</h3>
+<ul>
+<li>default - (<em>boolean</em>) The default value this Field should return if no
+value is provided.</li>
+<li>required - (<em>boolean</em>) Whether a value must be defined in order to
+pass validation and save.</li>
+</ul>
+<h2>Method: from<a class="permalink" id="Field:from" href="#Field:from" title="Permalink to 'Method: from'">#</a></h2>
+<p>Accepts a raw value, and converts it into a JavaScript value that gets
+stored on the model, and is returned by <code>model.get(field)</code>.
+
+</p>
+<p>New <code>Field</code> types should likely override this method.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="comment">//date should a `Date` object</span>
+<span class="keyword">var</span> date = dateField.from(<span class="string">'2012-02-01 06:54:22'</span>);</code></pre>
+<h2>Method: serialize<a class="permalink" id="Field:serialize" href="#Field:serialize" title="Permalink to 'Method: serialize'">#</a></h2>
+<p>Accepts a JavaScript value, such as a Date object, and returns a value
+that can be serialized into JSON.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="comment">//str should be a string, or perhaps a Number of the millis.</span>
+<span class="keyword">var</span> str = dateField.serialize(<span class="keyword">new</span> Date());</code></pre>
+<h1>Class: TextField<a class="permalink" id="TextField" href="#TextField" title="Permalink to 'Class: TextField'">#</a></h1>
+<p>A field that makes sure it's value is always a String.
+
+</p>
+<h3>Extends</h3>
+<p>Field
+
+</p>
+<h3>Options</h3>
+<ul>
+<li>all options from <code>Field</code>, plus:</li>
+<li>maxLength - (<em>number</em>, optional) Signifies a maximum length that will
+trigger a ValidationError upon validating.</li>
+<li>minLength - (<em>number</em>, optional) Similar to <code>maxLength</code>, but a minimum
+boundary.</li>
+</ul>
+<h1>Class: NumberField<a class="permalink" id="NumberField" href="#NumberField" title="Permalink to 'Class: NumberField'">#</a></h1>
+<p>A field that ensures it's value is always a Number.
+
+</p>
+<h3>Extends</h3>
+<p>Field
+
+</p>
+<h1>Class: BooleanField<a class="permalink" id="BooleanField" href="#BooleanField" title="Permalink to 'Class: BooleanField'">#</a></h1>
+<p>A field that ensures it's value is always a Boolean.
+
+</p>
+<h3>Extends</h3>
+<p>Field
+
+</p>
+<h1>Class: DateField<a class="permalink" id="DateField" href="#DateField" title="Permalink to 'Class: DateField'">#</a></h1>
+<p>A field that makes sure it's value is always a Date object.
+
+</p>
+<h3>Extends</h3>
+<p>Field
+
+</p>
+<h2>Options<a class="permalink" id="DateField:Options" href="#DateField:Options" title="Permalink to 'Options'">#</a></h2>
+<ul>
+<li>all options from <code>Field</code>, plus:</li>
+<li>auto - (<em>boolean</em>, optional) Automatically store the current date upon
+saving. Useful for last-modified type fields.</li>
+</ul>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" class="active">fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

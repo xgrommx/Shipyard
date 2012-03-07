@@ -1,0 +1,110 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: model</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: Model<a class="permalink" id="Model" href="#Model" title="Permalink to 'Class: Model'">#</a></h1>
+<p>Models represent the actual data that an application will be using. 
+Models also abstract away the specifics of where the data is stored.
+Whether you store the data on a server and need Ajax requests to fetch
+it, or you store it in the local SQLite database, the public API for 
+Models stays the same, so the rest of your application can blissfully
+ignorant.
+
+</p>
+<h3>Extends</h3>
+<p><a href="./sync.md#Syncable">Syncable</a>
+
+</p>
+<h2>Mutator: fields<a class="permalink" id="Model:fields" href="#Model:fields" title="Permalink to 'Mutator: fields'">#</a></h2>
+<p>This property is an object of fields that describe the data of your
+Model, using <code>Field</code> classes.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> Task = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Model,
+    fields: {
+        title: fields.TextField(),
+        created_at: fields.DateField(),
+        is_done: fields.BooleanField()
+    }    
+});</code></pre>
+<h2>Mutator: Sync<a class="permalink" id="Model:Sync" href="#Model:Sync" title="Permalink to 'Mutator: Sync'">#</a></h2>
+<p>This is an object of names and syncs that the data of this model should
+synchronize to.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> Task = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Model,
+    Sync: {
+        <span class="string">'default'</span>: BrowserSync,
+        <span class="string">'our_server'</span>: {
+            driver: ServerSync,
+            route: <span class="string">'/api/1/tasks'</span>
+        }
+    }
+})</code></pre>
+<h2>Method: constructor<a class="permalink" id="Model:constructor" href="#Model:constructor" title="Permalink to 'Method: constructor'">#</a></h2>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> model = <span class="keyword">new</span> Model([data]);</code></pre>
+<h3>Arguments</h3>
+<ol>
+<li>data - (<em>object</em>, optional) An object of key-value pairs relating to
+the Model's <code>fields</code> for the initial data.</li>
+</ol>
+<h2>Method: set<a class="permalink" id="Model:set" href="#Model:set" title="Permalink to 'Method: set'">#</a></h2>
+<p><em>Inherited from Observable</em>. The way to assign values to fields the 
+model has. Don't use direct assignment, or you'll miss out the 
+usefulness from <code>Observable</code> and <code>fields</code>.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>model.set(arguments);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>Two arguments (property, value)<ul>
+<li>property - (<em>string</em>) A key corresponding to the same name of one
+of the model's <code>fields</code>.</li>
+<li>value - (<em>mixed</em>) The value to set for the speific field.</li>
+</ul>
+</li>
+<li>One argument (properties)<ul>
+<li>properties - (<em>object</em>) An object of key-value pairs that work
+like calling <code>set</code> with each pair individually as the two-argument
+path.</li>
+</ul>
+</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(object) This Model instance.</li>
+</ul>
+<h3>Examples</h3>
+<pre><code><span class="keyword">var</span> model = <span class="keyword">new</span> Model();
+model.set(<span class="string">'pk'</span>, <span class="number">3</span>);
+model.set({
+    pk: <span class="number">4</span>,
+    title: <span class="string">'Example'</span>
+});</code></pre>
+<h2>Method: get<a class="permalink" id="Model:get" href="#Model:get" title="Permalink to 'Method: get'">#</a></h2>
+<p><em>Inherited from Observable</em>. The way to retrieve values of the fields
+that the model has.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> value = model.get(keyOrKeys);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>keyOrKeys - (<em>string or array</em>) A string or array of strings of
+properties to return the value of.</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(<em>mixed</em>) The value of the field requested, or an array of the values
+if an array was passed as an argument.</li>
+</ul>
+<h2>Method: save<a class="permalink" id="Model:save" href="#Model:save" title="Permalink to 'Method: save'">#</a></h2>
+<p><em>Inherited from Syncable</em>.
+
+</p>
+<h2>Method: destroy<a class="permalink" id="Model:destroy" href="#Model:destroy" title="Permalink to 'Method: destroy'">#</a></h2>
+<p><em>Inherited from Syncable</em>.
+</p>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" class="active">model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

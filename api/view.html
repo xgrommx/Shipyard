@@ -1,0 +1,65 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: view</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: View<a class="permalink" id="View" href="#View" title="Permalink to 'Class: View'">#</a></h1>
+<p>A View is an abstract way of showing data to a user on the screen. The
+DOM can be confusing and unintuitive, so the View layer allows
+developers to work without touching the DOM. Potentially, it also allows
+developers to create their application using the View api, and modify
+the internals to use a different technology, such as XUL, SVG, or
+Canvas, without the application needing to change it's code.
+
+</p>
+<p>Views use templates to render their internals, which means that a user
+can provide their own templates if they needed to drastically change the
+way Views rendered.
+
+</p>
+<p>Views have a binding interface, which allows them to bind to an
+<code>Observable</code>, such as a <code>Model</code>, and automatically update themselves
+when the <code>Observable</code>'s properties change.
+
+</p>
+<h3>Extends</h3>
+<p>Observable
+
+</p>
+<h3>Usage</h3>
+<pre><code><span class="keyword">var</span> View = <span class="keyword">require</span>(<span class="string">'shipyard/view/View'</span>);</code></pre>
+<h2>Method: constructor<a class="permalink" id="View:constructor" href="#View:constructor" title="Permalink to 'Method: constructor'">#</a></h2>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> view = <span class="keyword">new</span> View([options]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>options - (<em>object</em>, optional) An object of options that match
+properties of the View.</li>
+</ul>
+<h3>Examples</h3>
+<pre><code><span class="keyword">var</span> label = <span class="keyword">new</span> View({
+    id: <span class="string">'radical-label'</span>,
+    content: <span class="string">'Hello World'</span>
+});</code></pre>
+<h2>Method: set<a class="permalink" id="View:set" href="#View:set" title="Permalink to 'Method: set'">#</a></h2>
+<p><em>Inherited from Observable</em>
+
+</p>
+<h2>Method: get<a class="permalink" id="View:get" href="#View:get" title="Permalink to 'Method: get'">#</a></h2>
+<p><em>Inherited from Observable</em>
+
+</p>
+<h2>Method: bind<a class="permalink" id="View:bind" href="#View:bind" title="Permalink to 'Method: bind'">#</a></h2>
+<p>Binds another <code>Observable</code> to properties of this View.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>view.bind(observable, properties);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>observable - (<em>Observable</em>) An Observable instance whose data should
+be bound to the View.</li>
+<li>properties - (<em>object</em>) An object map of properties from the
+observable that should update the view.</li>
+</ul>
+<h3>Example</h3>
+<pre><code>view.bind(user, {
+    'content': 'username',
+    'class': 'isStaff'
+});</code></pre>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" class="active">view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

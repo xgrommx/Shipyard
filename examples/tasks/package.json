@@ -1,8 +1,0 @@
-{
-	"name": "tasks",
-	"version": "0.0.1",
-	"shipyard": {
-		"mini_require": true,
-		"target": "../tasks-min.js"
-	}
-}

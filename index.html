@@ -1,0 +1,51 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: index</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Shipyard<a class="permalink" id="Shipyard" href="#Shipyard" title="Permalink to 'Shipyard'">#</a></h1>
+<p>A Javascript <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a> application framework. For when you have a full-on application sitting on a web page. So much is going on, you should be able to focus on making the application working, not worrying about XmlHttpRequests and the DOM.
+
+</p>
+<h2>What Shipyard is<a class="permalink" id="Shipyard:What_Shipyard_is" href="#Shipyard:What_Shipyard_is" title="Permalink to 'What Shipyard is'">#</a></h2>
+<p>An application framework that covers all the common things any JavaScript application would need to deal with: interacting with a server, storing data, rendering said data in the browser, and responding to user actions. An application built on Shipyard should only have to write that pulls all those things together.
+
+</p>
+<p>If you're application is going to have 1000 lines of JavaScript, would you rather write all those yourself, or have 900 of them be in a framework that is tested and used by others?
+
+</p>
+<p>When starting a web application, you would reach for Django, or CakePHP, or Rails; never would you decide to use just he language itself. Why shouldn't you do the same when the target language is JavaScript?
+
+</p>
+<h2>Goals<a class="permalink" id="Shipyard:Goals" href="#Shipyard:Goals" title="Permalink to 'Goals'">#</a></h2>
+<h3>Framework-wide Goals</h3>
+<ol>
+<li><strong>Modularity</strong>: Be able to declare dependencies inside the code, and not be bothered with managing them during development or deployment.</li>
+<li><strong>Testability</strong>: Be easily testable, using a node test runner.</li>
+<li><strong>JavaScript</strong>: Not reliant on any other language. Build scripts will use JavaScript. The End.</li>
+</ol>
+<h3>Model Goals</h3>
+<ol>
+<li><strong>Fields</strong>: Powerful fields come alive from simple JSON.</li>
+<li><strong>Sync</strong>: Easily specify multiple locations the data should sync to.</li>
+</ol>
+<h3>View Goals</h3>
+<ol>
+<li><strong>Binding</strong>: Views can automatically update themselves when related
+properties change in a Controller or Model.</li>
+<li><strong>DRY</strong>: Views are easily extendable.</li>
+<li><strong>DOMs Away</strong>: The DOM is a layer away. Instead, you get a nice
+interface, with contextual events.</li>
+<li><strong>Templates</strong>: The underlying layer of Views uses Templates to
+render, if you're a control freak.</li>
+</ol>
+<h3>Controller Goals</h3>
+<ol>
+<li><strong>Boilerplate</strong>: Attempt to remove typical boilerplate of attaching
+Models to Views with validation in between.</li>
+</ol>
+<h2>Getting Started<a class="permalink" id="Shipyard:Getting_Started" href="#Shipyard:Getting_Started" title="Permalink to 'Getting Started'">#</a></h2>
+<pre><code>$ git <span class="keyword">clone</span> git:<span class="comment">//github.com/seanmonstar/Shipyard.git</span>
+$ cd Shipyard
+$ npm link
+$ shipyard test</code></pre>
+<p>Take a look at the <a href="./topics/tutorial.md">tutorial</a> to make your first
+application.
+
+</p>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics\tutorial.html" >tutorial</a></li>                    <li><a href="topics\installation.html" >installation</a></li>                    <li><a href="topics\dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api\class.html" >class</a></li>                    <li><a href="api\events.html" >events</a></li>                    <li><a href="api\fields.html" >fields</a></li>                    <li><a href="api\model.html" >model</a></li>                    <li><a href="api\observable.html" >observable</a></li>                    <li><a href="api\sync.html" >sync</a></li>                    <li><a href="api\view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

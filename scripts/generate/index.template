@@ -1,5 +1,0 @@
-var {model} = require('./models/{model}');
-
-exports.init = function init() \{
-
-};
