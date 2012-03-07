@@ -11,6 +11,11 @@ var program = require('commander'),
     shell = require('../scripts/shell').shell,
     test = require('../scripts/test');
 
+var marked = false;
+try {
+	marked = require('marked');
+} catch(requireError) {}
+
 function uncaughtException(e) {
     if (program.debug) {
         console.error(e.stack);    
@@ -96,6 +101,15 @@ program
 		shipyard.registerExts();
         shell();
     });
+
+if (marked) {
+	program
+		.command('doc')
+		.description('Build the Shipyard docs.')
+		.action(function() {
+			require('../scripts/doc').build();
+		});
+}
 
 if (process.argv.length == 2) {
     process.argv.push('-h');

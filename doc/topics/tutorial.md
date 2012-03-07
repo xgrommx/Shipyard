@@ -287,4 +287,4 @@ Shipyard. The concepts are the same as you scale to a full application,
 but you can always read up more about specific parts if you like the
 details.
 
-[1]: ./installation
+[1]: ./installation.md

@@ -9,7 +9,7 @@ ignorant.
 
 ### Extends
 
-Syncable
+[Syncable](./sync.md#Syncable)
 
 ## Mutator: fields
 
@@ -25,7 +25,7 @@ Model, using `Field` classes.
 			created_at: fields.DateField(),
 			is_done: fields.BooleanField()
 		}	
-	});)
+	});
 
 ## Mutator: Sync
 

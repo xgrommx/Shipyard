@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shipyard JS: <%=title%></title>
+		<link rel="stylesheet" type="text/css" href="/Shipyard/style.css">
+	</head>
+	<body>
+		<header>
+			<div>
+				<h1><a href="/Shipyard">Shipyard</a></h1>
+				<p>A modular JavaScript MVC framework</p>
+			</div>
+		</header>
+		<div id="container">
+			<article id="main">
+				<%- main %>
+			</article>
+			<aside id="nav">
+				<p><em>v<%=version%></em></p>
+				<nav>
+					<ul>
+						<li>
+							Topics
+							<ul>
+								<% topics.forEach(function(link) { %>
+								<li><%- linkify(link, 'topics') %></li>
+								<% }); %>
+							</ul>
+						</li>
+						<li>
+							API Reference
+							<ul>
+								<% api.forEach(function(link) { %>
+								<li><%- linkify(link, 'api') %></li>
+								<% }); %>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</aside>
+			<footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>
+		</div>
+	</body>
+</html>

@@ -41,4 +41,4 @@ Excellent. Now you can proceed with the [tutorial][3].
 
 [1]: http://nodejs.org/#download
 [2]: https://github.com/seanmonstar/Shipyard
-[3]: ./tutorial
+[3]: ./tutorial.md
