@@ -33,7 +33,7 @@ function page(filename, dir, nav) {
 		version: shipyard.version,
 		linkify: function(name, folder) {
 			var link = name.replace(/\.md$/, '');
-			var url = path.join(folder, link + '.html');
+			var url = (folder ? folder + '/' : '') + link + '.html';
 			return string.substitute('<a href="{url}" {class}>{link}</a>', {
 				url: url,
 				link: link,
@@ -105,7 +105,7 @@ function markdown(original) {
 
 	// replace all .md links to .html
 	el.getElements('a').forEach(function(a) {
-		el.set('href', el.get('href').replace('.md', '.html'));
+		el.set('href', a.get('href').replace('.md', '.html'));
 	});
 	
 	return el.get('html');
@@ -130,11 +130,12 @@ exports.build = function build() {
 
 	var data = { topics: topics, api: apis };
 
-	// TODO make homepage
+	mktree(DEST);
+
+	// make homepage
 	page('index.md', null, data);
 
 	// move assets
-	mktree(DEST);
 	fs.writeFileSync(path.join(DEST, 'style.css'), fs.readFileSync(path.join(docDir, 'style.css')));
 
 	// make topics pages
