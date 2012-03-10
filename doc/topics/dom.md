@@ -20,5 +20,8 @@ An example:
 	dom.document.body.appendChild(el);
 
 However, if you think you need the `dom` to insert `Element`s,
-consider using a `View` instead.
+consider using a [View][] instead.
+
+
+[View]: ./views-and-binding.md
 

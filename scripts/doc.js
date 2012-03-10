@@ -59,7 +59,7 @@ function getID(element) {
 	if (anchor) {
 		return anchor.get('id');
 	} else {
-		var id = element.get('text').replace(/(Class|Method|Property|Mutator):/, '');
+		var id = element.get('text').replace(/^[^:]+:/, '');
 		id = id.trim();
 		id = id.replace(/[^a-zA-Z0-9]+/g, '_');
 		return id;
