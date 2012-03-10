@@ -1,5 +1,5 @@
 Views
------
+=====
 
 After you've defined your [data models][Models], it's worth thinking
 about Shipyard's [View][] system. The goal of the view system is to let
