@@ -1,0 +1,81 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: models</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Models<a class="permalink" id="Models" href="#Models" title="Permalink to 'Models'">#</a></h1>
+<p>Many applications have data, and they want to store it or fetch it from
+various locations. Shiyard <a href="../api/model.md#Model">Models</a> do a couple things that help
+organize and make the common operations easier, using Fields and Syncs.
+
+</p>
+<h2>Fields<a class="permalink" id="Models:Fields" href="#Models:Fields" title="Permalink to 'Fields'">#</a></h2>
+<p>Part of writing Model classes is that it lets you easily define what
+properties of data are relevant. With data coming from various
+locations, such as the server, a JSONP request, or the user, it's best
+to have a single place that deserializes the data and makes it useful
+inside our application. For example, here's what the <a href="../api/fields.md#DateField">DateField</a> does:
+
+</p>
+<pre><code><span class="keyword">var</span> Task = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Model,
+    fields: {
+        createdAt: DateField()    
+    }
+});
+
+<span class="comment">// from the server, we receive data in JSON form, and the createdAt</span>
+<span class="comment">// info is the Unix timestamp.</span>
+<span class="keyword">var</span> task = <span class="keyword">new</span> Task({ createdAt: <span class="number">1331339351176</span> });
+
+<span class="comment">// the DateField transforms it into a Date object for us</span>
+task.get(<span class="string">'createdAt'</span>); <span class="comment">// a Date object</span>
+
+<span class="comment">// and it will serialize to valid JSON again</span>
+JSON.stringify(task); <span class="comment">// { "createdAt": 1331339351176 }</span></code></pre>
+<p>This deserialization happens automatically, whenever a property is set.
+
+</p>
+<h2>Syncs<a class="permalink" id="Models:Syncs" href="#Models:Syncs" title="Permalink to 'Syncs'">#</a></h2>
+<p>Once you have your Model outlined with Fields, it's worth setting up
+where you expect to fetch and save the data of this model. Shipyard uses
+<a href="../api/sync.md#Sync">Syncs</a> for this purpose. Syncs define a way to create, update,
+read, and destroy data from a particular source. Shipyard currently has
+2 syncs out of the box: 
+
+</p>
+<ul>
+<li><a href="../api/sync.md#BrowserSync">BrowserSync</a> that uses <code>localStorage</code></li>
+<li><a href="../api/sync.md#ServerSync">ServerSync</a> that uses a REST server.</li>
+</ul>
+<h3><code>Using</code> Syncs</h3>
+<p>A Model can specify multiple sync locations, and then easily pick which
+one is needed later. Take this example:
+
+</p>
+<pre><code><span class="keyword">var</span> Task = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Model,
+    Sync: {
+        <span class="string">'default'</span>: {
+            driver: ServerSync,
+            route: <span class="string">'/api/tasks'</span>
+        },
+        <span class="string">'local'</span>: {
+            driver: BrowserSync,
+            table: <span class="string">'tasks'</span>
+        }
+    }
+});</code></pre>
+<p>This <code>Task</code> model declares that the default place to find and save data
+is a REST API located at <code>/api/tasks</code> from the website it is served on,
+but can also sync to <code>localStorage</code>, for some minor offline
+capabilities.
+
+</p>
+<p>Then, specifically using each sync is a cinch. You can add a <code>using</code>
+option with the name of the sync to use. If you don't pass one, the sync
+you named "default" will be used automatically.
+
+</p>
+<pre><code>Task.find({ callback: <span class="keyword">function</span>(tasks) {
+    <span class="comment">// used "default" ServerSync</span>
+}});
+
+<span class="comment">// ... elsewhere, save a specific task to localStorage</span>
+task.save({ using: <span class="string">'local'</span> });</code></pre>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics/tutorial.html" >tutorial</a></li>                    <li><a href="topics/installation.html" >installation</a></li>                    <li><a href="topics/dom.html" >dom</a></li>                    <li><a href="topics/models.html" class="active">models</a></li>                    <li><a href="topics/modules.html" >modules</a></li>                    <li><a href="topics/views-and-binding.html" >views-and-binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api/class.html" >class</a></li>                    <li><a href="api/events.html" >events</a></li>                    <li><a href="api/fields.html" >fields</a></li>                    <li><a href="api/model.html" >model</a></li>                    <li><a href="api/observable.html" >observable</a></li>                    <li><a href="api/sync.html" >sync</a></li>                    <li><a href="api/utils.html" >utils</a></li>                    <li><a href="api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

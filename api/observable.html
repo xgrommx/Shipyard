@@ -4,7 +4,66 @@ on an object allowing others to observe all or only specific changes.
 
 </p>
 <h3>Extends</h3>
-<p>EventEmitter
+<p><a href="./events.md#EventEmitter">EventEmitter</a>
 
 </p>
-     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics/tutorial.html" >tutorial</a></li>                    <li><a href="topics/installation.html" >installation</a></li>                    <li><a href="topics/dom.html" >dom</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api/class.html" >class</a></li>                    <li><a href="api/events.html" >events</a></li>                    <li><a href="api/fields.html" >fields</a></li>                    <li><a href="api/model.html" >model</a></li>                    <li><a href="api/observable.html" class="active">observable</a></li>                    <li><a href="api/sync.html" >sync</a></li>                    <li><a href="api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
+<h2>Method: set<a class="permalink" id="Observable:set" href="#Observable:set" title="Permalink to 'Method: set'">#</a></h2>
+<p>Set a property that will trigger a change event if the value is
+different.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>observable.set(property, value);
+observable.set(properties);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>Two arguments (property, value)<ul>
+<li>property - (<em>string</em>) A key corresponding to the same name of one
+of the model's <code>fields</code>.</li>
+<li>value - (<em>mixed</em>) The value to set for the speific field.</li>
+</ul>
+</li>
+<li>One argument (properties)<ul>
+<li>properties - (<em>object</em>) An object of key-value pairs that work
+like calling <code>set</code> with each pair individually as the two-argument
+path.</li>
+</ul>
+</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(object) This Observable instance.</li>
+</ul>
+<h2>Method: get<a class="permalink" id="Observable:get" href="#Observable:get" title="Permalink to 'Method: get'">#</a></h2>
+<p>Retrieve a value from the object. This allows computed properties to
+work seemlessly.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> value = observable.get(keyOrKeys);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>keyOrKeys - (<em>string or array</em>) A string or array of strings of
+properties to return the value of.</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>(<em>string or array</em>) The value of the property requested, or an array of the values
+if an array was passed as an argument.</li>
+</ul>
+<h2>Method: observe<a class="permalink" id="Observable:observe" href="#Observable:observe" title="Permalink to 'Method: observe'">#</a></h2>
+<p>Specify a function that should be called when the observed property
+changes. A shortcut for listening to change events for only a specific
+property.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>observable.observe(property, callback);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>property - (<em>string</em>) The property name to observe.</li>
+<li>callback - (<em>function</em>) The function to execute when the property
+changes. It will be passed as arguments the new value, and the old
+value: <code>function (newVal, oldVal) {}</code></li>
+</ul>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics/tutorial.html" >tutorial</a></li>                    <li><a href="topics/installation.html" >installation</a></li>                    <li><a href="topics/dom.html" >dom</a></li>                    <li><a href="topics/models.html" >models</a></li>                    <li><a href="topics/modules.html" >modules</a></li>                    <li><a href="topics/views-and-binding.html" >views-and-binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api/class.html" >class</a></li>                    <li><a href="api/events.html" >events</a></li>                    <li><a href="api/fields.html" >fields</a></li>                    <li><a href="api/model.html" >model</a></li>                    <li><a href="api/observable.html" class="active">observable</a></li>                    <li><a href="api/sync.html" >sync</a></li>                    <li><a href="api/utils.html" >utils</a></li>                    <li><a href="api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

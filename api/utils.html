@@ -1,0 +1,60 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: utils</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Module: type<a class="permalink" id="type" href="#type" title="Permalink to 'Module: type'">#</a></h1>
+<h2>Method: typeOf<a class="permalink" id="type:typeOf" href="#type:typeOf" title="Permalink to 'Method: typeOf'">#</a></h2>
+<p>Better version of <code>typeof</code>, returns a string of the type of the passed
+in value.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> type = typeOf(value);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>value - (<em>mixed</em>) Any value.</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li><em>string</em> - The type.</li>
+</ul>
+<h2>Method: isString<a class="permalink" id="type:isString" href="#type:isString" title="Permalink to 'Method: isString'">#</a></h2>
+<p>Convenience method equivalent to <code>typeOf(value) === 'string'</code>.
+
+</p>
+<h2>Method: isFunction<a class="permalink" id="type:isFunction" href="#type:isFunction" title="Permalink to 'Method: isFunction'">#</a></h2>
+<p>Convenience method equivalent to <code>typeOf(value) === 'function'</code>.
+
+</p>
+<h2>Method: isBoolean<a class="permalink" id="type:isBoolean" href="#type:isBoolean" title="Permalink to 'Method: isBoolean'">#</a></h2>
+<p>Convenience method equivalent to <code>typeOf(value) === 'boolean'</code>.
+
+</p>
+<h2>Method: isNumber<a class="permalink" id="type:isNumber" href="#type:isNumber" title="Permalink to 'Method: isNumber'">#</a></h2>
+<p>Convenience method equivalent to <code>typeOf(value) === 'number'</code>.
+
+</p>
+<h2>Method: isArray<a class="permalink" id="type:isArray" href="#type:isArray" title="Permalink to 'Method: isArray'">#</a></h2>
+<p>Convenience method equivalent to <code>typeOf(value) === 'array'</code>.
+
+</p>
+<h1>Module: object<a class="permalink" id="object" href="#object" title="Permalink to 'Module: object'">#</a></h1>
+<p>Used via <code>require('shipyard/utils/object')</code>.
+
+</p>
+<h2>Method: extend<a class="permalink" id="object:extend" href="#object:extend" title="Permalink to 'Method: extend'">#</a></h2>
+<p>Extend an object with another object, copying properties over.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>extend(child, <span class="keyword">parent</span>);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>child - (<em>object</em>) The object that will inherit all the new
+properties.</li>
+<li>parent - (<em>object</em>) The object provide all the properties.</li>
+</ul>
+<h2>Method: merge<a class="permalink" id="object:merge" href="#object:merge" title="Permalink to 'Method: merge'">#</a></h2>
+<p>A recursive merge of objects together, using clones for objects and
+arrays.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> obj = merge(source, objects...);</code></pre>
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics/tutorial.html" >tutorial</a></li>                    <li><a href="topics/installation.html" >installation</a></li>                    <li><a href="topics/dom.html" >dom</a></li>                    <li><a href="topics/models.html" >models</a></li>                    <li><a href="topics/modules.html" >modules</a></li>                    <li><a href="topics/views-and-binding.html" >views-and-binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api/class.html" >class</a></li>                    <li><a href="api/events.html" >events</a></li>                    <li><a href="api/fields.html" >fields</a></li>                    <li><a href="api/model.html" >model</a></li>                    <li><a href="api/observable.html" >observable</a></li>                    <li><a href="api/sync.html" >sync</a></li>                    <li><a href="api/utils.html" class="active">utils</a></li>                    <li><a href="api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
