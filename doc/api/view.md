@@ -17,7 +17,7 @@ when the `Observable`'s properties change.
 
 ### Extends
 
-Observable
+[Observable][]
 
 ### Usage
 
@@ -43,11 +43,11 @@ Observable
 
 ## Method: set
 
-_Inherited from Observable_
+_Inherited from [Observable][]_
 
 ## Method: get
 
-_Inherited from Observable_
+_Inherited from [Observable][]_
 
 ## Method: bind
 
@@ -70,3 +70,6 @@ Binds another `Observable` to properties of this View.
 		'content': 'username',
 		'class': 'isStaff'
 	});
+
+
+[Observable]: ./observable.md#Observable

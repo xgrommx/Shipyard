@@ -14,7 +14,7 @@ ignorant.
 ## Mutator: fields
 
 This property is an object of fields that describe the data of your
-Model, using `Field` classes.
+Model, using [Field][] classes.
 
 ### Syntax
 
@@ -29,8 +29,8 @@ Model, using `Field` classes.
 
 ## Mutator: Sync
 
-This is an object of names and syncs that the data of this model should
-synchronize to.
+This is an object of names and [syncs](./sync.md#Sync) that the data of 
+this model should synchronize to.
 
 ### Syntax
 
@@ -58,7 +58,7 @@ synchronize to.
 
 ## Method: set
 
-*Inherited from Observable*. The way to assign values to fields the 
+*Inherited from [Observable][]*. The way to assign values to fields the 
 model has. Don't use direct assignment, or you'll miss out the 
 usefulness from `Observable` and `fields`.
 
@@ -92,7 +92,7 @@ usefulness from `Observable` and `fields`.
 
 ## Method: get
 
-*Inherited from Observable*. The way to retrieve values of the fields
+*Inherited from [Observable][]*. The way to retrieve values of the fields
 that the model has.
 
 ### Syntax
@@ -106,13 +106,21 @@ that the model has.
 
 ### Returns
 
-- (_mixed_) The value of the field requested, or an array of the values
+- (_string or array_) The value of the field requested, or an array of the values
   if an array was passed as an argument.
 
 ## Method: save
 
-*Inherited from Syncable*.
+*Inherited from [Syncable][]*.
 
 ## Method: destroy
 
-*Inherited from Syncable*.
+*Inherited from [Syncable][]*.
+
+## Method: observe
+
+*Inherited from [Observable][]*
+
+[Field]: ./fields.md#Field
+[Syncable]: ./sync.md#Syncable
+[Observable]: ./observable.md#Observable
