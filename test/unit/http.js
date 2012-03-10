@@ -64,9 +64,15 @@ module.exports = {
 			mockXHR('mock');
             var r = new Request({ url: '/' });
             expect(r.options.headers['X-Requested-With']).toBe('XMLHttpRequest');
+
+			var headers = r.options.headers;
+			var count = 0;
+			for (var h in headers) {
+				count++;
+			}
             
             r.send();
-            expect(r.xhr.setRequestHeader.getCallCount()).toBe(2);
+            expect(r.xhr.setRequestHeader.getCallCount()).toBe(count);
         });
 	}
 
