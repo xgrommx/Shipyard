@@ -32,8 +32,8 @@ function page(filename, dir, nav) {
 		title: filename.replace(/\.md$/, ''),
 		version: shipyard.version,
 		linkify: function(name, folder) {
-			var link = name.replace(/\.md$/, '');
-			var url = (folder ? folder + '/' : '') + link + '.html';
+			var link = name.replace(/\.md$/, '').replace(/[\-_]/g, ' ');
+			var url = URL_ROOT + '/' + (folder ? folder + '/' : '') + link + '.html';
 			return string.substitute('<a href="{url}" {class}>{link}</a>', {
 				url: url,
 				link: link,
@@ -105,7 +105,7 @@ function markdown(original) {
 
 	// replace all .md links to .html
 	el.getElements('a').forEach(function(a) {
-		el.set('href', a.get('href').replace('.md', '.html'));
+		a.set('href', a.get('href').replace('.md', '.html'));
 	});
 	
 	return el.get('html');
