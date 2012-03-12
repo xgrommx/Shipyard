@@ -57,7 +57,7 @@ module.exports = {
 			});
 			r2.send();
 
-			expect(r2.xhr.open.getLastArgs().pop()).toBe('http://x.com/?a=1&foo=bar');
+			expect(r2.xhr.open.getLastArgs()[1]).toBe('http://x.com/?a=1&foo=bar');
 		});
 
         it('should have default headers', function(expect) {
