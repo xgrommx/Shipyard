@@ -1,6 +1,6 @@
 <!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: models</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Models<a class="permalink" id="Models" href="#Models" title="Permalink to 'Models'">#</a></h1>
 <p>Many applications have data, and they want to store it or fetch it from
-various locations. Shiyard <a href="../api/model.md#Model">Models</a> do a couple things that help
+various locations. Shiyard <a href="../api/model.html#Model">Models</a> do a couple things that help
 organize and make the common operations easier, using Fields and Syncs.
 
 </p>
@@ -9,7 +9,7 @@ organize and make the common operations easier, using Fields and Syncs.
 properties of data are relevant. With data coming from various
 locations, such as the server, a JSONP request, or the user, it's best
 to have a single place that deserializes the data and makes it useful
-inside our application. For example, here's what the <a href="../api/fields.md#DateField">DateField</a> does:
+inside our application. For example, here's what the <a href="../api/fields.html#DateField">DateField</a> does:
 
 </p>
 <pre><code><span class="keyword">var</span> Task = <span class="keyword">new</span> <span class="keyword">Class</span>({
@@ -34,14 +34,14 @@ JSON.stringify(task); <span class="comment">// { "createdAt": 1331339351176 }</s
 <h2>Syncs<a class="permalink" id="Models:Syncs" href="#Models:Syncs" title="Permalink to 'Syncs'">#</a></h2>
 <p>Once you have your Model outlined with Fields, it's worth setting up
 where you expect to fetch and save the data of this model. Shipyard uses
-<a href="../api/sync.md#Sync">Syncs</a> for this purpose. Syncs define a way to create, update,
+<a href="../api/sync.html#Sync">Syncs</a> for this purpose. Syncs define a way to create, update,
 read, and destroy data from a particular source. Shipyard currently has
 2 syncs out of the box: 
 
 </p>
 <ul>
-<li><a href="../api/sync.md#BrowserSync">BrowserSync</a> that uses <code>localStorage</code></li>
-<li><a href="../api/sync.md#ServerSync">ServerSync</a> that uses a REST server.</li>
+<li><a href="../api/sync.html#BrowserSync">BrowserSync</a> that uses <code>localStorage</code></li>
+<li><a href="../api/sync.html#ServerSync">ServerSync</a> that uses a REST server.</li>
 </ul>
 <h3><code>Using</code> Syncs</h3>
 <p>A Model can specify multiple sync locations, and then easily pick which
@@ -78,4 +78,4 @@ you named "default" will be used automatically.
 
 <span class="comment">// ... elsewhere, save a specific task to localStorage</span>
 task.save({ using: <span class="string">'local'</span> });</code></pre>
-     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="topics/tutorial.html" >tutorial</a></li>                    <li><a href="topics/installation.html" >installation</a></li>                    <li><a href="topics/dom.html" >dom</a></li>                    <li><a href="topics/models.html" class="active">models</a></li>                    <li><a href="topics/modules.html" >modules</a></li>                    <li><a href="topics/views-and-binding.html" >views-and-binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="api/class.html" >class</a></li>                    <li><a href="api/events.html" >events</a></li>                    <li><a href="api/fields.html" >fields</a></li>                    <li><a href="api/model.html" >model</a></li>                    <li><a href="api/observable.html" >observable</a></li>                    <li><a href="api/sync.html" >sync</a></li>                    <li><a href="api/utils.html" >utils</a></li>                    <li><a href="api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
+     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" class="active">models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/views and binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
