@@ -29,13 +29,14 @@ process.on('uncaughtException', uncaughtException);
 var dir = process.cwd();
 
 function pushShipyard() {
-    if (env.platform.version > '0.4.x') {
-        log.debug('Shipyard not pushed onto path. Must be in node_modules folder to work well.');
-    } else {
+	try {
+		require('shipyard/class/Class');
+	} catch (requireError) {
+        log.debug('Shipyard not in NODE_PATH. Temporarily adding it.');
         var lib = path.join(shipyard.dirname, shipyard.directories.lib);
-        var testigo = path.join(shipyard.dirname, './test/');
 
-        require.paths.unshift(lib);
+		var node_path = process.env.NODE_PATH || '';
+		process.env.NODE_PATH = node_path + ';' + lib;
     }
 }
 
