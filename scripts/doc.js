@@ -29,14 +29,15 @@ function page(filename, dir, nav) {
 	var content = fs.readFileSync(path.join(docDir, dir, filename));
 	var output = pageTemplate(nav, {
 		main: markdown(String(content)),
-		title: filename.replace(/\.md$/, ''),
+		title: filename.replace(/\.md$/, '').replace(/[\-_]/g, ' '),
 		version: shipyard.version,
 		linkify: function(name, folder) {
-			var link = name.replace(/\.md$/, '').replace(/[\-_]/g, ' ');
+			var link = name.replace(/\.md$/, '');
 			var url = URL_ROOT + '/' + (folder ? folder + '/' : '') + link + '.html';
-			return string.substitute('<a href="{url}" {class}>{link}</a>', {
+			text = link.replace(/[\-_]/g, ' ');
+			return string.substitute('<a href="{url}" {class}>{text}</a>', {
 				url: url,
-				link: link,
+				text: text,
 				'class': filename === name ? 'class="active"' : ''
 			});
 		}
