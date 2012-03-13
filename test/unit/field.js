@@ -1,9 +1,12 @@
-var fields = require('../../lib/shipyard/model/fields');
+var Class = require('../../lib/shipyard/class/Class'),
+	Model = require('../../lib/shipyard/model/Model'),
+	fields = require('../../lib/shipyard/model/fields'),
 	Field = fields.Field,
     BooleanField = fields.BooleanField,
     DateField = fields.DateField,
     NumberField = fields.NumberField,
-    TextField = fields.TextField;
+    TextField = fields.TextField,
+	ForeignKey = fields.ForeignKey;
 
 module.exports = {
 	'Field': function(it, setup) {
@@ -21,8 +24,8 @@ module.exports = {
     'BooleanField': function(it, setup) {
         var field;
         setup('beforeEach', function() {
-            field = new BooleanField;
-        })
+            field = new BooleanField();
+        });
         
         it('should accept boolean values', function(expect) {
             expect(field.from(true)).toBe(true);
@@ -48,7 +51,7 @@ module.exports = {
 	'DateField': function(it, setup) {
         var field;
         setup('beforeEach', function() {
-            field = new DateField;
+            field = new DateField();
         });
         
         it('should accept Date objects', function(expect) {
@@ -65,6 +68,10 @@ module.exports = {
             expect(val.getTime()).toBe(d.getTime());
         });
 
+		it('should accept standard timestamp format', function(expect) {
+			expect(false).toBe(true);
+		});
+
         it('should not convert null', function(expect) {
             expect(field.from(null)).toBe(null);
         });
@@ -74,8 +81,8 @@ module.exports = {
     'NumberField': function(it, setup) {
         var field;
         setup('beforeEach', function() {
-            field = new NumberField;
-        })
+            field = new NumberField();
+        });
         
         it('should accept number values', function(expect) {
             expect(field.from(3)).toBe(3);
@@ -94,7 +101,7 @@ module.exports = {
     'TextField': function(it, setup) {
         var field;
         setup('beforeEach', function() {
-            field = new TextField;
+            field = new TextField();
         });
         
         it('should accept string values', function(expect) {
@@ -107,7 +114,7 @@ module.exports = {
         });
 
         it('should convert booleans', function(expect) {
-            expect(field.from(true)).toBe('true')
+            expect(field.from(true)).toBe('true');
             expect(field.from(false)).toBe('false');
         });
 
@@ -115,5 +122,46 @@ module.exports = {
             expect(field.from(null)).toBe(null);
         });
     
-    }
+    },
+
+	'ForeignKey': function(it, setup) {
+		var field, Example;
+		setup('beforeEach', function() {
+			Example = new Class({
+				Extends: Model,
+				fields: {
+					id: NumberField(),
+					other: TextField()
+				}
+			});
+			field = new ForeignKey(Example);
+		});
+		
+		it('should accept a pk', function(expect) {
+			var ex = new Example({ pk: 3 });
+
+			expect(field.from(3)).toBe(ex);
+		});
+
+		it('should return a new, empty instance if not in cache', function(expect) {
+			var ex = field.from(99);
+			expect(ex).toBeAnInstanceOf(Example);
+		});
+
+		it('should serialize to the pk option', function(expect) {
+			var ex = new Example({ pk: 2, other: 'foo' });
+
+			expect(field.serialize(ex)).toBe(2);
+
+			var field2 = new ForeignKey(Example, { key: 'other' });
+			expect(field2.serialize(ex)).toBe('foo');
+		});
+
+		it('should serialize entire model with option', function(expect) {
+			var ex = new Example({ pk: 5, other: 'bar' });
+			var f = new ForeignKey(Example, { serialize: 'all' });
+
+			expect(f.serialize(ex)).toBeLike({ id: 5, other: 'bar' });
+		});
+	}
 };
