@@ -1,4 +1,4 @@
-var fields = require('../../lib/shipyard/model/fields');
+var fields = require('../../lib/shipyard/model/fields'),
 	Field = fields.Field,
     BooleanField = fields.BooleanField,
     DateField = fields.DateField,
@@ -64,6 +64,12 @@ module.exports = {
             expect(val).toBeAnInstanceOf(Date);
             expect(val.getTime()).toBe(d.getTime());
         });
+
+		it('should accept standard timestamps', function(expect) {
+			var val = field.from('2012-03-08T15:12:36');
+			expect(val).toBeAnInstanceOf(Date);
+			expect(val.getTime()).toBe(1331219556000);
+		});
 
         it('should not convert null', function(expect) {
             expect(field.from(null)).toBe(null);
