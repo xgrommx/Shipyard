@@ -29,10 +29,10 @@ module.exports = {
             expect(o.get('baz')).toBe('bad');
         });
 
-        it('should fire a change event when data changes', function(expect) {
+        it('should fire a propertyChange event when data changes', function(expect) {
             var o = new Observable(),
                 spy = new Spy();
-            o.addListener('change', spy);
+            o.addListener('propertyChange', spy);
             o.set('bad', 'mad');
             o.set('bad', 'happy');
             o.set('bad', 'happy');
