@@ -66,4 +66,59 @@ property.
 changes. It will be passed as arguments the new value, and the old
 value: <code>function (newVal, oldVal) {}</code></li>
 </ul>
+<h2>Mutator: onEvent<a class="permalink" id="Observable:onEvent" href="#Observable:onEvent" title="Permalink to 'Mutator: onEvent'">#</a></h2>
+<p>Any property matching the regular expression <code>/^on[A-Z]/</code> (such as
+onClick) will become a default handler for every instance of the class.
+
+</p>
+<p>It can also be used at instantiation for a single instance.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> Foo = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Observable,
+    onFoo: <span class="keyword">function</span>() {
+        console.log(<span class="string">'bar!'</span>);
+    }
+});
+
+<span class="keyword">var</span> f = <span class="keyword">new</span> Foo({
+    onBar: <span class="keyword">function</span>() {
+        console.log(<span class="string">'baz'</span>);
+    }
+});
+
+f.emit(<span class="string">'foo'</span>); <span class="comment">// logged "bar!"</span>
+f.emit(<span class="string">'bar'</span>); <span class="comment">// logged "baz"</span></code></pre>
+<h2>Static Method: property<a class="permalink" id="Observable:property" href="#Observable:property" title="Permalink to 'Static Method: property'">#</a></h2>
+<p>A helper to declare computed properties and the properties they depend
+on.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> computedProp = property(fn, keys...);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>fn - (<em>function</em>) The function to execute when being <code>set</code> or <code>get</code>.</li>
+<li>keys - (<em>strings</em>) A string of each property that this one depends on.</li>
+</ul>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> Person = <span class="keyword">new</span> <span class="keyword">Class</span>({
+    <span class="keyword">Extends</span>: Observable,
+    firstName: <span class="string">'John'</span>,
+    lastName: <span class="string">'Doe'</span>,
+    fullName: Observable.property(<span class="keyword">function</span>(name) {
+        <span class="keyword">if</span> (arguments.length === <span class="number">0</span>) {
+            <span class="comment">// getter</span>
+            <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'firstName'</span>) + <span class="string">' '</span> + <span class="keyword">this</span>.get(<span class="string">'lastName'</span>);
+        } <span class="keyword">else</span> {
+            <span class="comment">// setter</span>
+            <span class="keyword">var</span> split = name.split(<span class="string">' '</span>);
+            <span class="keyword">this</span>.set({
+                <span class="string">'firstName'</span>: split[<span class="number">0</span>],
+                <span class="string">'lastName'</span>: split[<span class="number">1</span>]
+            });
+        }
+    }, <span class="string">'firstName'</span>, <span class="string">'lastName'</span>)
+});</code></pre>
      </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable.html" class="active">observable</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

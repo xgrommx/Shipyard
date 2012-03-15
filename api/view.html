@@ -44,6 +44,12 @@ properties of the View.</li>
 <p><em>Inherited from <a href="./observable.html#Observable">Observable</a></em>
 
 </p>
+<h2>Method: attach<a class="permalink" id="View:attach" href="#View:attach" title="Permalink to 'Method: attach'">#</a></h2>
+<p>Attaches the View to the DOM, rendering it.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>view.attach();</code></pre>
 <h2>Method: bind<a class="permalink" id="View:bind" href="#View:bind" title="Permalink to 'Method: bind'">#</a></h2>
 <p>Binds another <code>Observable</code> to properties of this View.
 
@@ -62,4 +68,86 @@ observable that should update the view.</li>
     'content': 'username',
     'class': 'isStaff'
 });</code></pre>
+<h1>Class: Container<a class="permalink" id="Container" href="#Container" title="Permalink to 'Class: Container'">#</a></h1>
+<p>A View that have child views.
+
+</p>
+<h3>Extends</h3>
+<p><a href="#View">View</a>
+
+</p>
+<h2>Method: addView<a class="permalink" id="Container:addView" href="#Container:addView" title="Permalink to 'Method: addView'">#</a></h2>
+<p>Adds a View as a child of this View.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>container.addView(view);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>view - (<em>View</em>) The view to be adopted. Can be any view, including
+another container with it's own children.</li>
+</ul>
+<h2>Method: removeView<a class="permalink" id="Container:removeView" href="#Container:removeView" title="Permalink to 'Method: removeView'">#</a></h2>
+<p>Removes the View from being one of its children.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>container.removeView(view);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>view - (<em>View</em>) A view that is already a child view of the Container,
+that should no longer be.</li>
+</ul>
+<h1>Class: CollectionView<a class="permalink" id="CollectionView" href="#CollectionView" title="Permalink to 'Class: CollectionView'">#</a></h1>
+<p>A Container that renders a list of data with the same child views.
+Mostly an abstract class meant for extending.
+
+</p>
+<h3>Extends</h3>
+<p><a href="#Container">Container</a>
+
+</p>
+<h2>Method: addItem<a class="permalink" id="CollectionView:addItem" href="#CollectionView:addItem" title="Permalink to 'Method: addItem'">#</a></h2>
+<p>Add an item to the collection, creating another child view
+automatically.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>collectionView.addItem(item);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>item - (<em>mixed</em>) Any value that should be passed as content to the new
+child view.</li>
+</ul>
+<h2>Method: removeItem<a class="permalink" id="CollectionView:removeItem" href="#CollectionView:removeItem" title="Permalink to 'Method: removeItem'">#</a></h2>
+<p>Remove an item from the collection, and its corresponding child view.
+
+</p>
+<h3>Syntax</h3>
+<pre><code>collectionView.removeItem(item);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>item - (<em>mixed</em>) A value already part of the collection that should be
+removed.</li>
+</ul>
+<h1>Class: FormView<a class="permalink" id="FormView" href="#FormView" title="Permalink to 'Class: FormView'">#</a></h1>
+<p>A container to hold form controls.
+
+</p>
+<h3>Extends</h3>
+<p><a href="#Container">Container</a>
+
+</p>
+<h1>Class: ButtonView<a class="permalink" id="ButtonView" href="#ButtonView" title="Permalink to 'Class: ButtonView'">#</a></h1>
+<h1>Class: CheckboxView<a class="permalink" id="CheckboxView" href="#CheckboxView" title="Permalink to 'Class: CheckboxView'">#</a></h1>
+<h1>Class: TextFieldView<a class="permalink" id="TextFieldView" href="#TextFieldView" title="Permalink to 'Class: TextFieldView'">#</a></h1>
+<h1>Class: TextAreaView<a class="permalink" id="TextAreaView" href="#TextAreaView" title="Permalink to 'Class: TextAreaView'">#</a></h1>
+<h1>Class: ListView<a class="permalink" id="ListView" href="#ListView" title="Permalink to 'Class: ListView'">#</a></h1>
+<p>A CollectionView that will create a <code>ul</code> with <code>li</code> child views.
+
+</p>
+<h3>Extends</h3>
+<p><a href="#CollectionView">CollectionView</a>
+
+</p>
      </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" class="active">view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

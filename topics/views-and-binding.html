@@ -10,5 +10,35 @@ matter) are <a href="../api/observable.html#Observable">Observable</a>.
 
 </p>
 <h2>Binding<a class="permalink" id="Views:Binding" href="#Views:Binding" title="Permalink to 'Binding'">#</a></h2>
+<p>Views can provide an API to bind another Observable to it. This let's
+you declare that a model's <code>title</code> field and the view's <code>content</code> field
+should stay in sync.
+
+</p>
+<pre><code>view.bind(model, {
+    <span class="string">'content'</span>: <span class="string">'title'</span>
+});
+
+<span class="comment">// later</span>
+model.set(<span class="string">'title'</span>, <span class="string">'foo'</span>);
+<span class="comment">// view's content automatically updated to 'foo' in the DOM</span></code></pre>
+<p>This way, you can setup the UI at the beginning, bind the views to the
+data, and then write your application around how the data changes. You
+never have to worry about remembering which views all depend on the
+values you just changed; they'll automatically remember for you.
+
+
+</p>
 <h2>Computed Properties<a class="permalink" id="Views:Computed_Properties" href="#Views:Computed_Properties" title="Permalink to 'Computed Properties'">#</a></h2>
+<p>Any property on an <a href="../api/observable.html#Observable">Observable</a> can be a function, and if it is, it
+will be invoked whenever <code>get</code> or <code>set</code> are called for that property.
+You can also <code>observe</code> those properties like any other.
+
+</p>
+<p>However, if those properties depend on others to compute their value,
+there is a way to declare that so when a dependent property changes, the
+<a href="../api/observable.html#Observable:property">computed property</a> also changes.
+
+
+</p>
      </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" class="active">views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
