@@ -10,7 +10,7 @@ An application framework that covers all the common things any JavaScript applic
 
 If you're application is going to have 1000 lines of JavaScript, would you rather write all those yourself, or have 900 of them be in a framework that is tested and used by others?
 
-When starting a web application, you would reach for Django, or CakePHP, or Rails; never would you decide to use just he language itself. Why shouldn't you do the same when the target language is JavaScript?
+When starting a web application, you would reach for Django, or CakePHP, or Rails; never would you decide to use just the language itself. Why shouldn't you do the same when the target language is JavaScript?
 
 Goals
 -----
@@ -50,6 +50,7 @@ Getting Started
 	$ shipyard test
 
 Take a look at the [tutorial](./topics/tutorial.md) to make your first
-application.
+application, or the [obligatory example Todo app][todo].
 
-[mvc]: http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+[mvc]: http://en.wikipedia.org/wiki/Model%E2%80%93view]E2%80%93controller
+[todo]: /Shipyard/examples/tasks/
