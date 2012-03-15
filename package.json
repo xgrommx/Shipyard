@@ -3,7 +3,7 @@
   "description": "A classical JavaScript MVC framework.",
   "author": "Sean McArthur <smcarthur@mozilla.com> (https://github.com/seanmonstar)",
   "version": "0.1.0a",
-  "main": "./",
+  "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/seanmonstar/Shipyard.git"
@@ -11,6 +11,7 @@
   "bin": "./bin/shipyard",
   "directories": {
     "bin": "./bin",
+	"doc": "./doc",
     "lib": "./lib"
   },
   "engines": {

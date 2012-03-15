@@ -49,6 +49,14 @@ _Inherited from [Observable][]_
 
 _Inherited from [Observable][]_
 
+## Method: attach
+
+Attaches the View to the DOM, rendering it.
+
+### Syntax
+
+	view.attach();
+
 ## Method: bind
 
 Binds another `Observable` to properties of this View.
@@ -71,5 +79,101 @@ Binds another `Observable` to properties of this View.
 		'class': 'isStaff'
 	});
 
+# Class: Container
+
+A View that have child views.
+
+### Extends
+
+[View][]
+
+## Method: addView
+
+Adds a View as a child of this View.
+
+### Syntax
+
+	container.addView(view);
+
+### Arguments
+
+- view - (_View_) The view to be adopted. Can be any view, including
+  another container with it's own children.
+
+## Method: removeView
+
+Removes the View from being one of its children.
+
+### Syntax
+
+	container.removeView(view);
+
+### Arguments
+
+- view - (_View_) A view that is already a child view of the Container,
+  that should no longer be.
+
+# Class: CollectionView
+
+A Container that renders a list of data with the same child views.
+Mostly an abstract class meant for extending.
+
+### Extends
+
+[Container][]
+
+## Method: addItem
+
+Add an item to the collection, creating another child view
+automatically.
+
+### Syntax
+
+	collectionView.addItem(item);
+
+### Arguments
+
+- item - (_mixed_) Any value that should be passed as content to the new
+  child view.
+
+## Method: removeItem
+
+Remove an item from the collection, and its corresponding child view.
+
+### Syntax
+
+	collectionView.removeItem(item);
+
+### Arguments
+
+- item - (_mixed_) A value already part of the collection that should be
+  removed.
+
+# Class: FormView
+
+A container to hold form controls.
+
+### Extends
+
+[Container][]
+
+# Class: ButtonView
+
+# Class: CheckboxView
+
+# Class: TextFieldView
+
+# Class: TextAreaView
+
+# Class: ListView
+
+A CollectionView that will create a `ul` with `li` child views.
+
+### Extends
+
+[CollectionView][]
 
 [Observable]: ./observable.md#Observable
+[View]: #View
+[Container]: #Container
+[CollectionView]: #CollectionView

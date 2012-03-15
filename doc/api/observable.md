@@ -68,3 +68,62 @@ property.
   changes. It will be passed as arguments the new value, and the old
   value: `function (newVal, oldVal) {}`
 
+## Mutator: onEvent
+
+Any property matching the regular expression `/^on[A-Z]/` (such as
+onClick) will become a default handler for every instance of the class.
+
+It can also be used at instantiation for a single instance.
+
+### Example
+
+	var Foo = new Class({
+		Extends: Observable,
+		onFoo: function() {
+			console.log('bar!');
+		}
+	});
+
+	var f = new Foo({
+		onBar: function() {
+			console.log('baz');
+		}
+	});
+
+	f.emit('foo'); // logged "bar!"
+	f.emit('bar'); // logged "baz"
+
+## Static Method: property
+
+A helper to declare computed properties and the properties they depend
+on.
+
+### Syntax
+
+	var computedProp = property(fn, keys...);
+
+### Arguments
+
+- fn - (_function_) The function to execute when being `set` or `get`.
+- keys - (_strings_) A string of each property that this one depends on.
+
+### Example
+
+	var Person = new Class({
+		Extends: Observable,
+		firstName: 'John',
+		lastName: 'Doe',
+		fullName: Observable.property(function(name) {
+			if (arguments.length === 0) {
+				// getter
+				return this.get('firstName') + ' ' + this.get('lastName');
+			} else {
+				// setter
+				var split = name.split(' ');
+				this.set({
+					'firstName': split[0],
+					'lastName': split[1]
+				});
+			}
+		}, 'firstName', 'lastName')
+	})

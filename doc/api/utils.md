@@ -64,4 +64,59 @@ arrays.
 
 	var obj = merge(source, objects...);
 
+## Method: clone
 
+## Method: create
+
+## Method: forEach
+
+## Method: map
+
+## Method: some
+
+## Method: every
+
+## Method: toQueryString
+
+# Module: array
+
+## Method: from
+
+## Method: flatten
+
+# Module: string
+
+## Method: uniqueID
+
+## Method: capitalize
+
+## Method: camelCase
+
+## Method: hyphenate
+
+## Method: parseQueryString
+
+## Method: substitute
+
+# Module: function
+
+## Method: noop
+
+## Method: overloadSetter
+
+## Method: overloadGetter
+
+# Module: log
+
+A module to use logging capability, such as the console, and fail
+gracefully if it doesn't exist.
+
+## Method: getLogger
+
+## Method: debug/log
+
+## Method: info
+
+## Method: warn/warning
+
+## Method: error/critical
