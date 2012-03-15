@@ -64,7 +64,7 @@ module.exports = new Class({
     addTask: function(task) {
         this.tasks.push(task);
         this.list.addItem(task);
-        task.addListener('change', this._onTaskChange);
+        task.addListener('propertyChange', this._onTaskChange);
     },
 
     removeTask: function(task) {
@@ -73,7 +73,7 @@ module.exports = new Class({
             this.tasks.splice(idx, 1);
         }
         this.list.removeItem(task);
-        task.removeListener('change', this._onTaskChange);
+        task.removeListener('propertyChange', this._onTaskChange);
     },
 
     _onClear: function() {

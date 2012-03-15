@@ -72,6 +72,14 @@ module.exports = new Class({
             // setter
             content.set('isDone', isDone);
         }
-    }, 'content')
+    }, 'content'),
+
+	'class': function() {
+		var ret = this.parent.apply(this, arguments);
+		if (ret && this.get('isDone')) {
+			// getter
+			return ret + ' isDone';
+		}
+	}
 
 });
