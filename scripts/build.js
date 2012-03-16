@@ -93,6 +93,7 @@ function __all() {
     console.log('Wait, what? This is a terrible idea...');
     // start with `lib` directory
     var start = path.join(__dirname, '../lib/');
+	shipyard.registerExts();
 
     var buffer = [];
 
@@ -105,12 +106,14 @@ function __all() {
     // add files to project
             if (stats.isFile()) {
                 var ext = path.extname(p);
+                var id = p.replace(start, '');
                 if (ext === '.js') {
                     var contents = fs.readFileSync(p);
-                    var id = p.replace(start, '');
                     buffer.push(wrapDefines(contents, id));
                 } else if (ext === '.ejs') {
                     // TODO: TemplateLoader thingy
+					var fn = require(p);
+					buffer.push(wrapDefines(String(fn), id));
                 }
             } else {
     // recusrve with found directories
@@ -120,7 +123,7 @@ function __all() {
     }
 
     // remember mini-require
-    buffer.push(fs.readFileSync(path.join(__dirname, '../build/require.js')));
+    buffer.push(fs.readFileSync(path.join(__dirname, './build/require.js')));
     collect(start);
     // output
 
@@ -135,7 +138,7 @@ function filterNode(content, location) {
     if (typeof content !== 'string') {
 		content = content.toString();
 	}
-    return content.replace(/<node>.*<\/node>/g, '');
+    return content.replace(/<node>[\s\S]*?<\/node>/g, '');
 }
 filterNode.onRead = true;
 
