@@ -6,7 +6,7 @@ var child = require('child_process'),
 var dest;
 
 function sub(command, next) {
-	child.exec(command, { cwd: path.join(_dirname, '../') },
+	child.exec(command, { cwd: path.join(__dirname, '../') },
 		function(err, stdout, stderr) {
 		console.log('stdout: ' + stdout);
 		console.log('stderr: ' + stderr);
