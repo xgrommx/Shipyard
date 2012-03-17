@@ -143,7 +143,8 @@ function __all() {
 }
 var COMMIT;
 function sub(command, next) {
-	require('child_process').exec(command, function(err, stdout, stderr) {
+	require('child_process').exec(command, { cwd: path.join(__dirname, '../') },
+		function(err, stdout, stderr) {
 		if (err) {
 			console.log('ERROR: ' + err);
 			process.exit(1);
