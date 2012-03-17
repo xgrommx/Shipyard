@@ -121,6 +121,7 @@ module.exports = {
                 expect(list[0].data.a).toBe(3);
             }});
         });
+
 	}
 };
 
