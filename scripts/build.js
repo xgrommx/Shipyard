@@ -128,10 +128,30 @@ function __all() {
     // output
 
     var shipyard_all = path.join(process.cwd, 'shipyard-all.js');
+	// add date and version info
+	var date = new Date();
+	var version = shipyard.version;
+
+	buffer.unshift('// shipyard-all \n' +
+		'// ' + (date.getYear()+1900) + '-' + (date.getMonth()+1) + '-' + date.getDate() + '\n' +
+		'// v'+version+'\n' +
+		'// commit ' + COMMIT + '\n\n');
     var output = filterNode(buffer.join(''));
-    // output = copy.filter.uglifyjs(output);
+	
     fs.writeFileSync(shipyard_all, output);
     console.log('Oh, good God. What have you done?');
+}
+var COMMIT;
+function sub(command, next) {
+	require('child_process').exec(command, function(err, stdout, stderr) {
+		if (err) {
+			console.log('ERROR: ' + err);
+			process.exit(1);
+		} else {
+			COMMIT = stdout.trim();
+			next();
+		}
+	});
 }
 
 exports.__all = __all;
@@ -171,7 +191,7 @@ template.onRead = true;
 
 if (require.main === module) {
     if (process.argv[2] === '--all') {
-        __all();
+        sub('git rev-parse HEAD', __all);
         return;
     }
     var src = path.join(process.cwd(), process.argv[2]),
