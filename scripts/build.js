@@ -127,7 +127,7 @@ function __all() {
     collect(start);
     // output
 
-    var shipyard_all = path.join(process.cwd, 'shipyard-all.js');
+    var shipyard_all = path.join(__dirname, '../shipyard-all.js');
 	// add date and version info
 	var date = new Date();
 	var version = shipyard.version;
