@@ -134,6 +134,8 @@ function __all() {
     console.log('Oh, good God. What have you done?');
 }
 
+exports.__all = __all;
+
 function filterNode(content, location) {
     if (typeof content !== 'string') {
 		content = content.toString();
