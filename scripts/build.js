@@ -155,7 +155,9 @@ function sub(command, next) {
 	});
 }
 
-exports.__all = __all;
+exports.__all = function() {
+	sub('git rev-parse HEAD', __all);
+};
 
 function filterNode(content, location) {
     if (typeof content !== 'string') {
@@ -192,8 +194,8 @@ template.onRead = true;
 
 if (require.main === module) {
     if (process.argv[2] === '--all') {
-        sub('git rev-parse HEAD', __all);
-        return;
+        exports.__all();
+		return;
     }
     var src = path.join(process.cwd(), process.argv[2]),
         dest = path.join(process.cwd(), process.argv[3]);
