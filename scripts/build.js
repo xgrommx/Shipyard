@@ -113,7 +113,7 @@ function __all() {
                 } else if (ext === '.ejs') {
                     // TODO: TemplateLoader thingy
 					var fn = require(p);
-					buffer.push(wrapDefines(String(fn), id));
+					buffer.push(wrapDefines('module.exports = ' +String(fn), id));
                 }
             } else {
     // recusrve with found directories
