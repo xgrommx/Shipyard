@@ -31,9 +31,13 @@ exports.load = function load(dir, casesArgs, prefix) {
     }
     casesArgs.forEach(function(val) {
         var _p = path.join(dir, val);
-        if (existsSync(_p) && fs.statSync(_p).isFile()) {
+        if (!existsSync(_p)) {
+            console.warn("Test doesn't exist: ", _p);
+            return;
+        }
+        if (path.extname(_p) === '.js' && fs.statSync(_p).isFile()) {
             cases.push(namespace(prefix, require(_p)));
-        } else {
+        } else if (fs.statSync(_p).isDirectory()) {
             var _prefix = (prefix ? prefix+': ' : '') + val;
             load(_p, null, _prefix).forEach(function(_d) {
                 cases.push(_d);
