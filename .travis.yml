@@ -2,3 +2,4 @@ language: node_js
 script: node ./bin/shipyard test
 node_js:
     - 0.6
+    - 0.7
