@@ -1,5 +1,6 @@
 var mockXHR = require('../../../lib/shipyard/test/mockXHR'),
-    Request = require('../../../lib/shipyard/http/Request');
+    Request = require('../../../lib/shipyard/http/Request'),
+    string = require('../../../lib/shipyard/utils/string');
 
 module.exports = {
     'mockXHR': function(it, setup) {
@@ -43,6 +44,7 @@ module.exports = {
 
         it('should accept a handler', function(expect) {
             mockXHR(function(data) {
+                data = string.parseQueryString(data);
                 expect(data.a).toBe('moo');
                 return 'derp';
             });
