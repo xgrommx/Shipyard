@@ -1,19 +1,26 @@
 Shipyard
 ===========
 
-A Javascript [MVC][mvc] application framework. For when you have a full-on application sitting on a web page. So much is going on, you should be able to focus on making the application working, not worrying about XmlHttpRequests and the DOM.
+Besides being [MVC][mvc] in JavaScript, Shipyard is __explictly
+modular__, __easy to test__, and utilizes the power of __Syncs__ and
+__View binding__.
 
-What Shipyard is
---------------
+Get it now!
+-----------
 
-An application framework that covers all the common things any JavaScript application would need to deal with: interacting with a server, storing data, rendering said data in the browser, and responding to user actions. An application built on Shipyard should only have to write that pulls all those things together.
+Take a look at the [tutorial](./topics/tutorial.md) to make your first
+application, or the [obligatory example Todo app][todo].
 
-If you're application is going to have 1000 lines of JavaScript, would you rather write all those yourself, or have 900 of them be in a framework that is tested and used by others?
+Then, install the latest stable version using `npm install shipyard`, or
+grab the dev version from GitHub:
 
-When starting a web application, you would reach for Django, or CakePHP, or Rails; never would you decide to use just the language itself. Why shouldn't you do the same when the target language is JavaScript?
+	$ git clone git://github.com/seanmonstar/Shipyard.git
+	$ cd Shipyard
+	$ npm link
+	$ shipyard test
 
-Goals
------
+What is Shipyard?
+-----------------
 
 ### Framework-wide Goals
 
@@ -41,16 +48,11 @@ Goals
 1. __Boilerplate__: Attempt to remove typical boilerplate of attaching
    Models to Views with validation in between.
 
-Getting Started
----------------
+Meta
+----
 
-	$ git clone git://github.com/seanmonstar/Shipyard.git
-	$ cd Shipyard
-	$ npm link
-	$ shipyard test
-
-Take a look at the [tutorial](./topics/tutorial.md) to make your first
-application, or the [obligatory example Todo app][todo].
+The code is available on GitHub, the test suite is connected to
+TravisCI, and you can play with it on jsFiddle.
 
 [mvc]: http://en.wikipedia.org/wiki/Model%E2%80%93view]E2%80%93controller
 [todo]: /Shipyard/examples/tasks/
