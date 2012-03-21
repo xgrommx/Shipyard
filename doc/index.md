@@ -51,8 +51,16 @@ What is Shipyard?
 Meta
 ----
 
-The code is available on GitHub, the test suite is connected to
-TravisCI, and you can play with it on jsFiddle.
+The code is [available on GitHub][source], the [test suite][ci] is
+connected to TravisCI, and you can play with it on [jsFiddle][jsfiddle].
+
+Bugs and feature requests live at [GitHub Issues][issues], and you can send tweets
+to [@shipyardjs][twitter].
 
 [mvc]: http://en.wikipedia.org/wiki/Model%E2%80%93view]E2%80%93controller
 [todo]: /Shipyard/examples/tasks/
+[source]: https://github.com/seanmonstar/Shipyard
+[ci]: http://travis-ci.org/#!/seanmonstar/Shipyard
+[jsfiddle]: http://jsfiddle.net/seanmonstar/JrcF4/
+[issues]: https://github.com/seanmonstar/Shipyard/issues
+[twitter]: https://twitter.com/shipyardjs
