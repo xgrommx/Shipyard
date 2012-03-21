@@ -165,5 +165,10 @@ module.exports = {
 
 			expect(f.serialize(ex)).toBeLike({ id: 5, other: 'bar' });
 		});
+
+        it('should accept JSON for the related Model', function(expect) {
+            var ex = field.from({ pk: 6, other: 'baz' });
+            expect(ex.get('other')).toBe('baz');
+        });
 	}
 };
