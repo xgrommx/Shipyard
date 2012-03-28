@@ -17,7 +17,7 @@ module.exports = {
 				}
 			});
 		
-		})
+		});
 
 
 		it('should be able to set and get data', function(expect) {
@@ -32,7 +32,8 @@ module.exports = {
             var Task = new Class({
                 Extends: Model,
                 fields: {
-                    title: new Field({type:String, default:'Untitled'})
+                    id: new Field(),
+                    title: new Field({type:String, 'default':'Untitled'})
                 }
             });
 
@@ -48,10 +49,10 @@ module.exports = {
 			try {
 				u.get('asdfasfd');
 			} catch (ex) {
-				err = ex;	
+				err = ex;
 			}
 
-			expect(err).toBeAnInstanceOf(Error);
+			expect(err).not.toBeUndefined();
 		});
 
 		it('should be able to take a hash to set data', function(expect) {
@@ -118,7 +119,9 @@ module.exports = {
 			var nameChange = false;
 
 			u.observe('username', function(newVal, oldVal) {
-				if (newVal == 'jenn') nameChange = true;
+				if (newVal === 'jenn') {
+                    nameChange = true;
+                }
 			});
 
 			u.set('username', 'jenn');
@@ -126,6 +129,6 @@ module.exports = {
 
 		});
 		
-	}	
+	}
 	
 };
