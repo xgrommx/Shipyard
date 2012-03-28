@@ -122,6 +122,48 @@ module.exports = {
             }});
         });
 
-	}
+	},
+
+    'Syncable.pk': function(it, setup) {
+        it('should default to id', function(expect) {
+            var s = new Syncable({ id: 1 });
+            expect(s.get('pk')).toBe(s.get('id'));
+        });
+
+        it('should be changeable', function(expect) {
+            var Mock = new Class({
+                Extends: Syncable,
+                pk: 'foo'
+            });
+            var s = new Mock({ foo: 'bar' });
+            var s2 = new Mock({ pk: 'baz' });
+
+            expect(s.get('pk')).toBe('bar');
+            expect(s2.get('foo')).toBe('baz');
+        });
+
+        it('should emit events for both properties', function(expect) {
+            var s = new Syncable();
+            var pkSpy = new Spy();
+            var idSpy = new Spy();
+
+            s.observe('pk', pkSpy);
+            s.observe('id', idSpy);
+
+            s.set('pk', 1);
+            expect(pkSpy).toHaveBeenCalled();
+            expect(idSpy).toHaveBeenCalled();
+
+            var pkSpy2 = new Spy();
+            var idSpy2 = new Spy();
+
+            s.observe('pk', pkSpy2);
+            s.observe('id', idSpy2);
+
+            s.set('id', 2);
+            expect(pkSpy2).toHaveBeenCalled();
+            expect(idSpy2).toHaveBeenCalled();
+        });
+    }
 };
 
