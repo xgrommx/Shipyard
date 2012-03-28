@@ -120,7 +120,7 @@ var itCallback = function(){
 	};
 };
 
-Suite.prototype.$it = function(desc, fn){
+Suite.prototype.$it = function(desc, fn, timeout){
 	var self = this;
 	this.$testCount++;
 	var test = new Case(desc, fn, this.$context, {
@@ -128,7 +128,7 @@ Suite.prototype.$it = function(desc, fn){
 			self.$callbacks.beforeEach.call(null, self.name, desc, count);
 		},
 		after: itCallback.call(this)
-	}, this.$argCheck);
+	}, this.$argCheck, timeout);
 	this.$tests.push(test);
 };
 

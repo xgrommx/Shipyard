@@ -26,7 +26,7 @@ var countExpect = function(fn){
 	return count;
 };
 
-var Case = function(desc, test, context, callback, argCheck){
+var Case = function(desc, test, context, callback, argCheck, timeout) {
 	if (argCheck && !checkArg('expect', test))
 		throw new SyntaxError('Case function does not explicitly define an `expect` argument.');
 
@@ -46,6 +46,8 @@ var Case = function(desc, test, context, callback, argCheck){
 
 	this.$testCount = countExpect(test);
 	this.$doneCount = 0;
+
+    this.$timeout = timeout || 1000;
 
 	this.$passes = 0;
 	this.$failures = 0;
@@ -130,15 +132,34 @@ Case.prototype.run = function(){
 	} catch(e){
 		error = e;
 	} finally {
-		this.$finished = true;
-		if (error) addResult.call(this, {
-			passed: false,
-			received: null,
-			expected: null,
-			matcher: null,
-			error: error
-		}, false);
+		if (error) {
+            this.$finished = true;
+            addResult.call(this, {
+                passed: false,
+                received: null,
+                expected: null,
+                matcher: null,
+                error: error
+            }, false);
+        }
 	}
+    
+    // for async tests that never finish
+    if (!this.done()) {
+        setTimeout(function() {
+            if (!self.done()) {
+                // force it done.
+                self.$finished = true;
+                addResult.call(self, {
+                    passed: false,
+                    received: null,
+                    expected: null,
+                    matcher: null,
+                    error: new Error('Test timed out.')
+                })
+            }
+        }, this.$timeout);
+    }
 };
 
 exports.Case = Case;
