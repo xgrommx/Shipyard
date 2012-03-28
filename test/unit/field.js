@@ -6,7 +6,8 @@ var Class = require('../../lib/shipyard/class/Class'),
     DateField = fields.DateField,
     NumberField = fields.NumberField,
     TextField = fields.TextField,
-	ForeignKey = fields.ForeignKey;
+	ForeignKey = fields.ForeignKey,
+    ManyToManyField = require('../../lib/shipyard/model/fields/ManyToManyField');
 
 module.exports = {
 	'Field': function(it, setup) {
@@ -167,8 +168,67 @@ module.exports = {
 		});
 
         it('should accept JSON for the related Model', function(expect) {
-            var ex = field.from({ pk: 6, other: 'baz' });
-            expect(ex.get('other')).toBe('baz');
+            var ex2 = field.from({ pk: 6, other: 'baz' });
+            expect(ex2.get('other')).toBe('baz');
         });
-	}
+
+        it('should return a Model if passed a Model', function(expect) {
+            var ex = new Example({ pk: 11 });
+            expect(field.from(ex)).toBe(ex);
+        });
+	},
+
+    'ManyToManyField': function(it, setup) {
+        // model.get('foos') -> [Foo, Foo, Foo]
+        // model.set('foos', [3, 4, 7]) -> [Foo:3, Foo:4, Foo:7]
+        // model.set('foos', [Foo:2, Foo:5]) -> [Foo:2, Foo:5]
+        // model.set('foos', [{pk:7}]) -> [Foo:7]
+        
+        var field,
+            Example,
+            counter = 1;
+        setup('beforeEach', function() {
+            Example = new Class({
+                Extends: Model,
+                fields: {
+                    id: NumberField(),
+                    name: TextField()
+                }
+            });
+            field = new ManyToManyField(Example);
+        });
+
+        it('should get an array of Models', function(expect) {
+            var ex = new Example({ id: counter++, name: 'foo' });
+            var id = ex.get('id');
+
+            expect(field.from([id])).toBeLike([ex]);
+            expect(field.from([ex])).toBeLike([ex]);
+        });
+
+        it('should accept an array of JSON', function(expect) {
+            var ex = field.from([{ id: counter++, name: 'foo' }])[0];
+            expect(ex).toBeAnInstanceOf(Example);
+            expect(ex.get('name')).toBe('foo');
+        });
+
+        it('should serialize to array of pks', function(expect) {
+            var ex1 = new Example({ id: 1 }),
+                ex2 = new Example({ id: 2 });
+
+            expect(field.serialize([ex1, ex2])).toBeLike([1, 2]);
+        });
+
+        it('should be able to serialize all', function(expect) {
+            var ex1 = new Example({ id: counter++, name: 'sean' });
+            var allField = new ManyToManyField(Example, {
+                serialize: 'all'
+            });
+
+            expect(allField.serialize([ex1])).toBeLike([{
+                id: ex1.get('id'),
+                name: 'sean'
+            }]);
+        });
+    }
 };
