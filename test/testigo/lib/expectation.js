@@ -125,7 +125,7 @@ Expectation.Matchers = {
         if (type !== typeOf(received)) return null;
         if (type == 'object'){
             for (var key in expected){
-                if (received[key] === undefined || !this.toBeLike(received[key], expected[key])) return false;
+                if (!(key in received) || !this.toBeLike(received[key], expected[key])) return false;
             }
         } else if (type == 'array'){
             var len = expected.length;
