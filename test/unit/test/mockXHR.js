@@ -56,5 +56,21 @@ module.exports = {
                 }
             }).send();
         });
+
+        it('should still bubble errors to test suite', function(expect) {
+            mockXHR({ a: 1 });
+            var r = new Request({
+                onComplete: function(text) {
+                    // a deliberate error
+                    var a = text.a.valueOf();
+                }
+            })
+            
+            try {
+                r.send();
+            } catch (e) {
+                expect(e).not.toBeUndefined();
+            }
+        });
     }
 };
