@@ -70,7 +70,7 @@ module.exports = {
             expect(spy.getLastArgs()).toBeLike(['moe', 'baz']);
         });
 
-		it('should be able to set compuated properties', function(expect) {
+		it('should be able to set computed properties', function(expect) {
 			var Ex = new Class({
 				Extends: Observable,
 				bar: Observable.property(function(value) {
@@ -113,5 +113,28 @@ module.exports = {
             expect(spy).toHaveBeenCalled();
 			expect(spy2).toHaveBeenCalled();
         });
+
+		it('should deep observe properties', function(expect) {
+			var a = new Observable();
+			var b = new Observable({ a: a });
+			var spy = new Spy();
+			b.observe('a', spy);
+
+			a.set('foo', 'bar');
+			expect(spy).toHaveBeenCalled();
+
+			var c = new Observable();
+			var spy2 = new Spy();
+			b.observe('a', spy2);
+			b.set('a', c);
+			expect(spy2).toHaveBeenCalled();
+
+			var spy3 = new Spy();
+			b.observe('a', spy3);
+
+			// a is no longer a prop of b, so it shouldn't care anymore
+			a.set('herp', 'derp');
+			expect(spy3).not.toHaveBeenCalled();
+		});
     }
 };
