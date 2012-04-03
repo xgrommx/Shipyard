@@ -21,8 +21,7 @@ function sub(command, next) {
 
 
 function all() {
-	build.__all();
-	cp();
+	build.__all(cp);
 }
 
 function cp() {

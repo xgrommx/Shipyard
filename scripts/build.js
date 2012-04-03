@@ -155,8 +155,13 @@ function sub(command, next) {
 	});
 }
 
-exports.__all = function() {
-	sub('git rev-parse HEAD', __all);
+exports.__all = function(next) {
+	sub('git rev-parse HEAD', function() {
+		__all();
+		if (next) {
+			next();
+		}
+	});
 };
 
 function filterNode(content, location) {
