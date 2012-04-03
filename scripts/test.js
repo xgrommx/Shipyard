@@ -30,7 +30,7 @@ exports.load = function load(dir, casesArgs, prefix) {
         });
     }
     casesArgs.forEach(function(val) {
-        var _p = path.join(dir, val);
+		var _p = path.join(dir, val);
         if (!existsSync(_p)) {
             console.warn("Test doesn't exist: ", _p);
             return;
@@ -39,10 +39,9 @@ exports.load = function load(dir, casesArgs, prefix) {
             cases.push(namespace(prefix, require(_p)));
         } else if (fs.statSync(_p).isDirectory()) {
             var _prefix = (prefix ? prefix+': ' : '') + val;
-            load(_p, null, _prefix).forEach(function(_d) {
-                cases.push(_d);
-            });
+            cases.push.apply(cases, load(_p, null, _prefix));
         }
+		
     });
     return cases;
 };
@@ -66,6 +65,7 @@ if (require.main === module) {
 	var path = require('path');
 	var syPath = path.join(__dirname, '../');
 	var pack = require('../');
+	var shipyard = pack;
 	shipyard.registerExts(pack);
     var shipyardSuite = path.join(syPath, pack.shipyard.test);
 
