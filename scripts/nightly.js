@@ -35,7 +35,9 @@ function main() {
 	// 1. pull master
 	// 2. build all
 	// 3. cp file to destination
-	sub('git pull origin master', all);
+	sub('git fetch origin', function() {
+		sub('git reset --hard origin/master', all);
+	});
 }
 
 if (require.main === module) {
