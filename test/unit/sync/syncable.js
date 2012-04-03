@@ -124,13 +124,13 @@ module.exports = {
 
 	},
 
-    'Syncable.pk': function(it, setup) {
-        it('should default to id', function(expect) {
+    'Syncable.pk': function test_syncable_pk(it, setup) {
+        it('should default to id', function default_id(expect) {
             var s = new Syncable({ id: 1 });
             expect(s.get('pk')).toBe(s.get('id'));
         });
 
-        it('should be changeable', function(expect) {
+        it('should be changeable', function pk_changeable(expect) {
             var Mock = new Class({
                 Extends: Syncable,
                 pk: 'foo'
@@ -142,7 +142,7 @@ module.exports = {
             expect(s2.get('foo')).toBe('baz');
         });
 
-        it('should emit events for both properties', function(expect) {
+        it('should emit events for both properties', function pk_events(expect) {
             var s = new Syncable();
             var pkSpy = new Spy();
             var idSpy = new Spy();
