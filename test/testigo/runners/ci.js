@@ -75,7 +75,7 @@ var callbacks = {
             ' (Passed: ', results.tests.passes, ', Failed: ', results.tests.failures, ')\n'
         ].join(''));
 
-		if (!success && typeof process !== 'undefined') {
+		if (!success && this.$exits) {
 			process.nextTick(function() {
 				process.exit(1);
 			});
@@ -130,11 +130,12 @@ var callbacks = {
     }
 };
 
-var CIRunner = module.exports = function(testigo, colors, stack) {
+var CIRunner = module.exports = function(testigo, colors, stack, exits) {
     this.$testigo = testigo;
     this.$buffer = [];
     this.$colors = colors;
     this.$stack = (stack !== undefined) ? stack : true;
+	this.$exits = (exits !== undefined) ? exits : true;
     this.addCallbacks();
 };
 

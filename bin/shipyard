@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander'),
     path = require('path'),
+	fs = require('fs'),
     env = require('../lib/shipyard/env'),
     log = require('../lib/shipyard/utils/log'),
     type = require('../lib/shipyard/utils/type'),
@@ -49,7 +50,8 @@ program
     .option('-r, --require', 'include mini require')
     .option('-m, --minify', 'force a minify')
     .option('-M, --non-minify', 'do not minify')
-    .option('--debug', 'show error traces');
+    .option('--debug', 'show error traces')
+	.option('-w, --watch', 'watch files while testing');
 
 program
     .command('build [dest]')
@@ -62,22 +64,74 @@ program
         });
     });
 
+function files(d, ret) {
+	ret = ret || [];
+	
+	fs.readdirSync(d).forEach(function(name) {
+		name = path.join(d, name);
+		if (fs.statSync(name).isDirectory()) {
+			files(name, ret);
+		} else if (path.extname(name) in require.extensions) {
+			ret.push(name);	
+		}
+	});
+
+	return ret;
+}
+
+function doTests(exits) {
+	var pack = require(path.join(dir, './package.json'));
+	var tests = path.join(dir, pack.shipyard.test);
+	require('../').registerExts();
+	var test  = require('../scripts/test');
+
+	var args = program.args.filter(type.isString);
+
+	var cases = test.load(tests, args);
+	exits = (exits !== undefined) ? exits : true;
+	test.run(cases, exits);
+}
+
+function testsWatch() {
+	doTests(false);
+	console.log('\nwatching...');
+	var watchFiles = files(dir);
+	var blocked = false;
+
+	function purge() {
+		watchFiles.forEach(function(file) {
+			delete require.cache[file];
+		});
+	}
+
+	watchFiles.forEach(function(file) {
+		fs.watch(file, function() {
+			if (blocked) return;
+			blocked = true;
+			setTimeout(function() { 
+				blocked = false;
+				console.log('\nwatching...');
+			}, 3000);
+			purge();
+			doTests(false);
+		})
+	});
+}
+
 program
 	.command('test')
     .description('Run your app\'s test suite')
     .action(function() {
-        var pack = require(path.join(dir, './package.json'));
-        var tests = path.join(dir, pack.shipyard.test);
-        
         // when testing, you always want stacktraces
         program.debug = true;
         pushShipyard();
-		shipyard.registerExts();
 
-        var args = program.args.filter(type.isString);
-
-        var cases = test.load(tests, args);
-        test.run(cases);
+		if (program.watch) {
+			testsWatch();
+			return;
+		}
+        
+        doTests();
     });
 
 program

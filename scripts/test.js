@@ -46,10 +46,13 @@ exports.load = function load(dir, casesArgs, prefix) {
     return cases;
 };
 
-exports.run = function(cases) {
+exports.run = function(cases, exits) {
     var suite = new Testigo();
+	var colors = true;
+	var stack = true;
+	exits = (exits !== undefined) ? exits : true;
 
-    var runner = new Testigo.Runners.CI(suite, true);
+    var runner = new Testigo.Runners.CI(suite, colors, stack, exits);
 	//var runner = new Testigo.Runners.Simple('node', suite);
 
     cases.forEach(function(testCase) {
