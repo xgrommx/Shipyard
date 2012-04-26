@@ -21,10 +21,10 @@ module.exports = {
 
 		it('should have an effective level', function(expect) {
 			var n = string.uniqueID();
-			var n2 = n + '/' + string.uniqueID();
 			var a = new Logger(n);
 			a.setLevel('info');
 
+			var n2 = n + '/' + string.uniqueID();
 			var b = new Logger(n2);
 
 			expect(b.getEffectiveLevel()).toBe(Logger.INFO);
