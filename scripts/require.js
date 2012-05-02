@@ -134,7 +134,7 @@ var require = function shipyard_require(id, path){
     var contents = false,
         filename,
         ext = extname(id),
-        base = '',
+        base = id,
         paths = (id[0] === '/') ? [''] : require.paths,
         trailingSlash = (id.slice(-1) === '/'),
         isRelative = id.charAt(0) === '.',
@@ -231,9 +231,9 @@ var require = function shipyard_require(id, path){
 	}
     if (typeof module === 'function') {
         var factory = module;
-        module = { filename: id, dirname: dirname(id) };
+        module = { filename: base, dirname: dirname(base) };
         exec(factory, module);
-        MODULES[id] = module;
+        MODULES[base] = module;
     }
     if (module && !module.exports) {
         module.exports = module;
