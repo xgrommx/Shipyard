@@ -22,10 +22,7 @@ module.exports = {
 			});
 
 			MockSyncable = new Class({
-				Implements: Syncable,
-                initialize: function(data) {
-                    this.data = data;
-                }
+				Implements: Syncable
 			});
 		});
 		
@@ -105,7 +102,7 @@ module.exports = {
             MockSyncable.addSync('default', sync);
             MockSyncable.find({callback: function(list) {
                 expect(list).toBeAnInstanceOf(Array);
-                expect(list[0].data.a).toBe(1);
+                expect(list[0].get('a')).toBe(1);
             }});
         });
 
@@ -118,8 +115,31 @@ module.exports = {
             MockSyncable.addSync('default', sync);
             MockSyncable.find({callback: function(list){
                 expect(list).toBeAnInstanceOf(Array);
-                expect(list[0].data.a).toBe(3);
+                expect(list[0].get('a')).toBe(3);
             }});
+        });
+
+        it('should update if save returns new info', function(expect) {
+            var sync = new MockSync();
+            sync.create = function(data, callback) {
+                data = data.toJSON();
+                data.pk = 3;
+                callback(data);
+            };
+            sync.update = function(id, data, callback) {
+                data = data.toJSON();
+                data.updated = true;
+                callback(data);
+            };
+
+            MockSyncable.addSync('default', sync);
+
+            var m = new MockSyncable();
+            m.save();
+            expect(m.get('pk')).toBe(3);
+
+            m.save();
+            expect(m.get('updated')).toBe(true);
         });
 
 	},
