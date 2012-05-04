@@ -111,6 +111,23 @@ Sync
 		}
 	}
 
+# Class: BackupSync
+
+A Sync that incorporates two other Syncs, using one as the main sync
+goal, another as the backup when the main is unavailable. The most
+common use case is provide in Shipyard as the SmartSync.
+
+### Extends
+
+Sync
+
+### Options
+
+- main - (_Sync_) The main target Sync class.
+- backup - (_Sync_) The Sync class to store commands temporarily while
+  `main` is not available. Ideally, this is a Sync that can always be
+  accessed, such as `localStorage`.
+
 # Class: Syncable
 
 A Syncable object has a unified API for saving, reading, and destroying
