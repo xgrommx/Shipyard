@@ -111,6 +111,21 @@ module.exports = {
 			expect(JSON.stringify(u)).toBe(JSON.stringify(obj));
 		});
 
+		it('should not serialize write:false fields', function(expect) {
+			var Foo = new Class({
+				Extends: Model,
+				fields: {
+					a: new Field(),
+					b: new Field({ write: false })
+				},
+				pk: 'a'
+			});
+
+			var a = new Foo({ a: 'foo', b: 'bar' });
+
+			expect(JSON.stringify(a)).toBe('{"a":"foo"}');
+		});
+
 		it('should be Observable', function(expect) {
 		
 			var u = new this.User();

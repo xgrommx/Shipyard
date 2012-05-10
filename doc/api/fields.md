@@ -22,6 +22,8 @@ Creates a Field instance.
   value is provided.
 - required - (_boolean_) Whether a value must be defined in order to
   pass validation and save.
+- write - (_boolean_) Whether this field should be serialized when the
+  Model is saved. Default is true.
 
 ## Method: from
 
