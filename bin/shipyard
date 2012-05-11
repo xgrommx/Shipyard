@@ -29,16 +29,21 @@ process.on('uncaughtException', uncaughtException);
 
 var dir = process.cwd();
 
+var isWindows = process.platform === 'win32';
+var envSeperator = isWindows ? ';' : ':';
+
 function pushShipyard() {
     try {
         require('shipyard/class/Class');
         return false;
     } catch (requireError) {
-        log.debug('Shipyard not in NODE_PATH. Temporarily adding it.');
+        log.info('Shipyard not in NODE_PATH. Temporarily adding it.');
         var lib = path.join(shipyard.dirname, shipyard.directories.lib);
 
         var node_path = process.env.NODE_PATH || '';
-        process.env.NODE_PATH = node_path + ';' + lib;
+        process.env.NODE_PATH = node_path + envSeperator + lib;
+
+        log.debug('Setting NODE_PATH: ' + process.env.NODE_PATH);
 
         var child_process = require('child_process');
         var argv = process.argv.slice(0);
