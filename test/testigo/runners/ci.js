@@ -77,7 +77,11 @@ var callbacks = {
 
 		if (!success && this.$exits) {
 			process.nextTick(function() {
-				process.exit(1);
+				var code = 1;
+				process.stdout.once('drain', function() {
+					process.exit(code);
+				});
+				console.log('');
 			});
 		}
     },
