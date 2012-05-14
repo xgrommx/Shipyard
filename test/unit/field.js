@@ -187,6 +187,8 @@ module.exports = {
         var field,
             Example,
             counter = 1;
+
+		var SLICE = Array.prototype.slice;
         setup('beforeEach', function() {
             Example = new Class({
                 Extends: Model,
@@ -202,8 +204,8 @@ module.exports = {
             var ex = new Example({ id: counter++, name: 'foo' });
             var id = ex.get('id');
 
-            expect(field.from([id])).toBeLike([ex]);
-            expect(field.from([ex])).toBeLike([ex]);
+            expect(SLICE.call(field.from([id]))).toBeLike([ex]);
+            expect(SLICE.call(field.from([ex]))).toBeLike([ex]);
         });
 
         it('should accept an array of JSON', function(expect) {
