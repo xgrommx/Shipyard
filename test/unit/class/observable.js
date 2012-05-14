@@ -136,5 +136,25 @@ module.exports = {
 			a.set('herp', 'derp');
 			expect(spy3).not.toHaveBeenCalled();
 		});
+
+		it('should be able to not-deep observe', function(expect) {
+			var a = new Observable();
+			var b = new Observable({ a: a });
+			var spy = this.createSpy();
+			b.observe('a', spy, false);
+
+			a.set('c', 'd');
+			expect(spy).not.toHaveBeenCalled();
+
+			var spy2 = this.createSpy();
+			b.observe('a', spy2);
+			a.set('f', 'g');
+			expect(spy2).toHaveBeenCalled();
+			expect(spy).not.toHaveBeenCalled();
+
+			var e = new Observable();
+			b.set('a', e);
+			expect(spy).toHaveBeenCalled();
+		});
     }
 };

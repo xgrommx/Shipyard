@@ -1,6 +1,8 @@
 var Observable = require('../../../lib/shipyard/class/Observable'),
 	ObservableArray = require('../../../lib/shipyard/class/ObservableArray');
 
+var SLICE = Array.prototype.slice;
+
 module.exports = {
 	'ObservableArray': function(it, setup) {
 
@@ -19,6 +21,9 @@ module.exports = {
 			var arr = new ObservableArray(['a', 'b', 'c', 'd']);
 			expect(arr.length).toBe(4);
 			expect(arr[2]).toBe('c');
+
+			arr = new ObservableArray([]);
+			expect(arr.length).toBe(0);
 		});
 
 		it('should have all Array methods', function(expect) {
@@ -38,6 +43,24 @@ module.exports = {
 			expect(arr.length).toBe(0);
 		});
 
+		it('should be spliceable', function(expect) {
+			var arr = new ObservableArray(1, 2, 3, 4, 5);
+			var spy = this.createSpy();
+			arr.observe('array', spy);
+
+			var ditched = arr.splice(1, 2); // ditch 2 and 3
+
+			expect(SLICE.call(arr)).toBeLike([1, 4, 5]);
+			expect(arr.length).toBe(3);
+			expect(ditched).toBeLike([2, 3]);
+
+			arr.splice(-1, 1); // ditch the end
+			expect(SLICE.call(arr)).toBeLike([1, 4]);
+
+			arr.splice(0, 1, 'a', 'b');
+			expect(SLICE.call(arr)).toBeLike(['a', 'b', 4]);
+		});
+
 		it('should have observable indices', function(expect) {
 			var spy = this.createSpy();
 			var arr = new ObservableArray();
@@ -54,6 +77,35 @@ module.exports = {
 			expect(spy2).not.toHaveBeenCalled();
 			arr.shift();
 			expect(spy2).toHaveBeenCalled();
+		});
+
+		it('should be observable for array changes', function(expect) {
+			var arr = new ObservableArray('a', 'b', 'c');
+			var spy = this.createSpy();
+			arr.observe('array', spy);
+
+			arr.push('d');
+
+			expect(spy.getLastArgs()).toBeLike([3, 'd', undefined]);
+		});
+
+		it('should be deep observable', function(expect) {
+			var a = new Observable();
+			var arr = new ObservableArray(1,2,3);
+			a.set('arr', arr);
+			var spy = this.createSpy();
+
+			a.observe('arr', spy, false);
+
+			arr.push('a');
+			expect(spy).not.toHaveBeenCalled();
+
+			var spy2 = this.createSpy();
+			a.observe('arr', spy2);
+			arr.push('b');
+
+			expect(spy2).toHaveBeenCalled();
+			expect(spy).not.toHaveBeenCalled();
 		});
 	}
 };
