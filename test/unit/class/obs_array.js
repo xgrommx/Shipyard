@@ -38,24 +38,6 @@ module.exports = {
 			expect(arr.length).toBe(0);
 		});
 
-		it('should be spliceable', function(expect) {
-			var arr = new ObservableArray(1, 2, 3, 4, 5);
-			var spy = this.createSpy();
-			arr.observe('array', spy);
-
-			var ditched = arr.splice(1, 2); // ditch 2 and 3
-
-			expect(SLICE.call(arr)).toBeLike([1, 4, 5]);
-			expect(arr.length).toBe(3);
-			expect(ditched).toBeLike([2, 3]);
-
-			arr.splice(-1, 1); // ditch the end
-			expect(SLICE.call(arr)).toBeLike([1, 4]);
-
-			arr.splice(0, 1, 'a', 'b');
-			expect(SLICE.call(arr)).toBeLike(['a', 'b', 4]);
-		});
-
 		it('should have observable indices', function(expect) {
 			var spy = this.createSpy();
 			var arr = new ObservableArray();
