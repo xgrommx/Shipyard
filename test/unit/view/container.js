@@ -29,6 +29,17 @@ module.exports = {
             expect(el.getElements().get('tag')).toBeLike(['div', 'span']);
 
 		});
+
+		it('should be able to add views at an index', function(expect) {
+			var c = new Container();
+			var v1 = new View({ tag: 'derp' });
+			var v2 = new View({ tag: 'herp' });
+
+			c.addView(v1);
+			c.addView(v2, 0);
+
+			expect(c.toElement().getFirst().get('tag')).toBe(v2.get('tag'));
+		});
 	}
 
 };
