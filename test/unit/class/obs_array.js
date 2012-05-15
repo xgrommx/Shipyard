@@ -85,8 +85,13 @@ module.exports = {
 			arr.observe('array', spy);
 
 			arr.push('d');
+			expect(spy.getLastArgs()).toBeLike([3, [], ['d']]);
 
-			expect(spy.getLastArgs()).toBeLike([3, 'd', undefined]);
+			arr.unshift('e');
+			expect(spy.getLastArgs()).toBeLike([0, [], ['e']]);
+
+			arr.shift();
+			expect(spy.getLastArgs()).toBeLike([0, ['e'], []]);
 		});
 
 		it('should be deep observable', function(expect) {
