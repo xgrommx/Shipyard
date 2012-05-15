@@ -39,6 +39,10 @@ module.exports = {
 
 			expect(v.render().indexOf('qqqq')).toBe(-1);
 			expect(v.childViews[0].get('content')).toBe(arr[0]);
+
+			arr.push('qwerty');
+
+			expect(v.childViews[3].get('content')).toBe(arr[3]);
 		});
 
 		it('should be able to accept a new array of content', function(expect) {
