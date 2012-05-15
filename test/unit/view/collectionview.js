@@ -54,16 +54,16 @@ module.exports = {
 		it('should be able to bind to another array', function(expect) {
 			var a = new Observable();
 			var view = new CollectionView();
-			//view.bind(a, { content: 'list' });
+			view.bind(a, { content: 'list' });
 
 			var arr = new ObservableArray(1, 2, 3, 4, 5);
-			//a.set('list', arr);
-			view.set('content', arr);
+			a.set('list', arr);
 
 			expect(view.toElement().getChildren().length).toBe(5);
 			
 			arr.splice(1, 2);
 			expect(view.childViews.length).toBe(3);
+			expect(view.childViews[0].get('content')).toBe(arr[0]);
 		});
 
 		/*it('should show an empty view when empty', function(expect) {
