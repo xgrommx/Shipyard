@@ -161,7 +161,7 @@ module.exports = {
 			main.read({}, function(datas) {
 				expect(datas[0]).toBeLike(data);
 				expect(datas[1]).toBeLike(data2);
-			})
+			});
         });
     },
 
@@ -174,11 +174,11 @@ module.exports = {
         });
 
         it('should determine if main is available', function(expect) {
-            navigator.online = true;
+            navigator.onLine = true;
             var sync = new SmartSync();
             expect(sync._isMainAvailable()).toBe(true);
 
-            navigator.online = false;
+            navigator.onLine = false;
             expect(sync._isMainAvailable()).toBe(false);
         });
 
