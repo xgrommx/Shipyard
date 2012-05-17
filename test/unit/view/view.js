@@ -51,6 +51,15 @@ module.exports = {
 			expect(el.get('class')).toBe('shipyard-view mock-view foo');
 		});
 
+		it('should be able to get and set the template function', function(expect) {
+			// https://github.com/seanmonstar/Shipyard/issues/39
+			var v = new MockView();
+			var template = function() { return 'foo'; };
+
+			v.set('template', template);
+			expect(v.get('template')).toBe(template);
+		});
+
 	}
 
 };
