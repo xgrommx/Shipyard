@@ -1,6 +1,6 @@
 var Class = require('../../../lib/shipyard/class/Class'),
 	Events = require('../../../lib/shipyard/class/Events'),
-	log = require('../../../lib/shipyard/utils/log'),
+	logging = require('../../../lib/shipyard/logging'),
 	Spy = require('../../../lib/shipyard/test/Spy');
 
 module.exports = {
@@ -102,6 +102,7 @@ module.exports = {
         it('should not stack multiple times of the function', function(expect) {
             var handler = new Spy();
 			var warn = new Spy();
+			var log = logging.getLogger('shipyard.class.Events');
 			var oldWarn = log.warn;
 			log.warn = warn;
             this.E.addListener('spy', handler);

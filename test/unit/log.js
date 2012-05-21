@@ -1,4 +1,3 @@
-var logging = require('../../lib/shipyard/utils/log');
 var Logger = require('../../lib/shipyard/logging/Logger'),
     Handler = require('../../lib/shipyard/logging/Handler'),
     string = require('../../lib/shipyard/utils/string');
@@ -59,6 +58,21 @@ module.exports = {
 
         });
 
+        it('should substitute extra arguments', function(expect) {
+            var n = string.uniqueID();
+            var a = new Logger(n);
+            a.propagate = false;
+            var spy = this.createSpy();
+            a.addHandler({ level: 0, handle: spy });
+
+            a.info('foo{0}baz', 'bar');
+            expect(spy.getLastArgs()[0].message).toBe('foobarbaz');
+            a.info('foobaz', 'bar');
+            expect(spy.getLastArgs()[0].message).toBe('foobaz bar');
+            a.info('foo{0}baz', 'bar', 'quux');
+            expect(spy.getLastArgs()[0].message).toBe('foobarbaz quux');
+        });
+
     },
 
     'Handler': function(it, setup) {
@@ -75,7 +89,7 @@ module.exports = {
             a.debug('derp');
 
             expect(handler.emit).toHaveBeenCalled();
-            expect(handler.emit.getLastArgs()[0].msg).toBe('derp');
+            expect(handler.emit.getLastArgs()[0].message).toBe('derp');
         });
     }
 };
