@@ -4,7 +4,9 @@ var http = require('http'),
 	url = require('url'),
 	path = require('path'),
     object = require('../lib/shipyard/utils/object'),
-	log = require('../lib/shipyard/utils/log');
+	logging = require('../lib/shipyard/logging');
+
+var log = logging.getLogger('shipyard.server');
 
 var HEADERS = { 'Content-Type': 'text/plain' };
 
