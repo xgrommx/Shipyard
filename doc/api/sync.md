@@ -181,17 +181,22 @@ provide criteria.
   the sync has returned data. The callback will be passed an array of
   instances of the Syncable as a parameter.
 
+### Returns
+
+- ([ObservableArray][]) An array that will be filled in with the results
+  as they are received.
+
 ### Example
 
-	Task.find({
+	var tasks = Task.find({
 		conditions: { isDone: false },
-		using: 'server',
-		callback: renderTasks
+		using: 'server'
 	});
+	listView.set('content', tasks);
 
 ## Note
 
-A Syncable class is also an EventEmitter. It is specially modified so
+A Syncable class is also itself an EventEmitter. It is specially modified so
 that one can listen to events on the Class, to retrieve all events that
 are emitted on all instances.
 
@@ -202,3 +207,5 @@ are emitted on all instances.
 	});
 	var t = new Task();
 	task.save(); // will log the instance to the console
+
+[ObservableArray]: ./observable-array.md#ObservableArray
