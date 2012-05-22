@@ -88,8 +88,56 @@ A field that makes sure it's value is always a Date object.
 
 Field
 
-## Options
+### Options
 
 - all options from `Field`, plus:
 - auto - (_boolean_, optional) Automatically store the current date upon
   saving. Useful for last-modified type fields.
+
+# Class: ForeignKey
+
+A field that relates this Model to another Model, like a hasOne
+relationship.
+
+First argument is the Model Class that this field relates to.
+
+### Extends
+
+Field
+
+### Options
+
+- all options from `Field`, plus:
+- key - (_string_) The property that is used to identify the related
+  Model. Default is `pk`.
+- serialize - (_string_) Whether to serialize this property as just the
+  key, or the entire related model embedded. Valid values are `key` and
+  `all`. Default is `key`.
+
+### Example
+
+	ForeignKey(Tag, { key: 'resource_uri' });
+
+# Class: ManyToManyField
+
+A field that keeps a collection of related Models, like a hasMany
+relationship.
+
+First argument is the Model Class that this field relates to.
+
+### Extends
+
+Field
+
+### Options
+
+- all options from `Field`, plus:
+- key - (_string_) The property that is used to identify the related
+  Model. Default is `pk`.
+- serialize - (_string_) Whether to serialize this property as just the
+  key, or the entire related model embedded. Valid values are `key` and
+  `all`. Default is `key`.
+
+### Example
+
+	ManyToManyKey(Tag, { key: 'resource_uri' });
