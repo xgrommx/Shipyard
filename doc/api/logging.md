@@ -26,4 +26,51 @@ same.
     log.error('This module should not be loaded'); // error message is logged
 
 
+# Module: logging/config
+
+A straight-forward way to configure a set of loggers, handlers, and
+formatters.
+
+### Example
+
+    var config = require('shipyard/logging/config');
+    var NullHandler = require('shipyard/logging/NullHandler');
+    var ConsoleHandler = require('shipyard/logging/ConsoleHandler');
+    var CustomHandler = require('myapp/CustomHandler');
+    config({
+        formatters: {
+            'basic': '{name}: {message}',
+            'normal': '[{date}] {name}.{levelname}: {message}'
+        },
+        handlers: {
+            'null': {
+                'class': NullHandler
+            },
+            'console': {
+                'class': ConsoleHandler,
+                'formatter': 'basic'
+            },
+            'custom': {
+                'class': CustomHandler,
+                'formatter': 'normal',
+                'level': 'ERROR'
+            }
+        },
+        loggers: {
+            'shipyard': {
+                'handlers': ['console', 'custom'],
+                'level': 'WARNING'
+            },
+            'shipyard.http': {
+                'handlers': ['null'],
+                'propagate': false
+            },
+            'myapp': {
+                'handlers': ['console', 'custom'],
+                'level': 'DEBUG'
+            }
+        }
+    })
+
+
 [Python]: http://docs.python.org/library/logging.html
