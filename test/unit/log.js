@@ -1,5 +1,10 @@
-var Logger = require('../../lib/shipyard/logging/Logger'),
+var logging = require('../../lib/shipyard/logging'),
+    Logger = require('../../lib/shipyard/logging/Logger'),
     Handler = require('../../lib/shipyard/logging/Handler'),
+    NullHandler = require('../../lib/shipyard/logging/NullHandler'),
+    config = require('../../lib/shipyard/logging/config'),
+    Class = require('../../lib/shipyard/class/Class'),
+    Spy = require('../../lib/shipyard/test/Spy'),
     string = require('../../lib/shipyard/utils/string');
 
 
@@ -90,6 +95,60 @@ module.exports = {
 
             expect(handler.emit).toHaveBeenCalled();
             expect(handler.emit.getLastArgs()[0].message).toBe('derp');
+        });
+    },
+
+    'config': function(it, setup) {
+
+        var SpyHandler = new Class({
+            Extends: Handler,
+            initialize: function SpyHandler() {
+                this.parent.apply(this, arguments);
+                this.emit = new Spy();
+            }
+        });
+
+
+        it('should be able to configure logging', function(expect) {
+            config({
+                formatters: {
+                    'basic': {
+                        'format': '{message}'
+                    },
+                    'foo': {
+                        'format': 'foo! {levelname}: {message}'
+                    }
+                },
+                handlers: {
+                    'null': {
+                        'class': SpyHandler,
+                        'formatter': 'foo'
+                    }
+                },
+                loggers: {
+                    'qqq.zzz': {
+                        'level': 'INFO',
+                        'propagate': false,
+                        'handlers': ['null']
+                    }
+                }
+            });
+
+            var log = logging.getLogger('qqq.zzz');
+            //TODO: not touch _private property
+            var handler = log._handlers[0];
+            expect(log._handlers.length).toBe(1);
+            expect(log.propagate).toBeFalse();
+
+            log.debug('asdf');
+            expect(handler.emit).not.toHaveBeenCalled();
+
+            log.info('qwer');
+            expect(handler.emit).toHaveBeenCalled();
+            expect(handler.emit.getLastArgs()[0].message).toBe('qwer');
+
+            var msg = handler.format({ message: 'hi', levelname: 'BAR'});
+            expect(msg).toBe('foo! BAR: hi');
         });
     }
 };
