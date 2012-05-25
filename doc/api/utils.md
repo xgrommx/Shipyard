@@ -98,6 +98,29 @@ arrays.
 
 ## Method: substitute
 
+A helper method to format a string, by placing markers where
+replacements should happen.
+
+### Syntax
+
+	var output = string.substitute(str, object);
+
+### Arguments
+
+- str - (_string_) A string with {markers} to be replaced.
+- object - (_object_) An object with properties. The name of the markers
+  will be matched with properties on the object. If the properties are a
+  function, the function will be invoked and the return value will be
+  used for replacement.
+
+### Example
+
+	var output = string.substitute('A {adj} example of {noun}', {
+		adj: 'fine',
+		noun: 'substitution'
+	});
+	output === 'A fine example of substitution';
+
 # Module: function
 
 ## Method: noop
@@ -106,17 +129,48 @@ arrays.
 
 ## Method: overloadGetter
 
-# Module: log
+# Module: date
 
-A module to use logging capability, such as the console, and fail
-gracefully if it doesn't exist.
+A utility module with date helpers.
 
-## Method: getLogger
+## Method: format
 
-## Method: debug/log
+Format a date according to the string provided. Uses syntax of
+[string.substitute][].
 
-## Method: info
+### Syntax
 
-## Method: warn/warning
+	var output = date.format(str[, date]);
 
-## Method: error/critical
+### Arguments
+
+- str - (_string_) A string with {markers} in order to format the date.
+- date - (_Date_, optional) A date to be used when formatting. If not
+  provided, the current date will be used.
+
+### Format Options
+
+- a - short day ("Mon", "Tue")
+- A - full day ("Monday")
+- b - short month ("Jan", "Feb")
+- B - full month ("January")
+- c - the full date to string
+- d - the date to two digits (01, 05, etc)
+- H - the hour to two digits in military time (24 hr mode) (00, 11, 14, etc)
+- I - the hour as a decimal number using a 12-hour clock (range 01 to 12).
+- j - the day of the year to three digits (001 to 366, is Jan 1st)
+- m - the numerical month to two digits (01 is Jan, 12 is Dec)
+- M - the minutes to two digits (01, 40, 59)
+- p - the current language equivalent of either AM or PM
+- S - the seconds to two digits (01, 40, 59)
+- w - the numerical day of the week, one digit (0 is Sunday, 1 is Monday)
+- x - the date: {m}/{d}/{y}
+- X - the time: {H}:{M}:{S}
+- y - the short year (two digits; "07")
+- Y - the full year (four digits; "2007")
+
+### Example
+
+	date.format('{a} at {I}:{M}{p}'); // 'Tue at 02:14PM'
+
+[string.substitute]: #string:substitute
