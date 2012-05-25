@@ -13,10 +13,15 @@ module.exports = new Class({
 
     initialize: function TaskView(options) {
         this.parent(options);
+        var view = this;
 
         var checkbox = new CheckboxView({ 'class': 'delete' });
         checkbox.bind(this, { checked: 'isDone' });
         this.addView(checkbox);
+
+        checkbox.addListener('click', function() {
+            view.parentView.emit('taskComplete', view.get('content'));
+        });
 
         var label = new View({ 'class': 'title' });
         label.bind(this, { content: 'label' });
@@ -74,12 +79,12 @@ module.exports = new Class({
         }
     }, 'content'),
 
-	'class': function() {
-		var ret = this.parent.apply(this, arguments);
-		if (ret && this.get('isDone')) {
-			// getter
-			return ret + ' isDone';
-		}
-	}
+    'class': function() {
+        var ret = this.parent.apply(this, arguments);
+        if (ret && this.get('isDone')) {
+            // getter
+            return ret + ' isDone';
+        }
+    }
 
 });

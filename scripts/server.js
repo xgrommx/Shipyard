@@ -94,7 +94,7 @@ exports.serve = function(dir, port) {
         });
     });
     server.listen(PORT);
-    log.debug('Server running at http://localhost:%d', PORT);
+    log.debug('Server running at http://localhost:{0}', PORT);
 };
 
 if (require.main === module) {

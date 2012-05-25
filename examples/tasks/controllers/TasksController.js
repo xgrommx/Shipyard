@@ -2,11 +2,10 @@ var Class = require('shipyard/class/Class'),
     Observable = require('shipyard/class/Observable');
 
 var Task = require('../models/Task'),
-	ListView = require('../views/TaskList'),
-    TaskView = require('../views/TaskView'),
-	FormView = require('shipyard/view/FormView'),
-	ButtonView = require('shipyard/view/ButtonView'),
-	TextFieldView = require('shipyard/view/TextFieldView');
+    TaskList = require('../views/TaskList'),
+    FormView = require('shipyard/view/FormView'),
+    ButtonView = require('shipyard/view/ButtonView'),
+    TextFieldView = require('shipyard/view/TextFieldView');
 
 module.exports = new Class({
 
@@ -31,10 +30,14 @@ module.exports = new Class({
             task.save();
         });
 
-        this.list = new ListView({
-            empty: 'Add a task with the above form.',
-            itemView: TaskView
+        this.list = new TaskList({
+            onTaskComplete: function(task) {
+                task.save();
+            }
         }).attach();
+        this.list.bind(this, {
+            content: 'tasks'
+        });
 
         var clearBtn = new ButtonView({ content: 'Clear Completed Tasks' });
         clearBtn.addListener('click', this._onClear.bind(this));
@@ -44,11 +47,7 @@ module.exports = new Class({
     observeTasks: function() {
         var controller = this;
 
-        Task.find({ callback: function(tasks) {
-            tasks.forEach(function(t) {
-                controller.addTask(t);
-            });
-        }});
+        this.set('tasks', Task.find());
 
         Task.addListener('save', function(task, isNew) {
             if (isNew) {
@@ -58,13 +57,10 @@ module.exports = new Class({
         Task.addListener('destroy', function(task) {
             controller.removeTask(task);
         });
-                
     },
 
     addTask: function(task) {
         this.tasks.push(task);
-        this.list.addItem(task);
-        task.addListener('propertyChange', this._onTaskChange);
     },
 
     removeTask: function(task) {
@@ -72,8 +68,6 @@ module.exports = new Class({
         if (idx !== -1) {
             this.tasks.splice(idx, 1);
         }
-        this.list.removeItem(task);
-        task.removeListener('propertyChange', this._onTaskChange);
     },
 
     _onClear: function() {
@@ -83,10 +77,6 @@ module.exports = new Class({
         completed.forEach(function(task) {
             task.destroy();
         }, this);
-    },
-
-    _onTaskChange: function(property, value) {
-        this.save();
     }
 
 });

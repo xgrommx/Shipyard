@@ -1,13 +1,12 @@
 var Class = require('shipyard/class/Class'),
-	model = require('shipyard/model'),
+	Model = require('shipyard/model/Model'),
+	fields = require('shipyard/model/fields'),
 	Syncable = require('shipyard/sync/Syncable'),
 	BrowserSync = require('shipyard/sync/Browser');
 
 var Task = module.exports = new Class({
 	
-	Extends: model.Model,
-
-	Implements: Syncable,
+	Extends: Model,
 
 	Sync: {
 		'default': {
@@ -17,10 +16,10 @@ var Task = module.exports = new Class({
 	},
 	
 	fields: {
-		id: model.fields.TextField(),
-		title: model.fields.TextField(),
-		createdAt: model.fields.DateField(),
-		isDone: model.fields.BooleanField({ 'default': false })
+		id: fields.TextField(),
+		title: fields.TextField(),
+		createdAt: fields.DateField(),
+		isDone: fields.BooleanField({ 'default': false })
 	},
 
 	toString: function() {
