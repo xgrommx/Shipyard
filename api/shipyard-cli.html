@@ -1,0 +1,67 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: shipyard%20cli</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>shipyard<a class="permalink" id="shipyard" href="#shipyard" title="Permalink to 'shipyard'">#</a></h1>
+<p>Shipyard comes with a command-line tool to easily manage your Shipyard
+programming. It should be installed if you use <code>npm link</code> in the
+Shipyard directory.
+
+</p>
+<p>Of course, <code>shipyard --help</code> will show you help plus all available
+options.
+
+</p>
+<p>Many of these commands expect properties defined in the <code>package.json</code>
+of your application. Specifically, they should all be defined on the
+<code>shipyard</code> property, so as not to conflict with any <code>npm</code> properties.
+
+</p>
+<h2>build<a class="permalink" id="shipyard:build" href="#shipyard:build" title="Permalink to 'build'">#</a></h2>
+<p>While developing, you can take advantage of Shipyard's <code>require.js</code>
+script to make things easy. However, for production, that script is just
+not acceptable. Since everyone already minifies their JavaScript anyways
+(right?), Shipyard piggybacks and easily combines all your projects
+files for you. It does this following all the <code>require</code>s.
+
+</p>
+<p>Simply go to the directory of your application, and use this:
+
+</p>
+<pre><code>shipyard build [destination]</code></pre>
+<h3>Options</h3>
+<ul>
+<li><code>--dir &lt;name&gt;</code> - Path to directory containing the app, if not
+currently in it.</li>
+<li><code>-m, --minify</code> - Force the result to be minified. Ignores
+package.json property.</li>
+<li><code>-M, --non-minify</code> - Force the result to not be minified. Ignores
+package.json property.</li>
+</ul>
+<h3>package.json</h3>
+<ul>
+<li>app - (<em>string</em>) Relative path to the file that starts your
+application.</li>
+<li>target - (<em>string</em>) Relative path of where the combined file should
+output, unless <code>destination</code> is passed to the command.</li>
+<li>mini<em>require - (_boolean</em>) Whether to include the mini require
+provided by Shipyard, or use your own. Default is false.</li>
+<li>min - (<em>boolean</em>) Whether to minify the result as well. Default is
+false.</li>
+</ul>
+<h2>test<a class="permalink" id="shipyard:test" href="#shipyard:test" title="Permalink to 'test'">#</a></h2>
+<pre><code>shipyard test [testFiles]</code></pre>
+<p><a href="../topics/testing.html">Testing your app</a> should be a top priority. Shipyard tries to make that
+really simple.
+
+</p>
+<h2>server<a class="permalink" id="shipyard:server" href="#shipyard:server" title="Permalink to 'server'">#</a></h2>
+<pre><code>shipyard server</code></pre>
+<p>Will serve the current directory at <code>http://localhost:8000</code>, with
+<code>/shipyard</code> paths automatically pulling in files from Shipyard.
+
+</p>
+<h2>shell<a class="permalink" id="shipyard:shell" href="#shipyard:shell" title="Permalink to 'shell'">#</a></h2>
+<pre><code>shipyard shell</code></pre>
+<p>Loads nodejs' REPL, but with Shipyard automatically pushed onto the path
+for you, so you can do things like <code>require('shipyard/class/Class')</code>.
+
+
+</p>
+     </article>     <aside id="nav">      <p><em>v0.2.0</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/testing.html" >testing</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/logging.html" >logging</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable-array.html" >observable array</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/shipyard-cli.html" class="active">shipyard cli</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

@@ -1,0 +1,73 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: logging</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Module: Logging<a class="permalink" id="Logging" href="#Logging" title="Permalink to 'Module: Logging'">#</a></h1>
+<p>A logging module with the ability to extensively configure how your
+entire application logs messages.
+
+</p>
+<p>Logging in Shipyard is based on being able to easily use several
+loggers, configure (or not) whether messages from certain loggers are
+handled differently.
+
+</p>
+<p>For example, you could want all log messages with level <code>WARN</code> and
+higher to be logged to the console, as well as sent via <code>XMLHttpRequest</code>
+to the server, so you can keep track of whenever the JavaScript client
+is warning or erroring.
+
+</p>
+<p>This logging module is inspired by <a href="http://docs.python.org/library/logging.html">Python's logging module</a>, so if you
+know that, you should be right at home here. The API is also largely the
+same.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> logging = <span class="keyword">require</span>(<span class="string">'shipyard/logging'</span>);
+log = logging.getLogger(<span class="string">'myapp.mymodule'</span>);
+log.setLevel(logging.WARN);
+
+log.debug(<span class="string">'This module has been loaded!'</span>); <span class="comment">// debug level is ignored</span>
+log.error(<span class="string">'This module should not be loaded'</span>); <span class="comment">// error message is logged</span></code></pre>
+<h1>Module: logging/config<a class="permalink" id="logging_config" href="#logging_config" title="Permalink to 'Module: logging/config'">#</a></h1>
+<p>A straight-forward way to configure a set of loggers, handlers, and
+formatters.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> config = <span class="keyword">require</span>(<span class="string">'shipyard/logging/config'</span>);
+<span class="keyword">var</span> NullHandler = <span class="keyword">require</span>(<span class="string">'shipyard/logging/NullHandler'</span>);
+<span class="keyword">var</span> ConsoleHandler = <span class="keyword">require</span>(<span class="string">'shipyard/logging/ConsoleHandler'</span>);
+<span class="keyword">var</span> CustomHandler = <span class="keyword">require</span>(<span class="string">'myapp/CustomHandler'</span>);
+config({
+    formatters: {
+        <span class="string">'basic'</span>: <span class="string">'{name}: {message}'</span>,
+        <span class="string">'normal'</span>: <span class="string">'[{date}] {name}.{levelname}: {message}'</span>
+    },
+    handlers: {
+        <span class="string">'null'</span>: {
+            <span class="string">'class'</span>: NullHandler
+        },
+        <span class="string">'console'</span>: {
+            <span class="string">'class'</span>: ConsoleHandler,
+            <span class="string">'formatter'</span>: <span class="string">'basic'</span>
+        },
+        <span class="string">'custom'</span>: {
+            <span class="string">'class'</span>: CustomHandler,
+            <span class="string">'formatter'</span>: <span class="string">'normal'</span>,
+            <span class="string">'level'</span>: <span class="string">'ERROR'</span>
+        }
+    },
+    loggers: {
+        <span class="string">'shipyard'</span>: {
+            <span class="string">'handlers'</span>: [<span class="string">'console'</span>, <span class="string">'custom'</span>],
+            <span class="string">'level'</span>: <span class="string">'WARNING'</span>
+        },
+        <span class="string">'shipyard.http'</span>: {
+            <span class="string">'handlers'</span>: [<span class="string">'null'</span>],
+            <span class="string">'propagate'</span>: <span class="keyword">false</span>
+        },
+        <span class="string">'myapp'</span>: {
+            <span class="string">'handlers'</span>: [<span class="string">'console'</span>, <span class="string">'custom'</span>],
+            <span class="string">'level'</span>: <span class="string">'DEBUG'</span>
+        }
+    }
+})</code></pre>
+     </article>     <aside id="nav">      <p><em>v0.2.0</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/testing.html" >testing</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/logging.html" class="active">logging</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable-array.html" >observable array</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/shipyard-cli.html" >shipyard cli</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

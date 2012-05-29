@@ -1,0 +1,36 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: observable%20array</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Class: ObservableArray<a class="permalink" id="ObservableArray" href="#ObservableArray" title="Permalink to 'Class: ObservableArray'">#</a></h1>
+<p>A class that mimics the entire <code>Array</code> interface, but is an
+<code>Observable</code>. This allows you to treat it like an array, but to also be
+able to observe when the Array itself changes.
+
+</p>
+<h3>Extends</h3>
+<p><a href="./observable.html#Observable">Observable</a>
+
+
+</p>
+<h2>Method: constructor<a class="permalink" id="ObservableArray:constructor" href="#ObservableArray:constructor" title="Permalink to 'Method: constructor'">#</a></h2>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> arr = <span class="keyword">new</span> ObservableArray([argsOrArray]);</code></pre>
+<h3>Arguments</h3>
+<ol>
+<li>argsOrArray - (<em>mixed</em>, optional) An existing array, or any number of
+arguments, or nothing.</li>
+</ol>
+<h2>Event: arrayChange<a class="permalink" id="ObservableArray:arrayChange" href="#ObservableArray:arrayChange" title="Permalink to 'Event: arrayChange'">#</a></h2>
+<p>This event will be emitted any time the array changes, such as a value
+being added or removed, or a value being overwritten. The property
+<code>array</code> can be observed for the same effect.
+
+</p>
+<p>The index of the change, plus the values removed and added starting at
+that index, are passed to event listener.
+
+</p>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> arr = <span class="keyword">new</span> ObservableArray(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>);
+arr.observe(<span class="string">'array'</span>, <span class="keyword">function</span>(index, removed, added) {
+    console.log(index, removed, added);
+});
+arr.push(<span class="string">'d'</span>); <span class="comment">// logged: 3, [], ['d']</span></code></pre>
+     </article>     <aside id="nav">      <p><em>v0.2.0</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/testing.html" >testing</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/logging.html" >logging</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable-array.html" class="active">observable array</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/shipyard-cli.html" >shipyard cli</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

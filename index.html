@@ -1,32 +1,37 @@
 <!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: index</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Shipyard<a class="permalink" id="Shipyard" href="#Shipyard" title="Permalink to 'Shipyard'">#</a></h1>
-<p>A Javascript <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view]E2%80%93controller">MVC</a> application framework. For when you have a full-on application sitting on a web page. So much is going on, you should be able to focus on making the application working, not worrying about XmlHttpRequests and the DOM.
+<p>Besides being <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view]E2%80%93controller">MVC</a> in JavaScript, Shipyard is <strong>explictly
+modular</strong>, <strong>easy to test</strong>, and utilizes the power of <strong>Syncs</strong> and
+<strong>View binding</strong>.
 
 </p>
-<h2>What Shipyard is<a class="permalink" id="Shipyard:What_Shipyard_is" href="#Shipyard:What_Shipyard_is" title="Permalink to 'What Shipyard is'">#</a></h2>
-<p>An application framework that covers all the common things any JavaScript application would need to deal with: interacting with a server, storing data, rendering said data in the browser, and responding to user actions. An application built on Shipyard should only have to write that pulls all those things together.
+<h2>Get it now!<a class="permalink" id="Shipyard:Get_it_now_" href="#Shipyard:Get_it_now_" title="Permalink to 'Get it now!'">#</a></h2>
+<p>Take a look at the <a href="./topics/tutorial.html">tutorial</a> to make your first
+application, or the <a href="/Shipyard/examples/tasks/">obligatory example Todo app</a>.
 
 </p>
-<p>If you're application is going to have 1000 lines of JavaScript, would you rather write all those yourself, or have 900 of them be in a framework that is tested and used by others?
+<p>Then, install the latest stable version using <code>npm install shipyard</code>, or
+grab the dev version from GitHub:
 
 </p>
-<p>When starting a web application, you would reach for Django, or CakePHP, or Rails; never would you decide to use just the language itself. Why shouldn't you do the same when the target language is JavaScript?
-
-</p>
-<h2>Goals<a class="permalink" id="Shipyard:Goals" href="#Shipyard:Goals" title="Permalink to 'Goals'">#</a></h2>
+<pre><code>$ git <span class="keyword">clone</span> git:<span class="comment">//github.com/seanmonstar/Shipyard.git</span>
+$ cd Shipyard
+$ npm link
+$ shipyard test</code></pre>
+<h2>What is Shipyard?<a class="permalink" id="Shipyard:What_is_Shipyard_" href="#Shipyard:What_is_Shipyard_" title="Permalink to 'What is Shipyard?'">#</a></h2>
 <h3>Framework-wide Goals</h3>
 <ol>
-<li><strong>Modularity</strong>: Be able to declare dependencies inside the code, and not be bothered with managing them during development or deployment.</li>
-<li><strong>Testability</strong>: Be easily testable, using a node test runner.</li>
-<li><strong>JavaScript</strong>: Not reliant on any other language. Build scripts will use JavaScript. The End.</li>
+<li><strong><a href="./topics/modules.html">Modularity</a></strong>: Be able to declare dependencies inside the code, and not be bothered with managing them during development or deployment.</li>
+<li><strong><a href="./topics/testing.html">Testability</a></strong>: Be easily testable, using a node test runner.</li>
+<li><strong><a href="./api/shipyard-cli.html">JavaScript</a></strong>: Not reliant on any other language. Build scripts will use JavaScript. The End.</li>
 </ol>
 <h3>Model Goals</h3>
 <ol>
-<li><strong>Fields</strong>: Powerful fields come alive from simple JSON.</li>
-<li><strong>Sync</strong>: Easily specify multiple locations the data should sync to.</li>
+<li><strong><a href="./api/fields.html">Fields</a></strong>: Powerful fields come alive from simple JSON.</li>
+<li><strong><a href="./api/sync.html">Sync</a></strong>: Easily specify multiple locations the data should sync to.</li>
 </ol>
 <h3>View Goals</h3>
 <ol>
-<li><strong>Binding</strong>: Views can automatically update themselves when related
+<li><strong><a href="./topics/views-and-binding.html">Binding</a></strong>: Views can automatically update themselves when related
 properties change in a Controller or Model.</li>
 <li><strong>DRY</strong>: Views are easily extendable.</li>
 <li><strong>DOMs Away</strong>: The DOM is a layer away. Instead, you get a nice
@@ -39,13 +44,13 @@ render, if you're a control freak.</li>
 <li><strong>Boilerplate</strong>: Attempt to remove typical boilerplate of attaching
 Models to Views with validation in between.</li>
 </ol>
-<h2>Getting Started<a class="permalink" id="Shipyard:Getting_Started" href="#Shipyard:Getting_Started" title="Permalink to 'Getting Started'">#</a></h2>
-<pre><code>$ git <span class="keyword">clone</span> git:<span class="comment">//github.com/seanmonstar/Shipyard.git</span>
-$ cd Shipyard
-$ npm link
-$ shipyard test</code></pre>
-<p>Take a look at the <a href="./topics/tutorial.html">tutorial</a> to make your first
-application, or the <a href="/Shipyard/examples/tasks/">obligatory example Todo app</a>.
+<h2>Meta<a class="permalink" id="Shipyard:Meta" href="#Shipyard:Meta" title="Permalink to 'Meta'">#</a></h2>
+<p>The code is <a href="https://github.com/seanmonstar/Shipyard">available on GitHub</a>, the <a href="http://travis-ci.org/#!/seanmonstar/Shipyard">test suite</a> is
+connected to TravisCI, and you can play with it on <a href="http://jsfiddle.net/seanmonstar/JrcF4/">jsFiddle</a>.
 
 </p>
-     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
+<p>Bugs and feature requests live at <a href="https://github.com/seanmonstar/Shipyard/issues">GitHub Issues</a>, and you can send tweets
+to <a href="https://twitter.com/shipyardjs">@shipyardjs</a>.
+
+</p>
+     </article>     <aside id="nav">      <p><em>v0.2.0</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/testing.html" >testing</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/logging.html" >logging</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable-array.html" >observable array</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/shipyard-cli.html" >shipyard cli</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

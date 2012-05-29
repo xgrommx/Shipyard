@@ -74,18 +74,68 @@ arrays.
 <h2>Method: hyphenate<a class="permalink" id="string:hyphenate" href="#string:hyphenate" title="Permalink to 'Method: hyphenate'">#</a></h2>
 <h2>Method: parseQueryString<a class="permalink" id="string:parseQueryString" href="#string:parseQueryString" title="Permalink to 'Method: parseQueryString'">#</a></h2>
 <h2>Method: substitute<a class="permalink" id="string:substitute" href="#string:substitute" title="Permalink to 'Method: substitute'">#</a></h2>
+<p>A helper method to format a string, by placing markers where
+replacements should happen.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> output = string.substitute(str, object);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>str - (<em>string</em>) A string with {markers} to be replaced.</li>
+<li>object - (<em>object</em>) An object with properties. The name of the markers
+will be matched with properties on the object. If the properties are a
+function, the function will be invoked and the return value will be
+used for replacement.</li>
+</ul>
+<h3>Example</h3>
+<pre><code><span class="keyword">var</span> output = string.substitute(<span class="string">'A {adj} example of {noun}'</span>, {
+    adj: <span class="string">'fine'</span>,
+    noun: <span class="string">'substitution'</span>
+});
+output === <span class="string">'A fine example of substitution'</span>;</code></pre>
 <h1>Module: function<a class="permalink" id="function" href="#function" title="Permalink to 'Module: function'">#</a></h1>
 <h2>Method: noop<a class="permalink" id="function:noop" href="#function:noop" title="Permalink to 'Method: noop'">#</a></h2>
 <h2>Method: overloadSetter<a class="permalink" id="function:overloadSetter" href="#function:overloadSetter" title="Permalink to 'Method: overloadSetter'">#</a></h2>
 <h2>Method: overloadGetter<a class="permalink" id="function:overloadGetter" href="#function:overloadGetter" title="Permalink to 'Method: overloadGetter'">#</a></h2>
-<h1>Module: log<a class="permalink" id="log" href="#log" title="Permalink to 'Module: log'">#</a></h1>
-<p>A module to use logging capability, such as the console, and fail
-gracefully if it doesn't exist.
+<h1>Module: date<a class="permalink" id="date" href="#date" title="Permalink to 'Module: date'">#</a></h1>
+<p>A utility module with date helpers.
 
 </p>
-<h2>Method: getLogger<a class="permalink" id="log:getLogger" href="#log:getLogger" title="Permalink to 'Method: getLogger'">#</a></h2>
-<h2>Method: debug/log<a class="permalink" id="log:debug_log" href="#log:debug_log" title="Permalink to 'Method: debug/log'">#</a></h2>
-<h2>Method: info<a class="permalink" id="log:info" href="#log:info" title="Permalink to 'Method: info'">#</a></h2>
-<h2>Method: warn/warning<a class="permalink" id="log:warn_warning" href="#log:warn_warning" title="Permalink to 'Method: warn/warning'">#</a></h2>
-<h2>Method: error/critical<a class="permalink" id="log:error_critical" href="#log:error_critical" title="Permalink to 'Method: error/critical'">#</a></h2>
-     </article>     <aside id="nav">      <p><em>v0.1.0a</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" class="active">utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
+<h2>Method: format<a class="permalink" id="date:format" href="#date:format" title="Permalink to 'Method: format'">#</a></h2>
+<p>Format a date according to the string provided. Uses syntax of
+<a href="#string:substitute">string.substitute</a>.
+
+</p>
+<h3>Syntax</h3>
+<pre><code><span class="keyword">var</span> output = date.format(str[, date]);</code></pre>
+<h3>Arguments</h3>
+<ul>
+<li>str - (<em>string</em>) A string with {markers} in order to format the date.</li>
+<li>date - (<em>Date</em>, optional) A date to be used when formatting. If not
+provided, the current date will be used.</li>
+</ul>
+<h3>Format Options</h3>
+<ul>
+<li>a - short day ("Mon", "Tue")</li>
+<li>A - full day ("Monday")</li>
+<li>b - short month ("Jan", "Feb")</li>
+<li>B - full month ("January")</li>
+<li>c - the full date to string</li>
+<li>d - the date to two digits (01, 05, etc)</li>
+<li>H - the hour to two digits in military time (24 hr mode) (00, 11, 14, etc)</li>
+<li>I - the hour as a decimal number using a 12-hour clock (range 01 to 12).</li>
+<li>j - the day of the year to three digits (001 to 366, is Jan 1st)</li>
+<li>m - the numerical month to two digits (01 is Jan, 12 is Dec)</li>
+<li>M - the minutes to two digits (01, 40, 59)</li>
+<li>p - the current language equivalent of either AM or PM</li>
+<li>S - the seconds to two digits (01, 40, 59)</li>
+<li>w - the numerical day of the week, one digit (0 is Sunday, 1 is Monday)</li>
+<li>x - the date: {m}/{d}/{y}</li>
+<li>X - the time: {H}:{M}:{S}</li>
+<li>y - the short year (two digits; "07")</li>
+<li>Y - the full year (four digits; "2007")</li>
+</ul>
+<h3>Example</h3>
+<pre><code>date.format(<span class="string">'{a} at {I}:{M}{p}'</span>); <span class="comment">// 'Tue at 02:14PM'</span></code></pre>
+     </article>     <aside id="nav">      <p><em>v0.2.0</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/testing.html" >testing</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/logging.html" >logging</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable-array.html" >observable array</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/shipyard-cli.html" >shipyard cli</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" class="active">utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  

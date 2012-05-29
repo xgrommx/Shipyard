@@ -1,0 +1,110 @@
+<!DOCTYPE html>  <html>   <head>    <title>Shipyard JS: testing</title>    <link rel="stylesheet" type="text/css" href="/Shipyard/style.css">   </head>   <body>    <header>     <div>      <h1><a href="/Shipyard">Shipyard</a></h1>      <p>A modular JavaScript MVC framework</p>     </div>    </header>    <div id="container">     <article id="main">      <h1>Testing<a class="permalink" id="Testing" href="#Testing" title="Permalink to 'Testing'">#</a></h1>
+<p>One of the core tenets of Shipyard is that you should be able to easily
+test your application. Specifically, right from the command line, even
+if it involves the <a href="./dom.html">DOM</a>.
+
+</p>
+<p>With the built in <a href="../api/shipyard-cli.html">shipyard</a> command, you can run tests for your app
+in a few moments.
+
+</p>
+<h2>Command Line<a class="permalink" id="Testing:Command_Line" href="#Testing:Command_Line" title="Permalink to 'Command Line'">#</a></h2>
+<pre><code>shipyard test [tests...]</code></pre>
+<p>Shipyard will try to find the tests based on the current working
+directory. If you specify why tests to run, it will only run those,
+otherwise, it will run all it finds.
+
+</p>
+<p>It knows where to look by the <code>test</code> property in your <code>package.json</code>
+file. It should be a relative path to the directory containing all your
+tests.
+
+</p>
+<p>Example:
+
+</p>
+<pre><code>{
+    "shipyard": {
+        "test": "./tests"
+    }
+}</code></pre>
+<h2>API<a class="permalink" id="Testing:API" href="#Testing:API" title="Permalink to 'API'">#</a></h2>
+<p>Testing in Shipyard uses the <a href="https://github.com/keeto/testigo">Testigo</a> library, which provides a
+Jasmine-like interface, but in nodejs form.
+
+</p>
+<p>Here is an example of how a test module should looke like:
+
+</p>
+<pre><code>module.exports = {
+    <span class="string">'MyClass'</span>: <span class="keyword">function</span>(it, setup) {
+        setup(<span class="string">'beforeEach'</span>, <span class="keyword">function</span>() {});
+
+        it(<span class="string">'should be MyClass'</span>, <span class="keyword">function</span>(expect) {
+            <span class="keyword">var</span> foo = <span class="keyword">new</span> MyClass();
+
+            expect(foo).toBeAnInstanceOf(MyClass);
+        });
+    }
+};</code></pre>
+<p>The module should export suites of tests, preferably grouped by
+objective, and appropriately named. Each property exported by the module
+should be a function, and it will be given <code>it</code> and <code>setup</code> functions.
+
+</p>
+<p><code>setup</code> is how you create <code>beforeEach</code>, <code>afterEach</code>, <code>before</code>, and
+<code>after</code> scaffolding helpers.
+
+</p>
+<p><code>it</code> is how you define individual test cases. <code>it</code> takes a description,
+and a function to be executed. Ideally, each <code>it</code> should describe and
+test a single use case. That function receives the <code>expect</code> function.
+
+</p>
+<p><code>expect</code> is how you define assertions. Pass it a value you want to test,
+and then call a method on the expectation.
+
+</p>
+<p>Here all available expectations:
+
+</p>
+<ul>
+<li>toBe</li>
+<li>toEqual</li>
+<li>toBeType</li>
+<li>toBeAnInstanceOf</li>
+<li>toBeNull</li>
+<li>toBeUndefined</li>
+<li>toBeTrue</li>
+<li>toBeTruthy</li>
+<li>toBeFalse</li>
+<li>toBeFalsy</li>
+<li>toBeGreaterThan</li>
+<li>toBeLessThan</li>
+<li>toHaveMember</li>
+<li>toHaveProperty</li>
+<li>toHaveMethod</li>
+<li>toBeLike</li>
+<li>toBeSimilar</li>
+<li>toMatch</li>
+<li>toHaveBeenCalled</li>
+</ul>
+<p>You may also access a <code>not</code> version of all these by accessing the <code>not</code>
+property before calling an expectation.
+
+</p>
+<pre><code>expect(arr.indexOf(val)).not.toBe(-1);</code></pre>
+<h3>Spy</h3>
+<p>The <code>toHaveBeenCalled</code> expectation requires a <code>Spy</code>, which is available
+with <code>require('shipyard/test/Spy')</code>.
+
+</p>
+<pre><code><span class="keyword">var</span> evts = <span class="keyword">new</span> Events();
+<span class="keyword">var</span> spy = <span class="keyword">new</span> Spy();
+evts.addListener(<span class="string">'foo'</span>, spy);
+evts.emit(<span class="string">'foo'</span>, <span class="string">'bar'</span>);
+
+expect(spy).toHaveBeenCalled();
+expect(spy.getCallCount()).toBe(<span class="number">1</span>);
+expect(spy.getLastArgs()).toBeLike([<span class="string">'bar'</span>]);</code></pre>
+     </article>     <aside id="nav">      <p><em>v0.2.0</em></p>      <nav>       <ul>        <li>         Topics         <ul>                    <li><a href="/Shipyard/topics/tutorial.html" >tutorial</a></li>                    <li><a href="/Shipyard/topics/installation.html" >installation</a></li>                    <li><a href="/Shipyard/topics/dom.html" >dom</a></li>                    <li><a href="/Shipyard/topics/models.html" >models</a></li>                    <li><a href="/Shipyard/topics/modules.html" >modules</a></li>                    <li><a href="/Shipyard/topics/testing.html" class="active">testing</a></li>                    <li><a href="/Shipyard/topics/views-and-binding.html" >views and binding</a></li>                   </ul>        </li>        <li>         API Reference         <ul>                    <li><a href="/Shipyard/api/class.html" >class</a></li>                    <li><a href="/Shipyard/api/events.html" >events</a></li>                    <li><a href="/Shipyard/api/fields.html" >fields</a></li>                    <li><a href="/Shipyard/api/logging.html" >logging</a></li>                    <li><a href="/Shipyard/api/model.html" >model</a></li>                    <li><a href="/Shipyard/api/observable-array.html" >observable array</a></li>                    <li><a href="/Shipyard/api/observable.html" >observable</a></li>                    <li><a href="/Shipyard/api/shipyard-cli.html" >shipyard cli</a></li>                    <li><a href="/Shipyard/api/sync.html" >sync</a></li>                    <li><a href="/Shipyard/api/utils.html" >utils</a></li>                    <li><a href="/Shipyard/api/view.html" >view</a></li>                   </ul>        </li>       </ul>      </nav>     </aside>     <footer>&copy; 2012 <a href="http://seanmonstar.com">Sean McArthur</a>. Source available on <a href="https://github.com/seanmonstar/Shipyard">GitHub</a>.</footer>    </div>   </body>  </html>  
