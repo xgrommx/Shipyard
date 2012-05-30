@@ -1,7 +1,8 @@
 var Class = require('../../lib/shipyard/class/Class'),
-    Observable = require('../../lib/shipyard/class/Observable'),
+	Observable = require('../../lib/shipyard/class/Observable'),
 	Model = require('../../lib/shipyard/model/Model'),
-	Field = require('../../lib/shipyard/model/fields/Field');
+	Field = require('../../lib/shipyard/model/fields/Field'),
+	logging = require('../../lib/shipyard/logging');
 
 module.exports = {
 	
@@ -28,31 +29,29 @@ module.exports = {
 		
 		});
 
-        it('should set initial default data', function(expect) {
-            var Task = new Class({
-                Extends: Model,
-                fields: {
-                    id: new Field(),
-                    title: new Field({type:String, 'default':'Untitled'})
-                }
-            });
+		it('should set initial default data', function(expect) {
+			var Task = new Class({
+				Extends: Model,
+				fields: {
+					id: new Field(),
+					title: new Field({type:String, 'default':'Untitled'})
+				}
+			});
 
-            var t = new Task();
-            expect(t.get('title')).toBe('Untitled');
-        });
+			var t = new Task();
+			expect(t.get('title')).toBe('Untitled');
+		});
 
-		it('should throw an Error if getting a non-existing field', function(expect) {
+		it('should warn if getting a non-existing field', function(expect) {
 			var u = new this.User();
 
-			var err;
+			var log = logging.getLogger('shipyard.model.Model');
+			var oldWarn = log.warn;
+			log.warn = this.createSpy();
+			u.get('asdfasfd');
 
-			try {
-				u.get('asdfasfd');
-			} catch (ex) {
-				err = ex;
-			}
-
-			expect(err).not.toBeUndefined();
+			expect(log.warn).toHaveBeenCalled();
+			log.warn = oldWarn;
 		});
 
 		it('should be able to take a hash to set data', function(expect) {
@@ -82,24 +81,24 @@ module.exports = {
 
 		});
 
-        it('should have a dynamic `pk` property', function(expect) {
-            var M = new Class({
-                Extends: this.User,
-                pk: 'username'
-            });
+		it('should have a dynamic `pk` property', function(expect) {
+			var M = new Class({
+				Extends: this.User,
+				pk: 'username'
+			});
 
-            var john = new this.User({ id: 1, username: 'john' });
-            var moe = new M({ id: 2, username: 'moe' });
+			var john = new this.User({ id: 1, username: 'john' });
+			var moe = new M({ id: 2, username: 'moe' });
 
-            expect(john.get('pk')).toBe(1);
-            expect(moe.get('pk')).toBe('moe');
+			expect(john.get('pk')).toBe(1);
+			expect(moe.get('pk')).toBe('moe');
 
-            john.set('pk', 4);
-            moe.set('pk', 'larry');
+			john.set('pk', 4);
+			moe.set('pk', 'larry');
 
-            expect(john.get('id')).toBe(4);
-            expect(moe.get('username')).toBe('larry');
-        });
+			expect(john.get('id')).toBe(4);
+			expect(moe.get('username')).toBe('larry');
+		});
 
 		it('should be serializable to JSON', function(expect) {
 			var obj = {
@@ -129,14 +128,14 @@ module.exports = {
 		it('should be Observable', function(expect) {
 		
 			var u = new this.User();
-            expect(u).toBeAnInstanceOf(Observable);
+			expect(u).toBeAnInstanceOf(Observable);
 
 			var nameChange = false;
 
 			u.observe('username', function(newVal, oldVal) {
 				if (newVal === 'jenn') {
-                    nameChange = true;
-                }
+					nameChange = true;
+				}
 			});
 
 			u.set('username', 'jenn');
