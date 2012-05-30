@@ -1,31 +1,31 @@
 #!/usr/bin/env node
 var program = require('commander'),
-    path = require('path'),
-    fs = require('fs'),
-    env = require('../lib/shipyard/env'),
-    logging = require('../lib/shipyard/logging'),
-    type = require('../lib/shipyard/utils/type'),
-    shipyard = require('../'),
-    builder = require('../scripts/build'),
-    server = require('../scripts/server'),
-    generate = require('../scripts/generate'),
-    shell = require('../scripts/shell').shell,
-    test = require('../scripts/test');
+	path = require('path'),
+	fs = require('fs'),
+	env = require('../lib/shipyard/env'),
+	logging = require('../lib/shipyard/logging'),
+	type = require('../lib/shipyard/utils/type'),
+	shipyard = require('../'),
+	builder = require('../scripts/build'),
+	server = require('../scripts/server'),
+	generate = require('../scripts/generate'),
+	shell = require('../scripts/shell').shell,
+	test = require('../scripts/test');
 
 var log = logging.getLogger('shipyard.bin');
 
 var marked = false;
 try {
-    marked = require('marked');
+	marked = require('marked');
 } catch(requireError) {}
 
 function uncaughtException(e) {
-    if (program.debug) {
-        console.error(e.stack);    
-    } else {
-        console.error(String(e));
-    }
-    process.exit(1);
+	if (program.debug) {
+		console.error(e.stack);    
+	} else {
+		console.error(String(e));
+	}
+	process.exit(1);
 };
 process.on('uncaughtException', uncaughtException);
 
@@ -35,164 +35,164 @@ var isWindows = process.platform === 'win32';
 var envSeperator = isWindows ? ';' : ':';
 
 function pushShipyard() {
-    try {
-        require('shipyard/class/Class');
-        return false;
-    } catch (requireError) {
-        log.info('Shipyard not in NODE_PATH. Temporarily adding it.');
-        var lib = path.join(shipyard.dirname, shipyard.directories.lib);
+	try {
+		require('shipyard/class/Class');
+		return false;
+	} catch (requireError) {
+		log.info('Shipyard not in NODE_PATH. Temporarily adding it.');
+		var lib = path.join(shipyard.dirname, shipyard.directories.lib);
 
-        var node_path = process.env.NODE_PATH || '';
-        process.env.NODE_PATH = node_path + envSeperator + lib;
+		var node_path = process.env.NODE_PATH || '';
+		process.env.NODE_PATH = node_path + envSeperator + lib;
 
-        log.debug('Setting NODE_PATH: ' + process.env.NODE_PATH);
+		log.debug('Setting NODE_PATH: ' + process.env.NODE_PATH);
 
-        var child_process = require('child_process');
-        var argv = process.argv.slice(0);
-        var child = child_process.spawn(argv.shift(), argv, { 
-            env: process.env
-        });
-        child.stdout.pipe(process.stdout, { end: false });
-        process.stdin.pipe(child.stdin);
-        child.on('exit', function(code) {
-            process.exit(code);
-        });
-        return true;
-    }
+		var child_process = require('child_process');
+		var argv = process.argv.slice(0);
+		var child = child_process.spawn(argv.shift(), argv, { 
+			env: process.env
+		});
+		child.stdout.pipe(process.stdout, { end: false });
+		process.stdin.pipe(child.stdin);
+		child.on('exit', function(code) {
+			process.exit(code);
+		});
+		return true;
+	}
 }
 
 
 program
-    .version(shipyard.version)
-    .option('-d, --dir <dir>', 'choose different directory', function(d) {
-        dir = path.join(dir, d);
-    })
-    .option('-r, --require', 'include mini require')
-    .option('-m, --minify', 'force a minify')
-    .option('-M, --non-minify', 'do not minify')
-    .option('--debug', 'show error traces')
-    .option('-w, --watch', 'watch files while testing');
+	.version(shipyard.version)
+	.option('-d, --dir <dir>', 'choose different directory', function(d) {
+		dir = path.join(dir, d);
+	})
+	.option('-r, --require', 'include mini require')
+	.option('-m, --minify', 'force a minify')
+	.option('-M, --non-minify', 'do not minify')
+	.option('--debug', 'show error traces')
+	.option('-w, --watch', 'watch files while testing');
 
 program
-    .command('build [dest]')
-    .description('Compress app into a single file')
-    .action(function(dest) {
-        builder.compile(dir, dest, {
-            force_minify: this.minify,
-            no_minify: this.nonMinify,
-            mini_require: this.require
-        });
-    });
+	.command('build [dest]')
+	.description('Compress app into a single file')
+	.action(function(dest) {
+		builder.compile(dir, dest, {
+			force_minify: this.minify,
+			no_minify: this.nonMinify,
+			mini_require: this.require
+		});
+	});
 
 function files(d, ret) {
-    ret = ret || [];
-    
-    fs.readdirSync(d).forEach(function(name) {
-        name = path.join(d, name);
-        if (fs.statSync(name).isDirectory()) {
-            files(name, ret);
-        } else if (path.extname(name) in require.extensions) {
-            ret.push(name);    
-        }
-    });
+	ret = ret || [];
+	
+	fs.readdirSync(d).forEach(function(name) {
+		name = path.join(d, name);
+		if (fs.statSync(name).isDirectory()) {
+			files(name, ret);
+		} else if (path.extname(name) in require.extensions) {
+			ret.push(name);    
+		}
+	});
 
-    return ret;
+	return ret;
 }
 
 function doTests(exits) {
-    var pack = require(path.join(dir, './package.json'));
-    var tests = path.join(dir, pack.shipyard.test);
-    require('../').registerExts();
-    var test  = require('../scripts/test');
+	var pack = require(path.join(dir, './package.json'));
+	var tests = path.join(dir, pack.shipyard.test);
+	require('../').registerExts();
+	var test  = require('../scripts/test');
 
-    var args = program.args.filter(type.isString);
+	var args = program.args.filter(type.isString);
 
-    var cases = test.load(tests, args);
-    exits = (exits !== undefined) ? exits : true;
-    test.run(cases, exits);
+	var cases = test.load(tests, args);
+	exits = (exits !== undefined) ? exits : true;
+	test.run(cases, exits);
 }
 
 function testsWatch() {
-    doTests(false);
-    console.log('\nwatching...');
-    var watchFiles = files(dir);
-    var blocked = false;
+	doTests(false);
+	console.log('\nwatching...');
+	var watchFiles = files(dir);
+	var blocked = false;
 
-    function purge() {
-        watchFiles.forEach(function(file) {
-            delete require.cache[file];
-        });
-    }
+	function purge() {
+		watchFiles.forEach(function(file) {
+			delete require.cache[file];
+		});
+	}
 
-    watchFiles.forEach(function(file) {
-        fs.watch(file, function() {
-            if (blocked) return;
-            blocked = true;
-            setTimeout(function() { 
-                blocked = false;
-                console.log('\nwatching...');
-            }, 3000);
-            purge();
-            doTests(false);
-        })
-    });
+	watchFiles.forEach(function(file) {
+		fs.watch(file, function() {
+			if (blocked) return;
+			blocked = true;
+			setTimeout(function() { 
+				blocked = false;
+				console.log('\nwatching...');
+			}, 3000);
+			purge();
+			doTests(false);
+		})
+	});
 }
 
 program
-    .command('test')
-    .description('Run your app\'s test suite')
-    .action(function() {
-        // when testing, you always want stacktraces
-        program.debug = true;
-        if (pushShipyard()) {
-            return; // child_process will do it
-        }
+	.command('test')
+	.description('Run your app\'s test suite')
+	.action(function() {
+		// when testing, you always want stacktraces
+		program.debug = true;
+		if (pushShipyard()) {
+			return; // child_process will do it
+		}
 
-        if (program.watch) {
-            testsWatch();
-            return;
-        }
-        
-        doTests();
-    });
-
-program
-    .command('server')
-    .description('Run a simple server')
-    .action(function() {
-        server.serve(dir);
-    });
+		if (program.watch) {
+			testsWatch();
+			return;
+		}
+		
+		doTests();
+	});
 
 program
-    .command('startapp <name>')
-    .description('Generate a new app')
-    .action(function(name) {
-        generate.app(name, dir);
-    });
+	.command('server')
+	.description('Run a simple server')
+	.action(function() {
+		server.serve(dir);
+	});
 
 program
-    .command('shell')
-    .description('A node shell with Shipyard already on the path')
-    .action(function() {
-        if (pushShipyard()) {
-            // child_process!
-            process.stdin.resume();
-        } else {
-            shipyard.registerExts();
-            shell();
-        }
-    });
+	.command('startapp <name>')
+	.description('Generate a new app')
+	.action(function(name) {
+		generate.app(name, dir);
+	});
+
+program
+	.command('shell')
+	.description('A node shell with Shipyard already on the path')
+	.action(function() {
+		if (pushShipyard()) {
+			// child_process!
+			process.stdin.resume();
+		} else {
+			shipyard.registerExts();
+			shell();
+		}
+	});
 
 if (marked) {
-    program
-        .command('doc')
-        .description('Build the Shipyard docs.')
-        .action(function() {
-            require('../scripts/doc').build();
-        });
+	program
+		.command('doc')
+		.description('Build the Shipyard docs.')
+		.action(function() {
+			require('../scripts/doc').build();
+		});
 }
 
 if (process.argv.length == 2) {
-    process.argv.push('-h');
+	process.argv.push('-h');
 }
 program.parse(process.argv);
