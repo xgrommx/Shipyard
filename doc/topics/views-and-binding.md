@@ -45,4 +45,4 @@ there is a way to declare that so when a dependent property changes, the
 [Models]: ./models.md#Models
 [View]: ../api/views.md#View
 [Observable]: ../api/observable.md#Observable
-[property]: ../api/observable.md#Observable:property
+[property]: ../api/observable.md#Observable:computed

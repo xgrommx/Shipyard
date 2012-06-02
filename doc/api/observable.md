@@ -93,19 +93,23 @@ It can also be used at instantiation for a single instance.
 	f.emit('foo'); // logged "bar!"
 	f.emit('bar'); // logged "baz"
 
-## Static Method: property
+## Static Method: computed
 
 A helper to declare computed properties and the properties they depend
 on.
-
 ### Syntax
 
-	var computedProp = property(fn, keys...);
+	var computedProp = computed(fn, keys...);
 
 ### Arguments
 
 - fn - (_function_) The function to execute when being `set` or `get`.
 - keys - (_strings_) A string of each property that this one depends on.
+
+### Note
+
+Computed properties cache their values by default. To disable
+caching, you can use `computedProp.canCache(false)`.
 
 ### Example
 
@@ -113,7 +117,7 @@ on.
 		Extends: Observable,
 		firstName: 'John',
 		lastName: 'Doe',
-		fullName: Observable.property(function(name) {
+		fullName: Observable.computed(function(name) {
 			if (arguments.length === 0) {
 				// getter
 				return this.get('firstName') + ' ' + this.get('lastName');

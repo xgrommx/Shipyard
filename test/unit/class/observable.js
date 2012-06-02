@@ -59,7 +59,7 @@ module.exports = {
         it('should be able to observe computed properties', function(expect) {
             var Ex = new Class({
                 Extends: Observable,
-                bar: Observable.property(function() {
+                bar: Observable.computed(function() {
                     return this.get('foo');
                 }, 'foo')
             });
@@ -77,7 +77,7 @@ module.exports = {
         it('should be able to set computed properties', function(expect) {
             var Ex = new Class({
                 Extends: Observable,
-                bar: Observable.property(function(value) {
+                bar: Observable.computed(function(value) {
                     if (arguments.length > 0) {
                         //setter
                         this.set('foo', value);
@@ -100,6 +100,51 @@ module.exports = {
             expect(fooSpy.getCallCount()).toBe(1);
             expect(barSpy.getCallCount()).toBeTruthy();
         });
+
+		it('should have computed properties cached', function(expect) {
+			var ex = new Observable();
+			ex.computed = this.createSpy(function() {
+				return 'foo';
+			});
+
+			expect(ex.get('computed')).toBe('foo');
+			expect(ex.get('computed')).toBe('foo');
+			
+			expect(ex.computed.getCallCount()).toBe(1);
+		});
+
+		it('should be able to NOT cache computed properties', function(expect) {
+			var ex = new Observable();
+			var counter = 1;
+			ex.computed = Observable.computed(this.createSpy(function() {
+				return counter++;
+			})).canCache(false);
+
+			expect(ex.get('computed')).toBe(1);
+			expect(ex.get('computed')).toBe(2);
+
+			expect(ex.computed.getCallCount()).toBe(2);
+		});
+
+		it('should not Class.wrap computed properties', function(expect) {
+			var Cow = new Class({
+				Extends: Observable,
+				milk: true,
+				moo: Observable.computed(function() {
+					var fn = function() {};
+					// .apply triggers a Class.wrap method...
+					fn.apply(this, arguments);
+					return this.milk === true;
+				}, 'milk')
+			});
+
+			var spy = this.createSpy();
+			var cow = new Cow();
+			cow.observe('moo', spy);
+			cow.set('milk', false);
+
+			expect(spy).toHaveBeenCalled();
+		});
 
         it('should assign events for properties starting with "on"', function(expect) {
             var spy = new Spy();
