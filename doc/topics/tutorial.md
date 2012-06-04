@@ -96,8 +96,8 @@ if a property isn't specified, so it's a good idea to set up a decent
 A dip into testing
 ---------------
 
-After having set up our Recipe model, go ahead and run the test suite
-again:
+After having set up our Recipe model, go ahead and run the [test][testing]
+suite again:
 
 	$ shipyard test
 	Starting Tests
@@ -227,7 +227,7 @@ like this:
 
 	Recipe.addListener('save', function(recipe, isNew) {
 		if (isNew) {
-			list.addItem(recipe);
+			list.get('content').push(recipe);
 		}
 	});
 
@@ -272,9 +272,7 @@ then can be accessed specifically be passing `{ using: 'yourSyncName'
 Back in our `index.js`, let's add in a line to load in our models on
 page load:
 
-	Recipe.find({ callback: function(recipes) {
-		recipes.forEach(list.addItem.bind(list));
-	}});
+	list.set('content', Recipe.find());
 
 Save and refresh, then save a couple recipes. Then, you can refresh
 again to see that they had been persisted.
@@ -288,3 +286,4 @@ but you can always read up more about specific parts if you like the
 details.
 
 [1]: ./installation.md
+[testing]: ./testing.md
