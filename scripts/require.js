@@ -242,10 +242,10 @@ var require = function shipyard_require(id, path){
 };
 
 require.extensions = {
-	'.js': function(module, filename) {
+	'.js': function jsExtension(module, filename) {
 				require._compile(module, require._load(filename));
 	},
-	'.json': function(module, filename) {
+	'.json': function jsonExtension(module, filename) {
 		module.exports = JSON.parse(require._load(filename));
 	}
 };
@@ -267,8 +267,6 @@ function main_require(main) {
 		}
 	}
 
-	var shipyard = require('shipyard');
-	shipyard.registerExts(json);
 	require.paths.unshift(main);
 	require(main);
 }
@@ -305,6 +303,9 @@ for (var i = 0, length = scripts.length; i < length; i++) {
 		break;
 	}
 }
+
+var shipyard = require('shipyard');
+shipyard.registerExts();
 
 window.addEventListener('DOMContentLoaded', function onload() {
 	main_require(main);
