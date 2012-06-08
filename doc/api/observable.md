@@ -68,6 +68,42 @@ property.
   changes. It will be passed as arguments the new value, and the old
   value: `function (newVal, oldVal) {}`
 
+## Method: bind
+
+Binds a property of this Observable to a Binding from another
+Observable. The properties of the Binding will be kept in sync.
+
+### Syntax
+
+	observable.bind(property, aBinding);
+
+### Arguments
+
+- property - (_string_) The property name to bind to.
+- aBinding- (_Binding_) A Binding instance that also has it's `from`
+  properties set.
+
+### Returns
+
+This `Observable` instance.
+
+## Method: binding
+
+Returns a Binding instance with the `from` part set to this object.
+Useful in conjunction with the `Observable.bind()` method.
+
+### Syntax
+
+	var binding = observable.binding(property);
+
+### Arguments
+
+- property - (_string_) The property of this object to bind from.
+
+### Example
+
+	view.bind('content', model.binding('fullName'));
+
 ## Mutator: onEvent
 
 Any property matching the regular expression `/^on[A-Z]/` (such as

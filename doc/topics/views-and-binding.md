@@ -12,13 +12,11 @@ matter) are [Observable][].
 Binding
 -------
 
-Views can provide an API to bind another Observable to it. This let's
-you declare that a model's `title` field and the view's `content` field
-should stay in sync.
+Views (really, all [Observables][bind]) provide an API to bind
+another Observable to it. This let's you declare that a model's
+`title` field and the view's `content` field should stay in sync.
 
-	view.bind(model, {
-		'content': 'title'
-	});
+	view.bind('content', model.binding('title'));
 
 	// later
 	model.set('title', 'foo');
@@ -45,4 +43,5 @@ there is a way to declare that so when a dependent property changes, the
 [Models]: ./models.md#Models
 [View]: ../api/views.md#View
 [Observable]: ../api/observable.md#Observable
+[bind]: ../api/observable.md#Observable:bind
 [property]: ../api/observable.md#Observable:computed

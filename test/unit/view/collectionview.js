@@ -58,7 +58,7 @@ module.exports = {
 		it('should be able to bind to another array', function(expect) {
 			var a = new Observable();
 			var view = new CollectionView();
-			view.bind(a, { content: 'list' });
+			view.bind('content', a.binding('list'));
 
 			var arr = new ObservableArray(1, 2, 3, 4, 5);
 			a.set('list', arr);

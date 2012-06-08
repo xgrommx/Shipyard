@@ -57,28 +57,6 @@ Attaches the View to the DOM, rendering it.
 
 	view.attach();
 
-## Method: bind
-
-Binds another `Observable` to properties of this View.
-
-### Syntax
-
-	view.bind(observable, properties);
-
-### Arguments
-
-- observable - (_Observable_) An Observable instance whose data should
-  be bound to the View.
-- properties - (_object_) An object map of properties from the
-  observable that should update the view.
-
-### Example
-
-	view.bind(user, {
-		'content': 'username',
-		'class': 'isStaff'
-	});
-
 # Class: Container
 
 A View that have child views.
