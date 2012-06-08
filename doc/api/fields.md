@@ -49,7 +49,7 @@ that can be serialized into JSON.
 
 # Class: TextField
 
-A field that makes sure it's value is always a String.
+A field that makes sure its value is always a String.
 
 ### Extends
 
@@ -66,7 +66,7 @@ Field
 
 # Class: NumberField
 
-A field that ensures it's value is always a Number.
+A field that ensures its value is always a Number.
 
 ### Extends
 
@@ -74,7 +74,7 @@ Field
 
 # Class: BooleanField
 
-A field that ensures it's value is always a Boolean.
+A field that ensures its value is always a Boolean.
 
 ### Extends
 
@@ -82,7 +82,7 @@ Field
 
 # Class: DateField
 
-A field that makes sure it's value is always a Date object.
+A field that makes sure its value is always a Date object.
 
 ### Extends
 

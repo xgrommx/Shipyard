@@ -133,7 +133,7 @@ Creating Views
 
 Until now, we've been playing with how to handle our data in models.
 Let's get some stuff showing in the browser, right? Shipyard renders
-data to the browser via it's View system.
+data to the browser via its View system.
 
 First, we'll create a simple View that will show the title and
 description of a single recipe. Edit the `recipes/index.js` file to look
