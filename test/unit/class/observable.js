@@ -126,6 +126,21 @@ module.exports = {
 			expect(ex.computed.getCallCount()).toBe(2);
 		});
 
+		it('should be able to have aliased properties', function(expect) {
+			var A = new Class({
+				Extends: Observable,
+				foo: '',
+				bar: Observable.computed('foo')
+			});
+
+			var a = new A();
+			a.set('foo', 'baz');
+			expect(a.get('bar')).toBe('baz');
+
+			a.set('bar', 'quux');
+			expect(a.get('foo')).toBe('quux');
+		});
+
 		it('should not Class.wrap computed properties', function(expect) {
 			var Cow = new Class({
 				Extends: Observable,
