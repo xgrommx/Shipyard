@@ -20,6 +20,22 @@ module.exports = {
 			expect(model.get('age')).toBe(view.get('content'));
 		});
 
+		it('should bind with paths', function(expect) {
+			var model = new Observable(),
+				controller = new Observable(),
+				view = new Observable();
+			model.set('name', 'Sean');
+			controller.set('model', model);
+
+			var b1 = new Binding(controller, 'model.name', view, 'content');
+			b1.watch();
+
+			expect(view.get('content')).toBe('Sean');
+
+			model.set('name', 'Piotr');
+			expect(view.get('content')).toBe('Piotr');
+		});
+
 		it('should remove handlers when destroyed', function(expect) {
 			var a = new Observable(),
 				b = new Observable();

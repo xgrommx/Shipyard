@@ -30,6 +30,59 @@ module.exports = {
 			expect(o.get('baz')).toBe('bad');
 		});
 
+		it('should be able to get and set with a path', function(expect) {
+			var a = new Observable();
+			var b = new Observable();
+			a.set('b', b);
+
+			a.setPath('b.c', 'foo');
+			expect(b.get('c')).toBe('foo');
+			b.set('c', 'bar');
+			expect(a.getPath('b.c')).toBe('bar');
+
+			// also with non-observables
+			var x = {};
+			a.setPath('x', x);
+			a.setPath('x.y', 'z');
+			expect(x.y).toBe('z');
+			x.y = 'w';
+			expect(a.getPath('x.y')).toBe('w');
+
+			// and undefined properties
+			expect(a.getPath('not.real')).toBeUndefined();
+			a.setPath('bat.man', 'hero');
+			expect(a.get('bat')).toBeLike({ man: 'hero' });
+		});
+
+		it('should be able to observe a path', function(expect) {
+			var a = new Observable();
+			var b = new Observable();
+			a.set('b', b);
+
+			var spy = this.createSpy();
+
+			var handle = a.observe('b.c', spy);
+			b.set('d', 'e');
+			expect(spy).not.toHaveBeenCalled();
+
+			b.set('c', 'asdf');
+			expect(spy).toHaveBeenCalled();
+			expect(spy.getLastArgs()[0]).toBeLike('asdf');
+
+			var b2 = new Observable({ 'c': 'qwer' });
+			a.set('b', b2);
+			expect(spy.getLastArgs()[0]).toBe('qwer');
+
+			b.set('c', 'derp');
+			expect(spy.getLastArgs()[0]).not.toBe('derp');
+
+			handle.detach();
+			var callCount = spy.getCallCount();
+			b2.set('c', 'zxcv');
+			expect(spy.getCallCount()).toBe(callCount);
+
+		});
+
 		it('should fire a propertyChange event when data changes', function(expect) {
 			var o = new Observable(),
 				spy = new Spy(),
@@ -131,7 +184,8 @@ module.exports = {
 			var A = new Class({
 				Extends: Observable,
 				foo: '',
-				bar: Observable.computed('foo')
+				bar: Observable.computed('foo'),
+				merp: Observable.computed('herp.derp')
 			});
 
 			var a = new A();
@@ -140,6 +194,13 @@ module.exports = {
 
 			a.set('bar', 'quux');
 			expect(a.get('foo')).toBe('quux');
+
+			var herp = new Observable({ 'derp': 'duh' });
+			a.set('herp', herp);
+			expect(a.get('merp')).toBe('duh');
+
+			a.set('merp', 'meh');
+			expect(herp.get('derp')).toBe('meh');
 		});
 
 		it('should not Class.wrap computed properties', function(expect) {
@@ -160,6 +221,42 @@ module.exports = {
 			cow.set('milk', false);
 
 			expect(spy).toHaveBeenCalled();
+		});
+
+		it('should have computed properties with paths', function(expect) {
+			var Example = new Class({
+				Extends: Observable,
+				foo: Observable.computed(function(val) {
+					if (arguments.length) {
+						this.setPath('bar.baz', val);
+					} else {
+						var ret = this.getPath('bar.baz');
+						return ret && ret.toUpperCase();
+					}
+				}, 'bar.baz'),
+				quux: Observable.computed('bar.baz')
+			});
+
+			var ex = new Example();
+			var bar = new Observable({ 'baz': 'derp' });
+			ex.set('bar', bar);
+			expect(ex.get('foo')).toBe('DERP');
+			expect(ex.get('quux')).toBe('derp');
+
+			var spy = new Spy();
+			ex.observe('foo', spy);
+
+			ex.set('quux', 'merp');
+			expect(bar.get('baz')).toBe('merp');
+			expect(spy).toHaveBeenCalled();
+
+			var spy2 = new Spy();
+			ex.observe('quux', spy2);
+			ex.set('foo', 'test');
+			expect(spy2).toHaveBeenCalled();
+			expect(spy2.getLastArgs()).toBeLike(['test', 'merp']);
+
+
 		});
 
 		it('should assign events for properties starting with "on"', function(expect) {
