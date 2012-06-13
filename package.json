@@ -9,6 +9,9 @@
 		"url": "git://github.com/seanmonstar/Shipyard.git"
 	},
 	"bin": "./bin/shipyard",
+	"bugs": {
+		"url": "https://github.com/seanmonstar/Shipyard/issues"
+	},
 	"directories": {
 		"bin": "./bin",
 		"doc": "./doc",
