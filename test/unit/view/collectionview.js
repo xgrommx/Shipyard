@@ -86,6 +86,19 @@ module.exports = {
 			expect(v.itemViewOptions.tag).toBe('span');
 			expect(v.itemViewOptions['class']).toBe('example');
 		});
+
+		it('should apply itemViewOptions to content in constructor', function(expect) {
+			// See https://github.com/seanmonstar/Shipyard/issues/52
+			var v = new CollectionView({
+				content: ['alpha', 'bravo', 'charlie'],
+				itemViewOptions: {
+					'class': 'moo'
+				}
+			});
+
+			expect(v.childViews[0].toElement().hasClass('moo')).toBe(true);
+
+		});
 	}
 
 };
