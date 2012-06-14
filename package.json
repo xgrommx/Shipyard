@@ -21,6 +21,7 @@
 		"node": ">=0.6"
 	},
 	"scripts": {
+		"start": "node ./bin/shipyard server",
 		"test": "node ./bin/shipyard test"
 	},
 	"dependencies": {
@@ -29,8 +30,8 @@
 		"commander": "0.x"
 	},
 	"devDependencies": {
-	"marked": "0.x",
-	"highlight": ">=0.2"
+		"marked": "0.x",
+		"highlight": ">=0.2"
 	},
 
 	"shipyard": {
