@@ -1,7 +1,8 @@
 var Class = require('shipyard/class/Class'),
 	View = require('shipyard/view/View'),
 	Container = require('shipyard/view/Container'),
-	CheckboxView = require('shipyard/view/CheckboxView');
+	CheckboxView = require('shipyard/view/CheckboxView'),
+	computed = View.computed;
 
 module.exports = new Class({
 
@@ -17,13 +18,12 @@ module.exports = new Class({
 
 		var checkbox = new CheckboxView({
 			'class': 'delete',
-			'checked': this.binding('isDone')
+			'checked': this.binding('isDone'),
+			'onClick': function() {
+				view.parentView.emit('taskComplete', view.get('content'));
+			}
 		});
 		this.addView(checkbox);
-
-		checkbox.addListener('click', function() {
-			view.parentView.emit('taskComplete', view.get('content'));
-		});
 
 		var label = new View({
 			'class': 'title',
@@ -45,43 +45,9 @@ module.exports = new Class({
 		}
 	},
 
-	content: function(task) {
-		if (arguments.length === 0) {
-			//getter
-			return this._task;
-		} else {
-			//setter
-			this._task = task;
-		}
-	},
+	label: computed('content.title'),
 
-	label: View.property(function(label) {
-		var content = this.get('content');
-		if (!content) {
-			return;
-		}
-		if (arguments.length === 0) {
-			// getter
-			return this.get('content').get('title');
-		} else {
-			// setter
-			this.get('content').set('title', label);
-		}
-	}, 'content'),
-
-	isDone: View.property(function(isDone) {
-		var content = this.get('content');
-		if (!content) {
-			return;
-		}
-		if (arguments.length === 0) {
-			// getter
-			return content.get('isDone');
-		} else {
-			// setter
-			content.set('isDone', isDone);
-		}
-	}, 'content'),
+	isDone: computed('content.isDone'),
 
 	'class': function() {
 		var ret = this.parent.apply(this, arguments);
