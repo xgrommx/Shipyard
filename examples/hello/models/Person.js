@@ -7,6 +7,7 @@ module.exports = new Class({
     Extends: Model,
 
     fields: {
+        id: fields.NumberField(),
         name: fields.TextField()
     }
 
