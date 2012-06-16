@@ -4,6 +4,8 @@ var program = require('commander'),
 	fs = require('fs'),
 	env = require('../lib/shipyard/env'),
 	logging = require('../lib/shipyard/logging'),
+	logConfig = require('../lib/shipyard/logging/config'),
+	ConsoleHandler = require('../lib/shipyard/logging/ConsoleHandler'),
 	type = require('../lib/shipyard/utils/type'),
 	shipyard = require('../'),
 	builder = require('../scripts/build'),
@@ -11,6 +13,27 @@ var program = require('commander'),
 	generate = require('../scripts/generate'),
 	shell = require('../scripts/shell').shell,
 	test = require('../scripts/test');
+
+logConfig({
+	'formatters': {
+		'default': {
+			'format': '{name}.{levelname}: {message}'
+		}
+	},
+	'handlers': {
+		'console': {
+			'class': ConsoleHandler,
+			'formatter': 'default'
+		}
+	},
+	'loggers': {
+		'shipyard': {
+			'handlers': ['console'],
+			'level': 'DEBUG',
+			'propagate': false
+		}
+	}
+});
 
 var log = logging.getLogger('shipyard.bin');
 

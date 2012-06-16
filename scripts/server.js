@@ -22,13 +22,13 @@ function serveFile(res, filename) {
 			e500(res, filename);
 			return;
 		}
-		if (!stats.isFile()) { 
+		if (!stats.isFile()) {
 			e404(res, filename);
 			return;
 		}
 		fs.readFile(filename, 'binary', function(err, contents) {
 			if (err) {
-				e500(res, filename);
+				e500(res, filename, err);
 				return;
 			}
 			
@@ -45,14 +45,14 @@ function serveFile(res, filename) {
 }
 
 function e404(res, filename) {
-	log.warn("File not found: %s", filename);
+	log.warn("404 File not found: ", filename);
 	res.writeHead(404, HEADERS);
 	res.write('404 Not Found\n');
 	res.end();
 }
 
-function e500(res, filename) {
-	log.error("Error for file (%s): %s", filename, err);
+function e500(res, filename, err) {
+	log.error("500 Error for file ({0}): {1}", filename, err);
 	res.writeHead(500, HEADERS);
 	res.write(err + '\n');
 	res.end();
