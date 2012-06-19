@@ -10,7 +10,7 @@ module.exports = new Class({
 
 	tag: 'li',
 
-	classNames: ['task-view'],
+	classNames: ['task-view', computed('isDone')],
 
 	initialize: function TaskView(options) {
 		this.parent(options);
@@ -30,31 +30,10 @@ module.exports = new Class({
 			'content': this.binding('label')
 		});
 		this.addView(label);
-
-		this.observe('isDone', this.toggleIsDone);
-	},
-
-	toggleIsDone: function(isDone) {
-		var element = this.get('element');
-		if (element) {
-			if (isDone) {
-				element.addClass('isDone');
-			} else {
-				element.removeClass('isDone');
-			}
-		}
 	},
 
 	label: computed('content.title'),
 
-	isDone: computed('content.isDone'),
-
-	'class': function() {
-		var ret = this.parent.apply(this, arguments);
-		if (ret && this.get('isDone')) {
-			// getter
-			return ret + ' isDone';
-		}
-	}
+	isDone: computed('content.isDone')
 
 });
