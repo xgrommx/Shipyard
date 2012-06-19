@@ -79,14 +79,13 @@ These fields determine what values you can use via the Model's `get` and
 	> var r = new Recipe();
 	> r.set('title', 'French Toast');
 	> r.get('title') // should return 'French Toast'
-	> r.set('oops', 'i did it again'); // won't set anything
-	> r.get('yikes'); // throw an Error about an non-existant 'yikes'
+	> r.get('yikes'); // log a warning about un-defined field 'yikes'
 
 While we're here editing the Model, it would be a good idea to set the
 `toString` method to something more useful.
 
 	toString: function toString() {
-		return this.get('title');	
+		return this.get('title');
 	}
 
 Most views will default to showing the String representation of a Model
@@ -147,13 +146,14 @@ like this:
 		ingredients: 'Bread, Egg, Milk'
 	});
 
-	var titleView = new View();
-	titleView.bind(toast, { 'content': 'title' });
+	var titleView = new View({
+		content: toast.binding('title')
+	});
 	titleView.attach();
 
 We instantiated a `Recipe`, passing it initial properties with an object
 map. Then we created a new basic `View`, and bound the `content`
-property to the `title` property of our model. View binding means
+property to the `title` property of our model. [View binding][binding] means
 whenever the model changes a property we care about, the view will
 update immediately.
 
@@ -287,3 +287,4 @@ details.
 
 [1]: ./installation.md
 [testing]: ./testing.md
+[binding]: ./views-and-binding.md
