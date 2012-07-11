@@ -3,6 +3,7 @@ var http = require('http'),
 	fs = require('fs'),
 	url = require('url'),
 	path = require('path'),
+	exists = fs.exists || path.exists,
 	object = require('../lib/shipyard/utils/object'),
 	logging = require('../lib/shipyard/logging');
 
@@ -63,7 +64,7 @@ function shipyardFile(res, uri) {
 	var root = path.join(__dirname, '../');
 	var syFile = uri.substring(9);
 	var filename = path.join(root, syFile);
-	path.exists(filename, function(exists) {
+	exists(filename, function(exists) {
 		if (exists) {
 			serveFile(res, filename);
 		} else {
@@ -83,7 +84,7 @@ exports.serve = function(dir, port) {
 		}
 
 		var filename = path.join(ROOT, uri);
-		path.exists(filename, function(exists) {
+		exists(filename, function(exists) {
 			if (exists) {
 				serveFile(res, filename);
 			} else if (uri.indexOf('/shipyard') === 0) {

@@ -1,6 +1,7 @@
 /*global process,__dirname,console*/
 var fs = require('fs'),
 	path = require('path'),
+	existsSync = fs.existsSync || path.existsSync,
 	assert = require('../lib/shipyard/error/assert'),
 	string = require('../lib/shipyard/utils/string'),
 	env = require('../lib/shipyard/env');
@@ -24,7 +25,7 @@ var model = exports.model = function(name, dir) {
 	name = modelName(name);
 	dir = path.join(dir || process.cwd, 'models');
 
-	if (!path.existsSync(dir)) {
+	if (!existsSync(dir)) {
 		fs.mkdirSync(dir, dirMode);
 	}
 
@@ -42,7 +43,7 @@ var app = exports.app = function(name, dir) {
 
 	//1. Make directory
 	console.log('Creating directory...');
-	assert(!path.existsSync(dir), 'App directory already exists: ', dir);
+	assert(!existsSync(dir), 'App directory already exists: ', dir);
 	fs.mkdirSync(dir, dirMode);
 
 	//2. Make package.json
