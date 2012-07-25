@@ -40,6 +40,18 @@ module.exports = {
 
 			expect(c.toElement().getFirst().get('tag')).toBe(v2.get('tag'));
 		});
+
+		it('should be able to initialize with childViews', function(expect) {
+			var c = new Container({
+				childViews: [
+					new View({ id: 'derp' }),
+					new View({ id: 'herp' })
+				]
+			});
+
+			expect(c.get('childViews')[0].get('parentView')).toBe(c);
+			expect(c.toElement().getFirst().get('id')).toBe('derp');
+		});
 	}
 
 };
